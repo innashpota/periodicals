@@ -5,9 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.inna.shpota</groupId>
-    <artifactId>railway-ticket-office</artifactId>
+    <artifactId>periodicals</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
+
+    <name>periodicals-system</name>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
