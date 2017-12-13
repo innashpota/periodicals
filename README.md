@@ -12,10 +12,14 @@ The application requires:
 ## How to run
 
 1. Build docker image for database
+
     ```
     docker build -t periodicals:periodicals-db -f Dockerfile.mysql .
     ```
+    
 2. Run the database 
+
     ```
     docker run -p 3306:3306 -e MYSQL_USER=periodicals -e MYSQL_PASSWORD=periodicals -e MYSQL_DATABASE=periodicals --name periodicals_db periodicals:periodicals-db
     ```
+
