@@ -20,10 +20,6 @@ public class PeriodicalsController extends HttpServlet {
             DataSource dataSource = (DataSource) initContext.lookup(
                     "java:/comp/env/jdbc/PeriodicalsDB"
             );
-            /*IDao<Admin> dao = new AdminDao(dataSource);
-            List<Admin> admins = dao.getAll();
-            System.out.println(admins);
-            throw new RuntimeException(admins.toString());*/
         } catch (NamingException e) {
             throw new ServletException(e);
         }
