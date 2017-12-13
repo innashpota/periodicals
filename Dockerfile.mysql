@@ -1,0 +1,7 @@
+FROM mysql:8.0.3
+
+MAINTAINER "Inna Shpota <inna.v.shpota@gmail.com>"
+
+ENV MYSQL_ROOT_PASSWORD=periodicals
+
+ADD docker/create_tables_mysql.sql /docker-entrypoint-initdb.d/
