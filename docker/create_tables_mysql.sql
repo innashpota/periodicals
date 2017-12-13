@@ -48,7 +48,7 @@ CREATE TABLE subscription (
 CREATE TABLE payment (
   id              INT AUTO_INCREMENT NOT NULL,
   subscription_id INT                NOT NULL,
-  price           INT                NOT NULL,
+  price           DOUBLE             NOT NULL,
   paid            BIT                NOT NULL DEFAULT 0,
   CONSTRAINT payment_subscription_subscription_fk FOREIGN KEY (subscription_id) REFERENCES subscription (id)
     ON DELETE NO ACTION,
