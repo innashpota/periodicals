@@ -6,14 +6,14 @@ public class Subscription {
     private long id;
     private final long readerId;
     private final long periodicalsId;
-    private final long monthQuantity;
+    private final int monthQuantity;
     private final LocalDateTime date;
 
     private Subscription(
             long id,
             long readerId,
             long periodicalsId,
-            long monthQuantity,
+            int monthQuantity,
             LocalDateTime date) {
         this.id = id;
         this.readerId = readerId;
@@ -34,7 +34,7 @@ public class Subscription {
         return periodicalsId;
     }
 
-    public long getMonthQuantity() {
+    public int getMonthQuantity() {
         return monthQuantity;
     }
 
@@ -65,7 +65,7 @@ public class Subscription {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (int) (readerId ^ (readerId >>> 32));
         result = 31 * result + (int) (periodicalsId ^ (periodicalsId >>> 32));
-        result = 31 * result + (int) (monthQuantity ^ (monthQuantity >>> 32));
+        result = 31 * result + monthQuantity;
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
@@ -85,7 +85,7 @@ public class Subscription {
         private long id;
         private long readerId;
         private long periodicalsId;
-        private long monthQuantity;
+        private int monthQuantity;
         private LocalDateTime date;
 
         private Builder() { }
@@ -105,7 +105,7 @@ public class Subscription {
             return this;
         }
 
-        public Builder monthQuantity(long monthQuantity) {
+        public Builder monthQuantity(int monthQuantity) {
             this.monthQuantity = monthQuantity;
             return this;
         }
