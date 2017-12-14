@@ -1,17 +1,19 @@
 package com.inna.shpota.periodicals.domain;
 
+import java.math.BigDecimal;
+
 public class Payment {
     private long id;
     private final long subscriptionId;
-    private final double price;
+    private final BigDecimal price;
     private final boolean paid;
 
-    public Payment(long id, long subscriptionId, double price, boolean paid) {
+    public Payment(long id, long subscriptionId, BigDecimal price, boolean paid) {
         this(subscriptionId, price, paid);
         this.id = id;
     }
 
-    public Payment(long subscriptionId, double price, boolean paid) {
+    public Payment(long subscriptionId, BigDecimal price, boolean paid) {
         this.subscriptionId = subscriptionId;
         this.price = price;
         this.paid = paid;
@@ -25,7 +27,7 @@ public class Payment {
         return subscriptionId;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -42,18 +44,15 @@ public class Payment {
 
         if (id != payment.id) return false;
         if (subscriptionId != payment.subscriptionId) return false;
-        if (Double.compare(payment.price, price) != 0) return false;
-        return paid == payment.paid;
+        if (paid != payment.paid) return false;
+        return price != null ? price.equals(payment.price) : payment.price == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (id ^ (id >>> 32));
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (int) (subscriptionId ^ (subscriptionId >>> 32));
-        temp = Double.doubleToLongBits(price);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (paid ? 1 : 0);
         return result;
     }

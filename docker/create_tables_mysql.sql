@@ -5,39 +5,39 @@ DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS payment;
 
 CREATE TABLE subscription_admin (
-  id       INT AUTO_INCREMENT NOT NULL,
-  login    VARCHAR(255)       NOT NULL,
-  password VARCHAR(255)       NOT NULL,
+  id       INT UNSIGNED AUTO_INCREMENT,
+  login    VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   CONSTRAINT admin_login_uk UNIQUE (login),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE periodicals (
-  id          INT AUTO_INCREMENT NOT NULL,
-  name        VARCHAR(255)       NOT NULL,
-  publisher   VARCHAR(255)       NOT NULL,
-  month_price DOUBLE             NOT NULL,
+  id          INT UNSIGNED AUTO_INCREMENT,
+  name        VARCHAR(255)  NOT NULL,
+  publisher   VARCHAR(255)  NOT NULL,
+  month_price DECIMAL(5, 2) NOT NULL,
   CONSTRAINT periodicals_name_uk UNIQUE (name),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE reader (
-  id          INT AUTO_INCREMENT NOT NULL,
-  last_name   VARCHAR(255)       NOT NULL,
-  first_name  VARCHAR(255)       NOT NULL,
-  middle_name VARCHAR(255)       NOT NULL,
-  email       VARCHAR(255)       NOT NULL,
-  password    VARCHAR(255)       NOT NULL,
+  id          INT UNSIGNED AUTO_INCREMENT,
+  last_name   VARCHAR(255) NOT NULL,
+  first_name  VARCHAR(255) NOT NULL,
+  middle_name VARCHAR(255) NOT NULL,
+  email       VARCHAR(255) NOT NULL,
+  password    VARCHAR(255) NOT NULL,
   CONSTRAINT reader_email_uk UNIQUE (email),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE subscription (
-  id             INT AUTO_INCREMENT NOT NULL,
-  reader_id      INT                NOT NULL,
-  periodicals_id INT                NOT NULL,
-  month_quantity INT                NOT NULL,
-  date           DATETIME           NOT NULL,
+  id             INT UNSIGNED AUTO_INCREMENT,
+  reader_id      INT      NOT NULL,
+  periodicals_id INT      NOT NULL,
+  month_quantity INT      NOT NULL,
+  date           DATETIME NOT NULL,
   CONSTRAINT subscription_reader_reader_fk FOREIGN KEY (reader_id) REFERENCES reader (id)
     ON DELETE NO ACTION,
   CONSTRAINT subscription_periodicals_periodicals_fk FOREIGN KEY (periodicals_id) REFERENCES periodicals (id)
@@ -46,10 +46,10 @@ CREATE TABLE subscription (
 );
 
 CREATE TABLE payment (
-  id              INT AUTO_INCREMENT NOT NULL,
-  subscription_id INT                NOT NULL,
-  price           DOUBLE             NOT NULL,
-  paid            BIT                NOT NULL DEFAULT 0,
+  id              INT UNSIGNED           AUTO_INCREMENT,
+  subscription_id INT           NOT NULL,
+  price           DECIMAL(7, 2) NOT NULL,
+  paid            BIT           NOT NULL DEFAULT 0,
   CONSTRAINT payment_subscription_subscription_fk FOREIGN KEY (subscription_id) REFERENCES subscription (id)
     ON DELETE NO ACTION,
   PRIMARY KEY (id)

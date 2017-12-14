@@ -1,17 +1,19 @@
 package com.inna.shpota.periodicals.domain;
 
+import java.math.BigDecimal;
+
 public class Periodicals {
     private long id;
     private final String name;
     private final String publisher;
-    private final Double monthPrice;
+    private final BigDecimal monthPrice;
 
-    public Periodicals(long id, String name, String publisher, Double monthPrice) {
+    public Periodicals(long id, String name, String publisher, BigDecimal monthPrice) {
         this(name, publisher, monthPrice);
         this.id = id;
     }
 
-    public Periodicals(String name, String publisher, Double monthPrice) {
+    public Periodicals(String name, String publisher, BigDecimal monthPrice) {
         this.name = name;
         this.publisher = publisher;
         this.monthPrice = monthPrice;
@@ -29,7 +31,7 @@ public class Periodicals {
         return publisher;
     }
 
-    public Double getMonthPrice() {
+    public BigDecimal getMonthPrice() {
         return monthPrice;
     }
 
