@@ -13,7 +13,7 @@ CREATE TABLE subscription_admin (
 );
 
 CREATE TABLE periodicals (
-  id          INT UNSIGNED AUTO_INCREMENT,
+  id          INT UNSIGNED  AUTO_INCREMENT,
   name        VARCHAR(255)  NOT NULL,
   publisher   VARCHAR(255)  NOT NULL,
   month_price DECIMAL(5, 2) NOT NULL,
@@ -34,10 +34,10 @@ CREATE TABLE reader (
 
 CREATE TABLE subscription (
   id             INT UNSIGNED AUTO_INCREMENT,
-  reader_id      INT      NOT NULL,
-  periodicals_id INT      NOT NULL,
-  month_quantity INT      NOT NULL,
-  date           DATETIME NOT NULL,
+  reader_id      INT UNSIGNED NOT NULL,
+  periodicals_id INT UNSIGNED NOT NULL,
+  month_quantity INT          NOT NULL,
+  date           DATETIME     NOT NULL,
   CONSTRAINT subscription_reader_reader_fk FOREIGN KEY (reader_id) REFERENCES reader (id)
     ON DELETE NO ACTION,
   CONSTRAINT subscription_periodicals_periodicals_fk FOREIGN KEY (periodicals_id) REFERENCES periodicals (id)
@@ -46,8 +46,8 @@ CREATE TABLE subscription (
 );
 
 CREATE TABLE payment (
-  id              INT UNSIGNED           AUTO_INCREMENT,
-  subscription_id INT           NOT NULL,
+  id              INT UNSIGNED  AUTO_INCREMENT,
+  subscription_id INT UNSIGNED  NOT NULL,
   price           DECIMAL(7, 2) NOT NULL,
   paid            BIT           NOT NULL DEFAULT 0,
   CONSTRAINT payment_subscription_subscription_fk FOREIGN KEY (subscription_id) REFERENCES subscription (id)
