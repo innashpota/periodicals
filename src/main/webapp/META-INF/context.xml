@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <Resource name="jdbc/PeriodicalsDB"
+    <Resource name="jdbc/periodicals"
               auth="Container"
               type="javax.sql.DataSource"
               maxActive="100"

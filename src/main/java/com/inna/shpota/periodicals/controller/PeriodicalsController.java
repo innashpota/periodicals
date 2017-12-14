@@ -18,7 +18,7 @@ public class PeriodicalsController extends HttpServlet {
         try {
             Context initContext = new InitialContext();
             DataSource dataSource = (DataSource) initContext.lookup(
-                    "java:/comp/env/jdbc/PeriodicalsDB"
+                    "java:/comp/env/jdbc/periodicals"
             );
         } catch (NamingException e) {
             throw new ServletException(e);
