@@ -20,7 +20,7 @@ public interface Dao<E> {
         try (ResultSet resultSet = createStatement.getGeneratedKeys()) {
             long id = -1;
             if (resultSet.next()) {
-                id = resultSet.getLong("id");
+                id = resultSet.getLong(1);
             }
             return id;
         }
