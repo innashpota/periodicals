@@ -1,16 +1,16 @@
 package com.inna.shpota.periodicals.domain;
 
-public class SubscriptionAdmin {
+public class Admin {
     private long id;
     private final String login;
     private final String password;
 
-    public SubscriptionAdmin(long id, String login, String password) {
+    public Admin(long id, String login, String password) {
         this(login, password);
         this.id = id;
     }
 
-    public SubscriptionAdmin(String login, String password) {
+    public Admin(String login, String password) {
         this.login = login;
         this.password = password;
     }
@@ -32,11 +32,11 @@ public class SubscriptionAdmin {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SubscriptionAdmin that = (SubscriptionAdmin) o;
+        Admin admin = (Admin) o;
 
-        if (id != that.id) return false;
-        if (login != null ? !login.equals(that.login) : that.login != null) return false;
-        return password != null ? password.equals(that.password) : that.password == null;
+        if (id != admin.id) return false;
+        if (login != null ? !login.equals(admin.login) : admin.login != null) return false;
+        return password != null ? password.equals(admin.password) : admin.password == null;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class SubscriptionAdmin {
 
     @Override
     public String toString() {
-        return "SubscriptionAdmin{" +
+        return "Admin{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
