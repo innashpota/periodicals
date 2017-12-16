@@ -2,35 +2,82 @@ package com.inna.shpota.periodicals.domain;
 
 import java.math.BigDecimal;
 
+/**
+ * Payment Model Object
+ *
+ * <P>Various attributes of payment, and related behaviour.
+ *
+ * <P>Note that {@link BigDecimal} is used to model the price - not double or float.
+ * See {@link #Payment(long subscriptionId, BigDecimal price, boolean paid)} or
+ * {@link #Payment(long id, long subscriptionId, BigDecimal price, boolean paid)} for more information
+ *
+ * @author Inna Shpota
+ * @version 1.0
+ */
 public class Payment {
     private long id;
     private final long subscriptionId;
     private final BigDecimal price;
     private final boolean paid;
 
+    /**
+     * Constructor for all parameters.
+     *
+     * @param id             ID of the payment.
+     * @param subscriptionId (required) ID of the subscription.
+     * @param price          (automatically calculated) Price of the all months.
+     * @param paid           (optional) Paid or not paid subscription. Default value false.
+     */
     public Payment(long id, long subscriptionId, BigDecimal price, boolean paid) {
         this(subscriptionId, price, paid);
         this.id = id;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param subscriptionId (required) ID of the subscription.
+     * @param price          (automatically calculated) Price of the all months.
+     * @param paid           (optional) Paid or not paid subscription. Default value false.
+     */
     public Payment(long subscriptionId, BigDecimal price, boolean paid) {
         this.subscriptionId = subscriptionId;
         this.price = price;
         this.paid = paid;
     }
 
+    /**
+     * Getter for an id.
+     *
+     * @return id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Getter for a subscription id.
+     *
+     * @return subscriptionId
+     */
     public long getSubscriptionId() {
         return subscriptionId;
     }
 
+    /**
+     * Getter for a price.
+     *
+     * @return price
+     */
     public BigDecimal getPrice() {
         return price;
     }
 
+    /**
+     * Getter for a paid.
+     *
+     * @return paid
+     */
     public boolean isPaid() {
         return paid;
     }
