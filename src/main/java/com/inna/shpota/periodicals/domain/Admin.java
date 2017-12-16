@@ -1,28 +1,66 @@
 package com.inna.shpota.periodicals.domain;
 
+/**
+ * Admin Model Object
+ *
+ * <P>Various attributes of admin, and related behaviour.
+ *
+ * See {@link #Admin(String, String)} or {@link #Admin(long, String, String)} for more information
+ *
+ * @author Inna Shpota
+ * @version 1.0
+ */
 public class Admin {
     private long id;
     private final String login;
     private final String password;
 
+    /**
+     * Constructor for all parameters.
+     *
+     * @param id       ID of the admin.
+     * @param login    (required) Login of the admin.
+     * @param password (required) Password of the admin.
+     */
     public Admin(long id, String login, String password) {
         this(login, password);
         this.id = id;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param login    (required) Login of the admin.
+     * @param password (required) Password of the admin.
+     */
     public Admin(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
+    /**
+     * Getter for an id.
+     *
+     * @return id passed to the constructor.
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Getter for a login.
+     *
+     * @return login passed to the constructor.
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Getter for a password.
+     *
+     * @return password passed to the constructor.
+     */
     public String getPassword() {
         return password;
     }
