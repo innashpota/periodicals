@@ -5,7 +5,8 @@ package com.inna.shpota.periodicals.domain;
  *
  * <P>Various attributes of admin, and related behaviour.
  *
- * See {@link #Admin(String, String)} or {@link #Admin(long, String, String)} for more information
+ * See {@link #Admin(String login, String password)} or
+ * {@link #Admin(long id, String login, String password)} for more information
  *
  * @author Inna Shpota
  * @version 1.0
