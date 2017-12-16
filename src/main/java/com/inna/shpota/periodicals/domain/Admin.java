@@ -41,7 +41,7 @@ public class Admin {
     /**
      * Getter for an id.
      *
-     * @return id passed to the constructor.
+     * @return id
      */
     public long getId() {
         return id;
@@ -50,7 +50,7 @@ public class Admin {
     /**
      * Getter for a login.
      *
-     * @return login passed to the constructor.
+     * @return login
      */
     public String getLogin() {
         return login;
@@ -59,7 +59,7 @@ public class Admin {
     /**
      * Getter for a password.
      *
-     * @return password passed to the constructor.
+     * @return password
      */
     public String getPassword() {
         return password;
