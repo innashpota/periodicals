@@ -1,5 +1,15 @@
 package com.inna.shpota.periodicals.domain;
 
+/**
+ * Reader Model Object
+ *
+ * <P>Various attributes of reader, and related behaviour.
+ *
+ * See {@link #builder()}
+ *
+ * @author Inna Shpota
+ * @version 1.0
+ */
 public class Reader {
     private long id;
     private final String lastName;
@@ -23,30 +33,65 @@ public class Reader {
         this.password = password;
     }
 
+    /**
+     * Getter for an id.
+     *
+     * @return id
+     */
     public long getId() {
         return id;
     }
 
+    /**
+     * Getter for a last name.
+     *
+     * @return lastName
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Getter for a first name.
+     *
+     * @return firstName
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Getter for a middle name.
+     *
+     * @return middleName
+     */
     public String getMiddleName() {
         return middleName;
     }
 
+    /**
+     * Getter for an email.
+     *
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Getter for a password.
+     *
+     * @return password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Builders new {@link Builder} for a {@link Reader}.
+     *
+     * @return Builder object
+     */
     public static Builder builder() {
         return new Builder();
     }
@@ -89,6 +134,9 @@ public class Reader {
                 '}';
     }
 
+    /**
+     * Builder for a {@link Reader}
+     */
     public static class Builder {
         private long id;
         private String lastName;
@@ -99,36 +147,77 @@ public class Reader {
 
         private Builder() { }
 
+        /**
+         * Setter for an id.
+         *
+         * @param id ID of the reader.
+         * @return Builder object
+         */
         public Builder id(long id) {
             this.id = id;
             return this;
         }
 
+        /**
+         * Setter for a last name.
+         *
+         * @param lastName (required) Last name of the reader.
+         * @return Builder object
+         */
         public Builder lastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
+        /**
+         * Setter for a first name.
+         *
+         * @param firstName (required) First name of the reader.
+         * @return Builder object
+         */
         public Builder firstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
+        /**
+         * Setter for a middle name.
+         *
+         * @param middleName (required) Middle name of the reader.
+         * @return Builder object
+         */
         public Builder middleName(String middleName) {
             this.middleName = middleName;
             return this;
         }
 
+        /**
+         * Setter for an email.
+         *
+         * @param email (required) Email of the reader.
+         * @return Builder object
+         */
         public Builder email(String email) {
             this.email = email;
             return this;
         }
 
+        /**
+         * Setter for a password.
+         *
+         * @param password (required) Password of the reader.
+         * @return Builder object
+         */
         public Builder password(String password) {
             this.password = password;
             return this;
         }
 
+        /**
+         * Builds a new Reader.
+         *
+         * @return Reader object
+         */
         public Reader build() {
             return new Reader(id, lastName, firstName, middleName, email, password);
         }
