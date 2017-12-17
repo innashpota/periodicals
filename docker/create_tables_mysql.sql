@@ -72,11 +72,11 @@ INSERT INTO reader (last_name, first_name, middle_name, email, password) VALUES
   ('Drinfeld', 'Volodymyr', 'Gershonovich', 'drinfeld@tv.com', '4');
 
 INSERT INTO subscription (reader_id, periodicals_id, month_quantity, date) VALUES
-  (2, 1, 6, '2017-12-16 13:35'),
-  (1, 2, 12, '2017-12-14 13:35'),
-  (1, 3, 3, '2017-12-14 13:35'),
-  (4, 1, 3, '2017-12-04 13:35'),
-  (3, 1, 12, '2017-12-04 13:35');
+  (2, 1, 6, '2017-12-16 13:35:00'),
+  (1, 2, 12, '2017-12-14 13:35:00'),
+  (1, 3, 3, '2017-12-14 13:35:00'),
+  (4, 1, 3, '2017-12-04 13:35:00'),
+  (3, 1, 12, '2017-12-04 13:35:00');
 
 INSERT INTO payment (subscription_id, price, paid) VALUES
   (1, 594, 1),
