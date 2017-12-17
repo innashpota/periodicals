@@ -53,11 +53,12 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldUpdate() throws Exception {
-        Payment expectedPayment = new Payment(2, 2, new BigDecimal("1999.00"), false);
+        long id = 2;
+        Payment expectedPayment = new Payment(id, 2, new BigDecimal("1999.00"), false);
 
         jdbcPaymentDao.update(expectedPayment);
 
-        Payment actualPayment = jdbcPaymentDao.getById(2);
+        Payment actualPayment = jdbcPaymentDao.getById(id);
         assertEquals(expectedPayment, actualPayment);
     }
 

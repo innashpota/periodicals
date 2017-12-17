@@ -41,7 +41,8 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldGetById() throws Exception {
-        Admin expectedAdmin = new Admin(1, "admin1", "admin1");
+        long id = 1;
+        Admin expectedAdmin = new Admin(id, "admin1", "admin1");
 
         Admin actualAdmin = jdbcAdminDao.getById(1);
 
@@ -50,11 +51,12 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldUpdate() throws Exception {
-        Admin expectedAdmin = new Admin(1, "test", "test");
+        long id = 1;
+        Admin expectedAdmin = new Admin(id, "test", "test");
 
         jdbcAdminDao.update(expectedAdmin);
 
-        Admin actualAdmin = jdbcAdminDao.getById(1);
+        Admin actualAdmin = jdbcAdminDao.getById(id);
         assertEquals(expectedAdmin, actualAdmin);
     }
 
