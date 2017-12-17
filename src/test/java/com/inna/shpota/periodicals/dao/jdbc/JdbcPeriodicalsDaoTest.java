@@ -23,9 +23,9 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     public void shouldCreate() throws Exception {
         Periodicals periodicals = new Periodicals("test", "test", new BigDecimal("66.66"));
 
-        jdbcPeriodicalsDao.create(periodicals);
+        long id = jdbcPeriodicalsDao.create(periodicals);
 
-        Periodicals actual = jdbcPeriodicalsDao.getById(4);
+        Periodicals actual = jdbcPeriodicalsDao.getById(id);
         assertEquals(periodicals.getName(), actual.getName());
         assertEquals(periodicals.getPublisher(), actual.getPublisher());
         assertEquals(periodicals.getMonthPrice(), actual.getMonthPrice());
