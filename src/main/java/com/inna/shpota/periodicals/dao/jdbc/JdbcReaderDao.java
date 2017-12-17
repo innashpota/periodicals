@@ -80,6 +80,7 @@ public class JdbcReaderDao implements ReaderDao {
                 Reader reader = null;
                 if (resultSet.next()) {
                     reader = Reader.builder()
+                            .id(id)
                             .lastName(resultSet.getString("last_name"))
                             .firstName(resultSet.getString("first_name"))
                             .middleName(resultSet.getString("middle_name"))
