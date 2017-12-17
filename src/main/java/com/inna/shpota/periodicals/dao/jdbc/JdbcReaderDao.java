@@ -104,7 +104,7 @@ public class JdbcReaderDao implements ReaderDao {
              )) {
             updateStatement.setString(1, reader.getLastName());
             updateStatement.setString(2, reader.getFirstName());
-            updateStatement.setString(3, reader.getLastName());
+            updateStatement.setString(3, reader.getMiddleName());
             updateStatement.setString(4, reader.getEmail());
             updateStatement.setString(5, reader.getPassword());
             updateStatement.setLong(6, reader.getId());
