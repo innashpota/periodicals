@@ -14,7 +14,7 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
     private JdbcPaymentDao jdbcPaymentDao;
 
     @Before
-    public void setUp() throws Exception {
+    public void before() throws Exception {
         prepareConnection();
         jdbcPaymentDao = new JdbcPaymentDao(jdbcDataSource);
     }
