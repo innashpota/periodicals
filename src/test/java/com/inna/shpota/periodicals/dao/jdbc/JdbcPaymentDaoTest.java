@@ -75,5 +75,4 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
 
         assertEquals(expected, actual);
     }
-
 }

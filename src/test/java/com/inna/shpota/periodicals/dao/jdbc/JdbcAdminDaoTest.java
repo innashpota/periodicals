@@ -70,5 +70,4 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
 
         assertEquals(expected, actual);
     }
-
 }
