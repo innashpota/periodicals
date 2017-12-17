@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS subscription_admin;
+DROP TABLE IF EXISTS payment;
+DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS periodicals;
 DROP TABLE IF EXISTS reader;
-DROP TABLE IF EXISTS subscription;
-DROP TABLE IF EXISTS payment;
 
 CREATE TABLE subscription_admin (
   id       INT UNSIGNED AUTO_INCREMENT,
