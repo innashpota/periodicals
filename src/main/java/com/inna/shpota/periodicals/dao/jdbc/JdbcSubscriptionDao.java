@@ -80,6 +80,7 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                 Subscription subscription = null;
                 if (resultSet.next()) {
                     subscription = Subscription.builder()
+                            .id(id)
                             .readerId(resultSet.getLong("reader_id"))
                             .periodicalsId(resultSet.getLong("periodicals_id"))
                             .monthQuantity(resultSet.getInt("month_quantity"))
