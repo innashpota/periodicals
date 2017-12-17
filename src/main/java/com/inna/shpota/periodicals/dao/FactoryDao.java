@@ -6,22 +6,22 @@ import javax.sql.DataSource;
 
 public class FactoryDao {
     public static AdminDao createAdminDao(DataSource dataSource) {
-        return new AdminDaoJdbc(dataSource);
+        return new JdbcAdminDao(dataSource);
     }
 
     public static PeriodicalsDao createPeriodicalsDao(DataSource dataSource) {
-        return new PeriodicalsDaoJdbc(dataSource);
+        return new JdbcPeriodicalsDao(dataSource);
     }
 
     public static ReaderDao createReaderDao(DataSource dataSource) {
-        return new ReaderDaoJdbc(dataSource);
+        return new JdbcReaderDao(dataSource);
     }
 
     public static SubscriptionDao createSubscriptionDao(DataSource dataSource) {
-        return new SubscriptionDaoJdbc(dataSource);
+        return new JdbcSubscriptionDao(dataSource);
     }
 
     public static PaymentDao createPaymentDao(DataSource dataSource) {
-        return new PaymentDaoJdbc(dataSource);
+        return new JdbcPaymentDao(dataSource);
     }
 }

@@ -31,6 +31,7 @@
         </dependency>
 
         <dependency>
+            <scope>runtime</scope>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.8-dmr</version>
@@ -40,6 +41,13 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <scope>test</scope>
+            <groupId>com.h2database</groupId>
+            <version>1.4.196</version>
+            <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
 </project>
