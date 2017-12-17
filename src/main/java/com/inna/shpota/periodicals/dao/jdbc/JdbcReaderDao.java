@@ -15,7 +15,7 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-public class ReaderDaoJdbc implements ReaderDao {
+public class JdbcReaderDao implements ReaderDao {
     private static final String SQL_INSERT_READER =
             "INSERT INTO reader (last_name, first_name, middle_name, email, password) VALUES (?, ?, ?, ?, ?);";
     private static final String SQL_DELETE_READER =
@@ -30,7 +30,7 @@ public class ReaderDaoJdbc implements ReaderDao {
             "SELECT * FROM reader;";
     private final DataSource dataSource;
 
-    public ReaderDaoJdbc(DataSource dataSource) {
+    public JdbcReaderDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

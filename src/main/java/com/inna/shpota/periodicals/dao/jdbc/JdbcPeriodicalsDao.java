@@ -1,7 +1,7 @@
 package com.inna.shpota.periodicals.dao.jdbc;
 
-import com.inna.shpota.periodicals.dao.PaymentDao;
-import com.inna.shpota.periodicals.domain.Payment;
+import com.inna.shpota.periodicals.dao.PeriodicalsDao;
+import com.inna.shpota.periodicals.domain.Periodicals;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
 
@@ -15,34 +15,34 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-public class PaymentDaoJdbc implements PaymentDao {
-    private static final String SQL_INSERT_PAYMENT =
-            "INSERT INTO payment (subscription_id, price, paid) VALUES (?, ?, ?);";
-    private static final String SQL_DELETE_PAYMENT =
-            "DELETE FROM payment WHERE id = ?;";
-    private static final String SQL_SELECT_PAYMENT =
-            "SELECT subscription_id, price, paid FROM payment WHERE id = ?;";
-    private static final String SQL_UPDATE_PAYMENT =
-            "UPDATE payment SET subscription_id = ?, price = ?, paid = ? WHERE id = ?;";
+public class JdbcPeriodicalsDao implements PeriodicalsDao {
+    private final String SQL_INSERT_PERIODICALS =
+            "INSERT INTO periodicals (name, publisher, month_price) VALUES (?, ?, ?);";
+    private static final String SQL_DELETE_PERIODICALS =
+            "DELETE FROM periodicals WHERE id = ?;";
+    private static final String SQL_SELECT_PERIODICALS =
+            "SELECT name, publisher, month_price FROM periodicals WHERE id = ?;";
+    private static final String SQL_UPDATE_PERIODICALS =
+            "UPDATE periodicals SET name = ?, publisher = ?, month_price = ? WHERE id = ?;";
     private static final String SQL_SELECT_ALL =
-            "SELECT * FROM payment;";
+            "SELECT * FROM periodicals;";
     private final DataSource dataSource;
 
-    public PaymentDaoJdbc(DataSource dataSource) {
+    public JdbcPeriodicalsDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @Override
-    public long create(Payment payment) {
-        validate(payment);
+    public long create(Periodicals periodicals) {
+        validate(periodicals);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement createStatement = connection.prepareStatement(
-                     SQL_INSERT_PAYMENT,
+                     SQL_INSERT_PERIODICALS,
                      RETURN_GENERATED_KEYS
              )) {
-            createStatement.setLong(1, payment.getSubscriptionId());
-            createStatement.setBigDecimal(2, payment.getPrice());
-            createStatement.setInt(3, payment.isPaid() ? 1 : 0);
+            createStatement.setString(1, periodicals.getName());
+            createStatement.setString(2, periodicals.getPublisher());
+            createStatement.setBigDecimal(3, periodicals.getMonthPrice());
             createStatement.executeUpdate();
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class PaymentDaoJdbc implements PaymentDao {
         Assert.isPositive(id, "ID must be positive");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement deleteStatement = connection.prepareStatement(
-                     SQL_DELETE_PAYMENT
+                     SQL_DELETE_PERIODICALS
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
@@ -65,23 +65,24 @@ public class PaymentDaoJdbc implements PaymentDao {
     }
 
     @Override
-    public Payment getById(long id) {
+    public Periodicals getById(long id) {
         Assert.isPositive(id, "ID must be positive");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement selectStatement = connection.prepareStatement(
-                     SQL_SELECT_PAYMENT
+                     SQL_SELECT_PERIODICALS
              )) {
             selectStatement.setLong(1, id);
             try (ResultSet resultSet = selectStatement.executeQuery()) {
-                Payment payment = null;
+                Periodicals periodicals = null;
                 if (resultSet.next()) {
-                    payment = new Payment(
+                    periodicals = new Periodicals(
                             id,
-                            resultSet.getLong("subscription_id"),
-                            resultSet.getBigDecimal("price"),
-                            resultSet.getInt("paid") == 1);
+                            resultSet.getString("name"),
+                            resultSet.getString("publisher"),
+                            resultSet.getBigDecimal("month_price")
+                    );
                 }
-                return payment;
+                return periodicals;
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -89,16 +90,16 @@ public class PaymentDaoJdbc implements PaymentDao {
     }
 
     @Override
-    public void update(Payment payment) {
-        validate(payment);
+    public void update(Periodicals periodicals) {
+        validate(periodicals);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement updateStatement = connection.prepareStatement(
-                     SQL_UPDATE_PAYMENT
+                     SQL_UPDATE_PERIODICALS
              )) {
-            updateStatement.setLong(1, payment.getSubscriptionId());
-            updateStatement.setBigDecimal(2, payment.getPrice());
-            updateStatement.setInt(3, payment.isPaid() ? 1 : 0);
-            updateStatement.setLong(4, payment.getId());
+            updateStatement.setString(1, periodicals.getName());
+            updateStatement.setString(2, periodicals.getPublisher());
+            updateStatement.setBigDecimal(3, periodicals.getMonthPrice());
+            updateStatement.setLong(4, periodicals.getId());
             updateStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -106,19 +107,19 @@ public class PaymentDaoJdbc implements PaymentDao {
     }
 
     @Override
-    public List<Payment> getAll() {
+    public List<Periodicals> getAll() {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement allStatement = connection.prepareStatement(
                      SQL_SELECT_ALL
              )) {
             try (ResultSet resultSet = allStatement.executeQuery()) {
-                List<Payment> list = new ArrayList<>();
+                List<Periodicals> list = new ArrayList<>();
                 while (resultSet.next()) {
-                    list.add(new Payment(
+                    list.add(new Periodicals(
                             resultSet.getLong("id"),
-                            resultSet.getLong("subscription_id"),
-                            resultSet.getBigDecimal("price"),
-                            resultSet.getInt("paid") == 1
+                            resultSet.getString("name"),
+                            resultSet.getString("publisher"),
+                            resultSet.getBigDecimal("month_price")
                     ));
                 }
                 return list;

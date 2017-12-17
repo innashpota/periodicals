@@ -16,7 +16,7 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-public class SubscriptionDaoJdbc implements SubscriptionDao {
+public class JdbcSubscriptionDao implements SubscriptionDao {
     private static final String SQL_INSERT_SUBSCRIPTION =
             "INSERT INTO subscription (reader_id, periodicals_id, month_quantity, date) VALUES (?, ?, ?, ?);";
     private static final String SQL_DELETE_SUBSCRIPTION =
@@ -31,7 +31,7 @@ public class SubscriptionDaoJdbc implements SubscriptionDao {
             "SELECT * FROM subscription;";
     private final DataSource dataSource;
 
-    public SubscriptionDaoJdbc(DataSource dataSource) {
+    public JdbcSubscriptionDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

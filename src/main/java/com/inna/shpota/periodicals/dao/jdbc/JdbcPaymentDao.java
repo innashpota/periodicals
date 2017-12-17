@@ -1,7 +1,7 @@
 package com.inna.shpota.periodicals.dao.jdbc;
 
-import com.inna.shpota.periodicals.dao.AdminDao;
-import com.inna.shpota.periodicals.domain.Admin;
+import com.inna.shpota.periodicals.dao.PaymentDao;
+import com.inna.shpota.periodicals.domain.Payment;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
 
@@ -15,33 +15,34 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-public class AdminDaoJdbc implements AdminDao {
-    private static final String SQL_INSERT_ADMIN =
-            "INSERT INTO subscription_admin (login, password) VALUES (?, ?);";
-    private static final String SQL_DELETE_ADMIN =
-            "DELETE FROM subscription_admin WHERE id = ?;";
-    private static final String SQL_SELECT_ADMIN =
-            "SELECT login, password FROM subscription_admin WHERE id = ?;";
-    private static final String SQL_UPDATE_ADMIN =
-            "UPDATE subscription_admin SET login = ?, password = ? WHERE id = ?;";
+public class JdbcPaymentDao implements PaymentDao {
+    private static final String SQL_INSERT_PAYMENT =
+            "INSERT INTO payment (subscription_id, price, paid) VALUES (?, ?, ?);";
+    private static final String SQL_DELETE_PAYMENT =
+            "DELETE FROM payment WHERE id = ?;";
+    private static final String SQL_SELECT_PAYMENT =
+            "SELECT subscription_id, price, paid FROM payment WHERE id = ?;";
+    private static final String SQL_UPDATE_PAYMENT =
+            "UPDATE payment SET subscription_id = ?, price = ?, paid = ? WHERE id = ?;";
     private static final String SQL_SELECT_ALL =
-            "SELECT * FROM subscription_admin;";
+            "SELECT * FROM payment;";
     private final DataSource dataSource;
 
-    public AdminDaoJdbc(DataSource dataSource) {
+    public JdbcPaymentDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     @Override
-    public long create(Admin admin) {
-        validate(admin);
+    public long create(Payment payment) {
+        validate(payment);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement createStatement = connection.prepareStatement(
-                     SQL_INSERT_ADMIN,
+                     SQL_INSERT_PAYMENT,
                      RETURN_GENERATED_KEYS
              )) {
-            createStatement.setString(1, admin.getLogin());
-            createStatement.setString(2, admin.getPassword());
+            createStatement.setLong(1, payment.getSubscriptionId());
+            createStatement.setBigDecimal(2, payment.getPrice());
+            createStatement.setInt(3, payment.isPaid() ? 1 : 0);
             createStatement.executeUpdate();
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
@@ -54,7 +55,7 @@ public class AdminDaoJdbc implements AdminDao {
         Assert.isPositive(id, "ID must be positive");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement deleteStatement = connection.prepareStatement(
-                     SQL_DELETE_ADMIN
+                     SQL_DELETE_PAYMENT
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
@@ -64,22 +65,23 @@ public class AdminDaoJdbc implements AdminDao {
     }
 
     @Override
-    public Admin getById(long id) {
+    public Payment getById(long id) {
         Assert.isPositive(id, "ID must be positive");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement selectStatement = connection.prepareStatement(
-                     SQL_SELECT_ADMIN
+                     SQL_SELECT_PAYMENT
              )) {
             selectStatement.setLong(1, id);
             try (ResultSet resultSet = selectStatement.executeQuery()) {
-                Admin admin = null;
+                Payment payment = null;
                 if (resultSet.next()) {
-                    admin = new Admin(
+                    payment = new Payment(
                             id,
-                            resultSet.getString("login"),
-                            resultSet.getString("password"));
+                            resultSet.getLong("subscription_id"),
+                            resultSet.getBigDecimal("price"),
+                            resultSet.getInt("paid") == 1);
                 }
-                return admin;
+                return payment;
             }
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -87,15 +89,16 @@ public class AdminDaoJdbc implements AdminDao {
     }
 
     @Override
-    public void update(Admin admin) {
-        validate(admin);
+    public void update(Payment payment) {
+        validate(payment);
         try (Connection connection = dataSource.getConnection();
              PreparedStatement updateStatement = connection.prepareStatement(
-                     SQL_UPDATE_ADMIN
+                     SQL_UPDATE_PAYMENT
              )) {
-            updateStatement.setString(1, admin.getLogin());
-            updateStatement.setString(2, admin.getPassword());
-            updateStatement.setLong(3, admin.getId());
+            updateStatement.setLong(1, payment.getSubscriptionId());
+            updateStatement.setBigDecimal(2, payment.getPrice());
+            updateStatement.setInt(3, payment.isPaid() ? 1 : 0);
+            updateStatement.setLong(4, payment.getId());
             updateStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DaoException(e);
@@ -103,18 +106,19 @@ public class AdminDaoJdbc implements AdminDao {
     }
 
     @Override
-    public List<Admin> getAll() {
+    public List<Payment> getAll() {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement allStatement = connection.prepareStatement(
                      SQL_SELECT_ALL
              )) {
             try (ResultSet resultSet = allStatement.executeQuery()) {
-                List<Admin> list = new ArrayList<>();
+                List<Payment> list = new ArrayList<>();
                 while (resultSet.next()) {
-                    list.add(new Admin(
+                    list.add(new Payment(
                             resultSet.getLong("id"),
-                            resultSet.getString("login"),
-                            resultSet.getString("password")
+                            resultSet.getLong("subscription_id"),
+                            resultSet.getBigDecimal("price"),
+                            resultSet.getInt("paid") == 1
                     ));
                 }
                 return list;
