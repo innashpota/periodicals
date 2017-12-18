@@ -44,6 +44,12 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
             <scope>test</scope>
             <groupId>com.h2database</groupId>
             <version>1.4.196</version>
