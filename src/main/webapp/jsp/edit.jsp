@@ -5,7 +5,7 @@
 </head>
 <body>
 <h2>Edit periodical <c:out value="\"${periodical.getId()}\""/></h2>
-<form action="/edit-periodicals.jsp" method="post">
+<form action="/jsp/edit-periodicals.jsp.jsp" method="post">
     <h4>Name:</h4>
     <input type="text" name="name" value="${periodical.getName()}" required/>
     <h4>Publisher:</h4>

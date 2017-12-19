@@ -5,7 +5,7 @@
 </head>
 <body>
 <h2>Create new periodical</h2>
-<form action="/edit-periodicals.jsp" method="post">
+<form action="/jsp/edit-periodicals.jsp.jsp" method="post">
     <h4>Name:</h4>
     <input type="text" name="name" required/>
     <h4>Publisher:</h4>

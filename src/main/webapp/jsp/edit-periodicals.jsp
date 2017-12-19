@@ -49,7 +49,7 @@
 
 <div>
     <p>
-    <form action="/edit-periodicals.jsp" method="get">
+    <form action="/jsp/edit-periodicals.jsp" method="get">
         <input type="submit" name="create" value="Add periodical"/>
     </form>
 </div>
