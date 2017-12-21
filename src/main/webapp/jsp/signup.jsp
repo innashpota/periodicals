@@ -7,24 +7,44 @@
 <body>
 <h2>Create your account</h2>
 <form action="/periodicals" name="signupForm" method="post">
-    Last name: <br>
-    <input type="text" name="login" required/>
+    <br>
+    Last name:
     </br>
-    First name: <br>
-    <input type="text" name="login" required/>
+    <label>
+        <input type="text" name="lastName" required/>
+    </label>
+    <br>
+    First name:
     </br>
-    Middle name: <br>
-    <input type="text" name="login" required/>
+    <label>
+        <input type="text" name="firstName" required/>
+    </label>
     </br>
-    Email: <br>
-    <input type="text" name="login" required/>
+    Middle name:
     </br>
-    Password: <br>
-    <input type="text" name="password" required/>
+    <label>
+        <input type="text" name="middleName" required/>
+    </label>
+    <br>
+    Email:
+    </br>
+    <label>
+        <input type="text" name="email" required/>
+    </label>
+    <br>
+    Password:
+    </br>
+    <label>
+        <input type="text" name="password" required/>
+    </label>
     <br/>
-    <br/>
+    <br>
     <input type="submit" name="continue" value="Continue"/>
-    <%--<c:if test="" message != null return message "This email used!"--%>
+    </br>
+    <br>
+    <c:if test="${not empty message}">
+        <span style="color: red; "> This email used! </span>
+    </c:if>
 </form>
 </body>
 </html>
