@@ -4,6 +4,7 @@ import com.inna.shpota.periodicals.dao.PeriodicalsDao;
 import com.inna.shpota.periodicals.domain.Periodicals;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.util.List;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class JdbcPeriodicalsDao implements PeriodicalsDao {
+    private final static Logger LOGGER = Logger.getLogger(JdbcPeriodicalsDao.class);
     private final String SQL_INSERT_PERIODICALS =
             "INSERT INTO periodicals (name, publisher, month_price) VALUES (?, ?, ?);";
     private static final String SQL_DELETE_PERIODICALS =
@@ -44,8 +46,10 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
             createStatement.setString(2, periodicals.getPublisher());
             createStatement.setBigDecimal(3, periodicals.getMonthPrice());
             createStatement.executeUpdate();
+            LOGGER.info("Create new periodical: " + periodicals);
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -59,7 +63,9 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
+            LOGGER.info("Delete periodical by ID: " + id);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -82,9 +88,11 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
                             resultSet.getBigDecimal("month_price")
                     );
                 }
+                LOGGER.info("Get by ID periodical: " + periodicals);
                 return periodicals;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -101,7 +109,9 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
             updateStatement.setBigDecimal(3, periodicals.getMonthPrice());
             updateStatement.setLong(4, periodicals.getId());
             updateStatement.executeUpdate();
+            LOGGER.info("Update periodical: " + periodicals);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -122,9 +132,11 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
                             resultSet.getBigDecimal("month_price")
                     ));
                 }
+                LOGGER.info("Get all periodicals: " + list);
                 return list;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
