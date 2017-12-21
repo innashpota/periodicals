@@ -13,10 +13,10 @@
 
 <div>
     <p>
-    <form action="/periodicals/login" method="get">
+    <form action="/login" method="get">
         <input type="submit" name="login" value="Log in"/>
     </form>
-    <form action="/periodicals/signup" method="get">
+    <form action="/signup" method="get">
         <input type="submit" name="signup" value="Sign up"/>
     </form>
     </p>
@@ -57,10 +57,10 @@
 
 <div>
     <p>
-    <form action="/periodicals/profile" method="get">
+    <form action="/profile" method="get">
         <input type="submit" name="profile" value="View profile"/>
     </form>
-    <form action="/periodicals/logout" method="get">
+    <form action="/logout" method="get">
         <input type="submit" name="logout" value="Log out"/>
     </form>
     </p>
