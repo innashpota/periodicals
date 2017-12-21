@@ -22,6 +22,8 @@ public class JdbcAdminDao implements AdminDao {
             "DELETE FROM subscription_admin WHERE id = ?;";
     private static final String SQL_SELECT_ADMIN =
             "SELECT login, password FROM subscription_admin WHERE id = ?;";
+    private static final String SQL_SELECT_ADMIN_BY_LOGIN_AND_PASS =
+            "SELECT * FROM subscription_admin WHERE login = ? AND password = ?;";
     private static final String SQL_UPDATE_ADMIN =
             "UPDATE subscription_admin SET login = ?, password = ? WHERE id = ?;";
     private static final String SQL_SELECT_ALL =
@@ -80,6 +82,28 @@ public class JdbcAdminDao implements AdminDao {
                             resultSet.getString("password"));
                 }
                 return admin;
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public long getByLoginAndPassword(String login, String password) {
+        Assert.notEmpty(login, "Login must not be empty");
+        Assert.notEmpty(password, "Password must not be empty");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement selectStatement = connection.prepareStatement(
+                     SQL_SELECT_ADMIN_BY_LOGIN_AND_PASS
+             )) {
+            selectStatement.setString(1, login);
+            selectStatement.setString(2, password);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                long id = -1;
+                if (resultSet.next()) {
+                    id = resultSet.getLong(1);
+                }
+                return id;
             }
         } catch (SQLException e) {
             throw new DaoException(e);

@@ -9,4 +9,6 @@ public interface AdminDao extends Dao<Admin> {
         Assert.notEmpty(admin.getLogin(), "Login must not be empty");
         Assert.notEmpty(admin.getPassword(), "Password must not be empty");
     }
+
+    long getByLoginAndPassword(String login, String password);
 }
