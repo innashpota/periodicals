@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Sign up</title>
@@ -43,8 +43,11 @@
     </br>
     <br>
     <c:if test="${not empty message}">
-        <span style="color: red; "> This email used! </span>
+        <c:out value="${message}"/>
     </c:if>
+    <%--<c:if test="${not empty message}">
+        <span style="color: red; "> This email used! </span>
+    </c:if>--%>
 </form>
 </body>
 </html>
