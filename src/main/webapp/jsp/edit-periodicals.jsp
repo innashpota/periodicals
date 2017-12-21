@@ -35,10 +35,10 @@
             </td>
             <td>
                 &nbsp;
-                <a href="/periodicals/${periodical.getId()}/delete">Delete</a>
+                <a href="/edit-periodicals/${periodical.getId()}/delete">Delete</a>
                 </a>
                 &nbsp;
-                <a href="/periodicals/${periodical.getId()}/edit">Edit</a>
+                <a href="/edit-periodicals/${periodical.getId()}/edit">Edit</a>
                 </a>
                 &nbsp;
             </td>
@@ -49,9 +49,13 @@
 
 <div>
     <p>
-    <form action="/jsp/edit-periodicals.jsp" method="get">
+    <form action="/create" method="get">
         <input type="submit" name="create" value="Add periodical"/>
     </form>
+    <form action="/logout" method="get">
+        <input type="submit" name="logout" value="Log out"/>
+    </form>
+    </p>
 </div>
 </body>
 
