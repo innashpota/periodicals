@@ -2,3 +2,5 @@
 target/
 
 *.iml
+logging.log
+logging.*
