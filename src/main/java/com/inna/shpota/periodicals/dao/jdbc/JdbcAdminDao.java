@@ -4,6 +4,7 @@ import com.inna.shpota.periodicals.dao.AdminDao;
 import com.inna.shpota.periodicals.domain.Admin;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.util.List;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class JdbcAdminDao implements AdminDao {
+    private final static Logger LOGGER = Logger.getLogger(JdbcAdminDao.class);
     private static final String SQL_INSERT_ADMIN =
             "INSERT INTO subscription_admin (login, password) VALUES (?, ?);";
     private static final String SQL_DELETE_ADMIN =
@@ -45,8 +47,10 @@ public class JdbcAdminDao implements AdminDao {
             createStatement.setString(1, admin.getLogin());
             createStatement.setString(2, admin.getPassword());
             createStatement.executeUpdate();
+            LOGGER.info("Create new admin: " + admin);
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -60,7 +64,9 @@ public class JdbcAdminDao implements AdminDao {
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
+            LOGGER.info("Delete admin by ID: " + id);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -81,9 +87,11 @@ public class JdbcAdminDao implements AdminDao {
                             resultSet.getString("login"),
                             resultSet.getString("password"));
                 }
+                LOGGER.info("Get by ID admin: " + admin);
                 return admin;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -103,9 +111,11 @@ public class JdbcAdminDao implements AdminDao {
                 if (resultSet.next()) {
                     id = resultSet.getLong(1);
                 }
+                LOGGER.info("Get by login and password: " + id);
                 return id;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -121,7 +131,9 @@ public class JdbcAdminDao implements AdminDao {
             updateStatement.setString(2, admin.getPassword());
             updateStatement.setLong(3, admin.getId());
             updateStatement.executeUpdate();
+            LOGGER.info("Update admin: " + admin);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -141,9 +153,11 @@ public class JdbcAdminDao implements AdminDao {
                             resultSet.getString("password")
                     ));
                 }
+                LOGGER.info("Get all admins: " + list);
                 return list;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
