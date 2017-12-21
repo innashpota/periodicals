@@ -11,13 +11,13 @@
     Email:
     </br>
     <label>
-        <input type="text" name="email" maxlength="255" value="${email}"  required/>
+        <input type="text" name="email" maxlength="255" value="${email}" required/>
     </label>
     <br>
     Password:
     </br>
     <label>
-        <input type="text" name="password" maxlength="255" value="${password}"  required/>
+        <input type="text" name="password" maxlength="255" value="${password}" required/>
     </label>
     <br/>
     <br>
