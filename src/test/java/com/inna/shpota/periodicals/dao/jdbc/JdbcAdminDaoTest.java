@@ -2,7 +2,9 @@ package com.inna.shpota.periodicals.dao.jdbc;
 
 import com.inna.shpota.periodicals.domain.Admin;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.List;
 
@@ -11,6 +13,9 @@ import static org.junit.Assert.assertEquals;
 
 public class JdbcAdminDaoTest extends AbstractDaoTest {
     private JdbcAdminDao jdbcAdminDao;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void before() throws Exception {
@@ -50,6 +55,15 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
+    public void shouldGetByLoginAndPassword() throws Exception {
+        String admin2 = "admin2";
+
+        long id = jdbcAdminDao.getByLoginAndPassword(admin2, admin2);
+
+        assertEquals(2, id);
+    }
+
+    @Test
     public void shouldUpdate() throws Exception {
         long id = 1;
         Admin expectedAdmin = new Admin(id, "test", "test");
@@ -71,5 +85,97 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
         List<Admin> actual = jdbcAdminDao.getAll();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNullAdmin() throws Exception {
+        Admin admin = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Admin must not be null");
+
+        jdbcAdminDao.create(admin);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNullLogin() throws Exception {
+        Admin admin = new Admin(null, "password");
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Login must not be empty");
+
+        jdbcAdminDao.create(admin);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNullPassword() throws Exception {
+        Admin admin = new Admin("login", null);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Password must not be empty");
+
+        jdbcAdminDao.create(admin);
+    }
+
+    @Test
+    public void shouldFailToDeleteGivenNegativeId() throws Exception {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcAdminDao.delete(id);
+    }
+
+    @Test
+    public void shouldFailToGetByLoginAndPasswordGivenEmptyLogin() throws Exception {
+        String login = "";
+        String password = "password";
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Login must not be empty");
+
+        jdbcAdminDao.getByLoginAndPassword(login, password);
+    }
+
+    @Test
+    public void shouldFailToGetByLoginAndPasswordGivenNullPassword() throws Exception {
+        String login = "login";
+        String password = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Password must not be empty");
+
+        jdbcAdminDao.getByLoginAndPassword(login, password);
+    }
+
+    @Test
+    public void shouldFailToGetByIdGivenNegativeId() throws Exception {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcAdminDao.getById(id);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNullAdmin() throws Exception {
+        Admin admin = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Admin must not be null");
+
+        jdbcAdminDao.update(admin);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNullLogin() throws Exception {
+        Admin admin = new Admin(null, "password");
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Login must not be empty");
+
+        jdbcAdminDao.update(admin);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNullPassword() throws Exception {
+        Admin admin = new Admin("login", null);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Password must not be empty");
+
+        jdbcAdminDao.update(admin);
     }
 }
