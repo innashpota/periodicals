@@ -4,6 +4,7 @@ import com.inna.shpota.periodicals.dao.ReaderDao;
 import com.inna.shpota.periodicals.domain.Reader;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.util.List;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class JdbcReaderDao implements ReaderDao {
+    private final static Logger LOGGER = Logger.getLogger(JdbcReaderDao.class);
     private static final String SQL_INSERT_READER =
             "INSERT INTO reader (last_name, first_name, middle_name, email, password) VALUES (?, ?, ?, ?, ?);";
     private static final String SQL_DELETE_READER =
@@ -48,8 +50,10 @@ public class JdbcReaderDao implements ReaderDao {
             createStatement.setString(4, reader.getEmail());
             createStatement.setString(5, reader.getPassword());
             createStatement.executeUpdate();
+            LOGGER.info("Create new reader: " + reader);
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -63,7 +67,9 @@ public class JdbcReaderDao implements ReaderDao {
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
+            LOGGER.info("Delete reader by ID: " + id);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -88,9 +94,11 @@ public class JdbcReaderDao implements ReaderDao {
                             .password(resultSet.getString("password"))
                             .build();
                 }
+                LOGGER.info("Get by ID reader: " + reader);
                 return reader;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -109,7 +117,9 @@ public class JdbcReaderDao implements ReaderDao {
             updateStatement.setString(5, reader.getPassword());
             updateStatement.setLong(6, reader.getId());
             updateStatement.executeUpdate();
+            LOGGER.info("Update reader: " + reader);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -133,9 +143,11 @@ public class JdbcReaderDao implements ReaderDao {
                             .build()
                     );
                 }
+                LOGGER.info("Get all readers: " + list);
                 return list;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }

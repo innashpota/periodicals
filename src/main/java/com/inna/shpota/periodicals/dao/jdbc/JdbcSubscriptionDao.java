@@ -4,6 +4,7 @@ import com.inna.shpota.periodicals.dao.SubscriptionDao;
 import com.inna.shpota.periodicals.domain.Subscription;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import java.util.List;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class JdbcSubscriptionDao implements SubscriptionDao {
+    private final static Logger LOGGER = Logger.getLogger(JdbcSubscriptionDao.class);
     private static final String SQL_INSERT_SUBSCRIPTION =
             "INSERT INTO subscription (reader_id, periodicals_id, month_quantity, date) VALUES (?, ?, ?, ?);";
     private static final String SQL_DELETE_SUBSCRIPTION =
@@ -48,8 +50,10 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             createStatement.setInt(3, subscription.getMonthQuantity());
             createStatement.setObject(4, subscription.getDate());
             createStatement.executeUpdate();
+            LOGGER.info("Create new subscription: " + subscription);
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -63,7 +67,9 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
+            LOGGER.info("Delete subscription by ID: " + id);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -87,9 +93,11 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                             .date(resultSet.getObject("date", LocalDateTime.class))
                             .build();
                 }
+                LOGGER.info("Get by ID subscription: " + subscription);
                 return subscription;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -107,7 +115,9 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             updateStatement.setObject(4, subscription.getDate());
             updateStatement.setLong(5, subscription.getId());
             updateStatement.executeUpdate();
+            LOGGER.info("Update subscription: " + subscription);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -130,9 +140,11 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
                             .build()
                     );
                 }
+                LOGGER.info("Get all subscriptions: " + list);
                 return list;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
