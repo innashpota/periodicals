@@ -25,7 +25,7 @@
     </br>
     <br>
     <c:if test="${not empty message}">
-        <span style="color: red; "> Either user name or password is wrong. </span>
+        <span style="color: red; "> Either admin name or password is wrong. </span>
     </c:if>
 </form>
 </body>
