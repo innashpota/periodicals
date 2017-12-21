@@ -4,6 +4,7 @@ import com.inna.shpota.periodicals.dao.PaymentDao;
 import com.inna.shpota.periodicals.domain.Payment;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
+import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.util.List;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class JdbcPaymentDao implements PaymentDao {
+    private final static Logger LOGGER = Logger.getLogger(JdbcPaymentDao.class);
     private static final String SQL_INSERT_PAYMENT =
             "INSERT INTO payment (subscription_id, price, paid) VALUES (?, ?, ?);";
     private static final String SQL_DELETE_PAYMENT =
@@ -44,8 +46,10 @@ public class JdbcPaymentDao implements PaymentDao {
             createStatement.setBigDecimal(2, payment.getPrice());
             createStatement.setInt(3, payment.isPaid() ? 1 : 0);
             createStatement.executeUpdate();
+            LOGGER.info("Create new payment: " + payment);
             return getGeneratedId(createStatement);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -59,7 +63,9 @@ public class JdbcPaymentDao implements PaymentDao {
              )) {
             deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
+            LOGGER.info("Delete payment by ID: " + id);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -81,9 +87,11 @@ public class JdbcPaymentDao implements PaymentDao {
                             resultSet.getBigDecimal("price"),
                             resultSet.getInt("paid") == 1);
                 }
+                LOGGER.info("Get by ID payment: " + payment);
                 return payment;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -100,7 +108,9 @@ public class JdbcPaymentDao implements PaymentDao {
             updateStatement.setInt(3, payment.isPaid() ? 1 : 0);
             updateStatement.setLong(4, payment.getId());
             updateStatement.executeUpdate();
+            LOGGER.info("Update payment: " + payment);
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
@@ -121,9 +131,11 @@ public class JdbcPaymentDao implements PaymentDao {
                             resultSet.getInt("paid") == 1
                     ));
                 }
+                LOGGER.info("Get all payments: " + list);
                 return list;
             }
         } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
     }
