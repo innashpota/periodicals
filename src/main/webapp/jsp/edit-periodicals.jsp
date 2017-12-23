@@ -50,7 +50,7 @@
     <form action="/create" method="get">
         <input type="submit" name="create" value="Add periodical"/>
     </form>
-    <form action="/logout" method="get">
+    <form action="/admin/logout" method="post">
         <input type="submit" name="logout" value="Log out"/>
     </form>
     </p>
