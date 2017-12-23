@@ -10,9 +10,10 @@
 </head>
 
 <body>
+<h4>Welcome ${admin.getLogin()}!</h4>
+
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <th>#</th>
         <th>Name</th>
         <th>Publisher</th>
         <th>Month price</th>
@@ -21,9 +22,6 @@
     <tbody>
     <c:forEach items="${periodicals}" var="periodical">
         <tr>
-            <td>
-                <c:out value="${periodical.getId()}"/><%--EDITED--%>
-            </td>
             <td>
                 <c:out value="${periodical.getName()}"/>
             </td>
