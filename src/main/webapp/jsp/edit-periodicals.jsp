@@ -47,7 +47,7 @@
 
 <div>
     <p>
-    <form action="/create" method="get">
+    <form action="/edit-periodicals" method="get">
         <input type="submit" name="create" value="Add periodical"/>
     </form>
     <form action="/admin/logout" method="post">
