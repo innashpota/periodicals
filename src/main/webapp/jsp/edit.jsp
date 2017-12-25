@@ -11,7 +11,7 @@
 <h2>
     Edit periodical <c:out value="\"${periodical.getName()}\""/>
 </h2>
-<form action="/edit-periodicals" method="post">
+<form action="/edit-periodicals/${periodical.getId()}/edit" method="post">
     <h4>Name:</h4>
     <input type="text" name="name"
            maxlength="255"
