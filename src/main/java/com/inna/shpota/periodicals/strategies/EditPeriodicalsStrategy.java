@@ -18,15 +18,8 @@ public class EditPeriodicalsStrategy extends Strategy {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Reader reader = (Reader) request.getSession().getAttribute("reader");
-        if (reader != null) {
-            request.getSession().setAttribute("message", "Access denied!");
-            request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
-        }
-        Admin attributeAdmin = (Admin) request.getSession().getAttribute("admin");
-        if (attributeAdmin != null) {
-            request.getRequestDispatcher("/jsp/edit-periodicals.jsp").forward(request, response);
-        }
+        validateReader(request, response);
+        validateAdmin(request);
         String login = (String) request.getSession().getAttribute("login");
         String password = (String) request.getSession().getAttribute("password");
         long id = adminDao.getByLoginAndPassword(login, password);
@@ -37,6 +30,22 @@ public class EditPeriodicalsStrategy extends Strategy {
         } else {
             request.getSession().setAttribute("message", "Either admin login or password is wrong.");
             response.sendRedirect("/admin/login");
+        }
+    }
+
+    private void validateReader(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Reader reader = (Reader) request.getSession().getAttribute("reader");
+        if (reader != null) {
+            request.getSession().setAttribute("message", "Access denied!");
+            request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+        }
+    }
+
+    private void validateAdmin(HttpServletRequest request) {
+        Admin attributeAdmin = (Admin) request.getSession().getAttribute("admin");
+        if (attributeAdmin != null) {
+            request.getSession().setAttribute("login", attributeAdmin.getLogin());
+            request.getSession().setAttribute("password", attributeAdmin.getPassword());
         }
     }
 }

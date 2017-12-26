@@ -34,10 +34,8 @@
             <td>
                 &nbsp;
                 <a href="/edit-periodicals/${periodical.id}/delete">Delete</a>
-                </a>
                 &nbsp;
                 <a href="/edit-periodicals/${periodical.id}/edit">Edit</a>
-                </a>
                 &nbsp;
             </td>
         </tr>
