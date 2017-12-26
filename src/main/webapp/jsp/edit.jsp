@@ -1,27 +1,30 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
 
 <html>
+
 <head>
     <title>Edit</title>
 </head>
+
 <body>
 <h2>
-    Edit periodical <c:out value="\"${periodical.getName()}\""/>
+    Edit periodical <c:out value="\"${periodical.name}\""/>
 </h2>
-<form action="/edit-periodicals/${periodical.getId()}/edit" method="post">
+
+<form action="/edit-periodicals/${periodical.id}/edit" method="post">
     <h4>Name:</h4>
     <input type="text" name="name"
            maxlength="255"
-           value="${periodical.getName()}"
+           value="${periodical.name}"
            required
     />
     <h4>Publisher:</h4>
     <input type="text" name="publisher"
            maxlength="255"
-           value="${periodical.getPublisher()}"
+           value="${periodical.publisher}"
            required
     />
     <h4>Month price:</h4>
@@ -30,7 +33,7 @@
            max="999.99"
            min="0.01"
            step="0.01"
-           value="${periodical.getMonthPrice()}"
+           value="${periodical.monthPrice}"
            required
     />
     <br/>

@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<h4>Welcome ${admin.getLogin()}!</h4>
+<h4>Welcome ${admin.login}!</h4>
 
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
@@ -23,20 +23,20 @@
     <c:forEach items="${periodicals}" var="periodical">
         <tr>
             <td>
-                <c:out value="${periodical.getName()}"/>
+                <c:out value="${periodical.name}"/>
             </td>
             <td>
-                <c:out value="${periodical.getPublisher()}"/>
+                <c:out value="${periodical.publisher}"/>
             </td>
             <td>
-                <c:out value="${periodical.getMonthPrice()}"/>
+                <c:out value="${periodical.monthPrice}"/>
             </td>
             <td>
                 &nbsp;
-                <a href="/edit-periodicals/${periodical.getId()}/delete">Delete</a>
+                <a href="/edit-periodicals/${periodical.id}/delete">Delete</a>
                 </a>
                 &nbsp;
-                <a href="/edit-periodicals/${periodical.getId()}/edit">Edit</a>
+                <a href="/edit-periodicals/${periodical.id}/edit">Edit</a>
                 </a>
                 &nbsp;
             </td>
@@ -48,13 +48,16 @@
 <div>
     <p>
     <form action="/edit-periodicals" method="get">
-        <input type="submit" name="create" value="Add periodical"/>
+        <input type="submit" name="create"
+               value="Add periodical"
+        />
     </form>
     <form action="/admin/logout" method="post">
-        <input type="submit" name="logout" value="Log out"/>
+        <input type="submit" name="logout"
+               value="Log out"
+        />
     </form>
     </p>
 </div>
 </body>
-
 </html>
