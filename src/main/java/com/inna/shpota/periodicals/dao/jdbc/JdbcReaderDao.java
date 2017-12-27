@@ -24,6 +24,8 @@ public class JdbcReaderDao implements ReaderDao {
             "DELETE FROM reader WHERE id = ?;";
     private static final String SQL_SELECT_READER =
             "SELECT last_name, first_name, middle_name, email, password FROM reader WHERE id = ?;";
+    private static final String SQL_SELECT_READER_BY_LOGIN_AND_PASS =
+            "SELECT * FROM reader WHERE email = ? AND password = ?;";
     private static final String SQL_UPDATE_READER =
             "UPDATE reader " +
                     "SET last_name = ?, first_name = ?, middle_name = ?, email = ?, password = ? " +
@@ -104,6 +106,30 @@ public class JdbcReaderDao implements ReaderDao {
     }
 
     @Override
+    public Reader getByEmailAndPassword(String email, String password) {
+        Assert.notEmpty(email, "Email must not be empty");
+        Assert.notEmpty(password, "Password must not be empty");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement selectStatement = connection.prepareStatement(
+                     SQL_SELECT_READER_BY_LOGIN_AND_PASS
+             )) {
+            selectStatement.setString(1, email);
+            selectStatement.setString(2, password);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                Reader reader = null;
+                if (resultSet.next()) {
+                    reader = buildReader(resultSet);
+                }
+                LOGGER.info("Get by email and password: " + reader);
+                return reader;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public void update(Reader reader) {
         validate(reader);
         try (Connection connection = dataSource.getConnection();
@@ -133,15 +159,7 @@ public class JdbcReaderDao implements ReaderDao {
             try (ResultSet resultSet = allStatement.executeQuery()) {
                 List<Reader> list = new ArrayList<>();
                 while (resultSet.next()) {
-                    list.add(Reader.builder()
-                            .id(resultSet.getLong("id"))
-                            .lastName(resultSet.getString("last_name"))
-                            .firstName(resultSet.getString("first_name"))
-                            .middleName(resultSet.getString("middle_name"))
-                            .email(resultSet.getString("email"))
-                            .password(resultSet.getString("password"))
-                            .build()
-                    );
+                    list.add(buildReader(resultSet));
                 }
                 LOGGER.info("Get all readers: " + list);
                 return list;
@@ -150,5 +168,16 @@ public class JdbcReaderDao implements ReaderDao {
             LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
+    }
+
+    private Reader buildReader(ResultSet resultSet) throws SQLException {
+        return Reader.builder()
+                .id(resultSet.getLong("id"))
+                .lastName(resultSet.getString("last_name"))
+                .firstName(resultSet.getString("first_name"))
+                .middleName(resultSet.getString("middle_name"))
+                .email(resultSet.getString("email"))
+                .password(resultSet.getString("password"))
+                .build();
     }
 }

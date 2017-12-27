@@ -12,4 +12,6 @@ public interface ReaderDao extends Dao<Reader> {
         Assert.notEmpty(reader.getEmail(), "Email must not be empty");
         Assert.notEmpty(reader.getPassword(), "Password must not be empty");
     }
+
+    Reader getByEmailAndPassword(String email, String password);
 }
