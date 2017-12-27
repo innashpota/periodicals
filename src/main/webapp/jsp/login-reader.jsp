@@ -1,23 +1,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page isELIgnored="false" %>
+
 <html>
 <head>
     <title>Log in</title>
 </head>
 <body>
 <h2>Log in</h2>
-<form action="/periodicals" name="loginForm" method="post">
+<form action="/login" name="loginForm" method="post">
     <br>
     Email:
     </br>
     <label>
-        <input type="text" name="email" maxlength="255" value="${email}" required/>
+        <input type="text" name="email"
+               maxlength="255"
+               value="${sessionScope.email}"
+               required
+        />
     </label>
     <br>
     Password:
     </br>
     <label>
-        <input type="text" name="password" maxlength="255" value="${password}" required/>
+        <input type="text" name="password"
+               maxlength="255"
+               value="${sessionScope.password}"
+               required
+        />
     </label>
     <br/>
     <br>
@@ -25,12 +36,11 @@
     Need an account? <a href="/signup"> Sign up</a>
     </br>
     <br>
-    <c:if test="${not empty message}">
-        <c:out value="${message}"/>
+    <c:if test="${not empty sessionScope.message}">
+        <span style="color: red; ">
+            <c:out value="${sessionScope.message}"/>
+        </span>
     </c:if>
-    <%--<c:if test="${not empty message}">
-        <span style="color: red; "> Either user name or password is wrong. </span>
-    </c:if>--%>
 </form>
 </body>
 </html>
