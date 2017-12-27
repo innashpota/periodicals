@@ -89,6 +89,23 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
+    public void shouldGetByEmail() throws Exception {
+        String email = "viazovska@ok.com";
+        Reader expectedReader = Reader.builder()
+                .id(2)
+                .lastName("Viazovska")
+                .firstName("Maryna")
+                .middleName("Sergiivna")
+                .email(email)
+                .password("2")
+                .build();
+
+        Reader actualReader = jdbcReaderDao.getByEmail(email);
+
+        assertEquals(expectedReader, actualReader);
+    }
+
+    @Test
     public void shouldUpdate() throws Exception {
         long id = 3;
         Reader expectedReader = Reader.builder()
@@ -212,6 +229,15 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
+    public void shouldFailToGetByIdGivenNegativeId() throws Exception {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcReaderDao.getById(id);
+    }
+
+    @Test
     public void shouldFailToGetByEmailAndPasswordGivenEmptyLogin() throws Exception {
         String email = "";
         String password = "password";
@@ -232,12 +258,12 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByIdGivenNegativeId() throws Exception {
-        long id = -2;
+    public void shouldFailToGetByLoginGivenNullEmail() throws Exception {
+        String email = null;
         expectedException.expect(IllegalArgumentException.class);
-        expectedException.expectMessage("ID must be positive");
+        expectedException.expectMessage("Email must not be empty");
 
-        jdbcReaderDao.getById(id);
+        jdbcReaderDao.getByEmail(email);
     }
 
     @Test

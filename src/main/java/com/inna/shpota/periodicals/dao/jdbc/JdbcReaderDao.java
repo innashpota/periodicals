@@ -24,8 +24,10 @@ public class JdbcReaderDao implements ReaderDao {
             "DELETE FROM reader WHERE id = ?;";
     private static final String SQL_SELECT_READER =
             "SELECT last_name, first_name, middle_name, email, password FROM reader WHERE id = ?;";
-    private static final String SQL_SELECT_READER_BY_LOGIN_AND_PASS =
+    private static final String SQL_SELECT_READER_BY_EMAIL_AND_PASS =
             "SELECT * FROM reader WHERE email = ? AND password = ?;";
+    private static final String SQL_SELECT_READER_BY_EMAIL =
+            "SELECT * FROM reader WHERE email = ?;";
     private static final String SQL_UPDATE_READER =
             "UPDATE reader " +
                     "SET last_name = ?, first_name = ?, middle_name = ?, email = ?, password = ? " +
@@ -111,7 +113,7 @@ public class JdbcReaderDao implements ReaderDao {
         Assert.notEmpty(password, "Password must not be empty");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement selectStatement = connection.prepareStatement(
-                     SQL_SELECT_READER_BY_LOGIN_AND_PASS
+                     SQL_SELECT_READER_BY_EMAIL_AND_PASS
              )) {
             selectStatement.setString(1, email);
             selectStatement.setString(2, password);
@@ -121,6 +123,28 @@ public class JdbcReaderDao implements ReaderDao {
                     reader = buildReader(resultSet);
                 }
                 LOGGER.info("Get by email and password: " + reader);
+                return reader;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public Reader getByEmail(String email) {
+        Assert.notEmpty(email, "Email must not be empty");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement selectStatement = connection.prepareStatement(
+                     SQL_SELECT_READER_BY_EMAIL
+             )) {
+            selectStatement.setString(1, email);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                Reader reader = null;
+                if (resultSet.next()) {
+                    reader = buildReader(resultSet);
+                }
+                LOGGER.info("Get by email: " + reader);
                 return reader;
             }
         } catch (SQLException e) {

@@ -14,4 +14,6 @@ public interface ReaderDao extends Dao<Reader> {
     }
 
     Reader getByEmailAndPassword(String email, String password);
+
+    Reader getByEmail(String email);
 }
