@@ -9,7 +9,7 @@
 </head>
 <body>
 <h2>Subscribe</h2>
-<%--<h4>Reader email : ${email}</h4>--%>
+
 <form action="/periodicals/subscribe/${periodical.id}" method="post">
     <h4>Periodical name:</h4>
     <c:out value="${periodical.name}"/>

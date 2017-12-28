@@ -32,7 +32,6 @@ public class ContinueSubscribeStrategy extends Strategy {
         Periodicals periodicals = (Periodicals) request.getSession().getAttribute("periodical");
         BigDecimal monthPrice = periodicals.getMonthPrice();
         long paymentId = subscriptionDao.createPaymentBySubscription(subscription, monthPrice);
-        request.getSession().setAttribute("paymentId", paymentId);
         response.sendRedirect("/periodicals/payment/" + paymentId);
     }
 
