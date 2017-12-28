@@ -7,6 +7,7 @@ import com.inna.shpota.periodicals.util.Assert;
 import org.apache.log4j.Logger;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,8 +30,9 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             "UPDATE subscription " +
                     "SET reader_id = ?, periodicals_id = ?, month_quantity = ?, date = ? " +
                     "WHERE id = ?;";
-    private static final String SQL_SELECT_ALL =
-            "SELECT * FROM subscription;";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM subscription;";
+    private static final String SQL_INSERT_PAYMENT =
+            "INSERT INTO payment (subscription_id, price, paid) VALUES (?, ?, ?);";
     private final DataSource dataSource;
 
     public JdbcSubscriptionDao(DataSource dataSource) {
@@ -52,6 +54,48 @@ public class JdbcSubscriptionDao implements SubscriptionDao {
             createStatement.executeUpdate();
             LOGGER.info("Create new subscription: " + subscription);
             return getGeneratedId(createStatement);
+        } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public long createPaymentBySubscription(Subscription subscription, BigDecimal monthPrice) {
+        validate(subscription);
+        try (Connection connection = dataSource.getConnection()) {
+            connection.setAutoCommit(false);
+            try (PreparedStatement createSubscription = connection.prepareStatement(
+                    SQL_INSERT_SUBSCRIPTION,
+                    RETURN_GENERATED_KEYS);
+                 PreparedStatement createPayment = connection.prepareStatement(
+                         SQL_INSERT_PAYMENT,
+                         RETURN_GENERATED_KEYS
+
+                 )) {
+                createSubscription.setLong(1, subscription.getReaderId());
+                createSubscription.setLong(2, subscription.getPeriodicalsId());
+                int monthQuantity = subscription.getMonthQuantity();
+                createSubscription.setInt(3, monthQuantity);
+                createSubscription.setObject(4, subscription.getDate());
+                createSubscription.executeUpdate();
+
+                long generatedIdSubscription = getGeneratedId(createSubscription);
+                createPayment.setLong(1, generatedIdSubscription);
+                BigDecimal price = monthPrice.multiply(new BigDecimal(monthQuantity));
+                createPayment.setBigDecimal(2, price);
+                createPayment.setInt(3, 0);
+                createPayment.executeUpdate();
+
+                connection.commit();
+                return getGeneratedId(createPayment);
+            } catch (SQLException e) {
+                connection.rollback();
+                LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+                throw new DaoException(e);
+            } finally {
+                connection.setAutoCommit(true);
+            }
         } catch (SQLException e) {
             LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
