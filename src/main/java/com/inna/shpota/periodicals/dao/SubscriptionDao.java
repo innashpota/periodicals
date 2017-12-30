@@ -1,6 +1,5 @@
 package com.inna.shpota.periodicals.dao;
 
-import com.inna.shpota.periodicals.domain.Payment;
 import com.inna.shpota.periodicals.domain.Subscription;
 import com.inna.shpota.periodicals.util.Assert;
 
