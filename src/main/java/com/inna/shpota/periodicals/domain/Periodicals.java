@@ -1,6 +1,7 @@
 package com.inna.shpota.periodicals.domain;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Periodicals Model Object
@@ -86,22 +87,16 @@ public class Periodicals {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Periodicals that = (Periodicals) o;
-
-        if (id != that.id) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (publisher != null ? !publisher.equals(that.publisher) : that.publisher != null) return false;
-        return monthPrice != null ? monthPrice.equals(that.monthPrice) : that.monthPrice == null;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(publisher, that.publisher) &&
+                Objects.equals(monthPrice, that.monthPrice);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
-        result = 31 * result + (monthPrice != null ? monthPrice.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, publisher, monthPrice);
     }
 
     @Override
