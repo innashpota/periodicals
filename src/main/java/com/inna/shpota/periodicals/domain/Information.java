@@ -6,9 +6,9 @@ import java.util.Objects;
 
 /**
  * Information Model Object
- * <p>
+ *
  * <P>Various attributes of information, and related behaviour.
- * <p>
+ *
  * See {@link #builder()}
  *
  * @author Inna Shpota
