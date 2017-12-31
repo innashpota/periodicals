@@ -22,9 +22,8 @@ public class EditPeriodicalsStrategy extends Strategy {
         validateAdmin(request);
         String login = (String) request.getSession().getAttribute("login");
         String password = (String) request.getSession().getAttribute("password");
-        long id = adminDao.getByLoginAndPassword(login, password);
-        if (id > 0) {
-            Admin admin = adminDao.getById(id);
+        Admin admin = adminDao.getByLoginAndPassword(login, password);
+        if (admin != null) {
             request.getSession().setAttribute("admin", admin);
             request.getRequestDispatcher("/jsp/edit-periodicals.jsp").forward(request, response);
         } else {
