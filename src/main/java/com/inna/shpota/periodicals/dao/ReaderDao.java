@@ -1,7 +1,10 @@
 package com.inna.shpota.periodicals.dao;
 
+import com.inna.shpota.periodicals.domain.Information;
 import com.inna.shpota.periodicals.domain.Reader;
 import com.inna.shpota.periodicals.util.Assert;
+
+import java.util.List;
 
 public interface ReaderDao extends Dao<Reader> {
     default void validate(Reader reader) {
@@ -16,4 +19,6 @@ public interface ReaderDao extends Dao<Reader> {
     Reader getByEmailAndPassword(String email, String password);
 
     Reader getByEmail(String email);
+
+    List<Information> getInformationByReader(long id);
 }

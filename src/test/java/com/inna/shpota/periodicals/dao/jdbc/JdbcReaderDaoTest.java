@@ -1,14 +1,19 @@
 package com.inna.shpota.periodicals.dao.jdbc;
 
+import com.inna.shpota.periodicals.domain.Information;
 import com.inna.shpota.periodicals.domain.Reader;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.time.Month.DECEMBER;
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertEquals;
 
 public class JdbcReaderDaoTest extends AbstractDaoTest {
@@ -166,6 +171,25 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
+    public void shouldGetInformationByReader() throws Exception {
+        long id = 2;
+        List<Information> expected = singletonList(
+                Information.builder()
+                        .periodicalsName("VOGUE UA")
+                        .periodicalsPublisher("TRK MEDIA FINANCE LIMITED")
+                        .periodicalsMonthPrice(new BigDecimal("99.00"))
+                        .subscriptionDate(LocalDateTime.of(2017, DECEMBER, 16, 13, 35))
+                        .monthQuantity(6)
+                        .paymentPaid(true)
+                        .build()
+        );
+
+        List<Information> actual = jdbcReaderDao.getInformationByReader(id);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void shouldFailToCreateGivenNullReader() throws Exception {
         Reader reader = null;
         expectedException.expect(IllegalArgumentException.class);
@@ -318,6 +342,15 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
         expectedException.expectMessage("Password must not be empty");
 
         jdbcReaderDao.update(reader);
+    }
+
+    @Test
+    public void shouldFailToGetInformationByReaderGivenNegativeId() throws Exception {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcReaderDao.getInformationByReader(id);
     }
 
     private Reader getReaderNullLastName() {
