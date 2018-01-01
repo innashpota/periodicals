@@ -1,5 +1,7 @@
 package com.inna.shpota.periodicals.domain;
 
+import java.util.Objects;
+
 /**
  * Admin Model Object
  *
@@ -70,20 +72,15 @@ public class Admin {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Admin admin = (Admin) o;
-
-        if (id != admin.id) return false;
-        if (login != null ? !login.equals(admin.login) : admin.login != null) return false;
-        return password != null ? password.equals(admin.password) : admin.password == null;
+        return id == admin.id &&
+                Objects.equals(login, admin.login) &&
+                Objects.equals(password, admin.password);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (login != null ? login.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
+        return Objects.hash(id, login, password);
     }
 
     @Override

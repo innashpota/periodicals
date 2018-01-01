@@ -1,5 +1,7 @@
 package com.inna.shpota.periodicals.domain;
 
+import java.util.Objects;
+
 /**
  * Reader Model Object
  *
@@ -100,26 +102,18 @@ public class Reader {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Reader reader = (Reader) o;
-
-        if (id != reader.id) return false;
-        if (lastName != null ? !lastName.equals(reader.lastName) : reader.lastName != null) return false;
-        if (firstName != null ? !firstName.equals(reader.firstName) : reader.firstName != null) return false;
-        if (middleName != null ? !middleName.equals(reader.middleName) : reader.middleName != null) return false;
-        if (email != null ? !email.equals(reader.email) : reader.email != null) return false;
-        return password != null ? password.equals(reader.password) : reader.password == null;
+        return id == reader.id &&
+                Objects.equals(lastName, reader.lastName) &&
+                Objects.equals(firstName, reader.firstName) &&
+                Objects.equals(middleName, reader.middleName) &&
+                Objects.equals(email, reader.email) &&
+                Objects.equals(password, reader.password);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
-        return result;
+        return Objects.hash(id, lastName, firstName, middleName, email, password);
     }
 
     @Override

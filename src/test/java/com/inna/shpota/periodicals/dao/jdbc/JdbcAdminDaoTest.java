@@ -49,7 +49,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
         long id = 1;
         Admin expectedAdmin = new Admin(id, "admin1", "admin1");
 
-        Admin actualAdmin = jdbcAdminDao.getById(1);
+        Admin actualAdmin = jdbcAdminDao.getById(id);
 
         assertEquals(expectedAdmin, actualAdmin);
     }
@@ -57,10 +57,11 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     @Test
     public void shouldGetByLoginAndPassword() throws Exception {
         String admin2 = "admin2";
+        Admin expectedAdmin = new Admin(2, admin2, admin2);
 
-        long id = jdbcAdminDao.getByLoginAndPassword(admin2, admin2);
+        Admin actualAdmin = jdbcAdminDao.getByLoginAndPassword(admin2, admin2);
 
-        assertEquals(2, id);
+        assertEquals(expectedAdmin, actualAdmin);
     }
 
     @Test

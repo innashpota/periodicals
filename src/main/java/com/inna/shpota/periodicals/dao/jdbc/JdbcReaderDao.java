@@ -1,6 +1,7 @@
 package com.inna.shpota.periodicals.dao.jdbc;
 
 import com.inna.shpota.periodicals.dao.ReaderDao;
+import com.inna.shpota.periodicals.domain.Information;
 import com.inna.shpota.periodicals.domain.Reader;
 import com.inna.shpota.periodicals.exception.DaoException;
 import com.inna.shpota.periodicals.util.Assert;
@@ -11,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +26,28 @@ public class JdbcReaderDao implements ReaderDao {
             "DELETE FROM reader WHERE id = ?;";
     private static final String SQL_SELECT_READER =
             "SELECT last_name, first_name, middle_name, email, password FROM reader WHERE id = ?;";
+    private static final String SQL_SELECT_READER_BY_EMAIL_AND_PASS =
+            "SELECT * FROM reader WHERE email = ? AND password = ?;";
+    private static final String SQL_SELECT_READER_BY_EMAIL =
+            "SELECT * FROM reader WHERE email = ?;";
     private static final String SQL_UPDATE_READER =
             "UPDATE reader " +
                     "SET last_name = ?, first_name = ?, middle_name = ?, email = ?, password = ? " +
                     "WHERE id = ?;";
-    private static final String SQL_SELECT_ALL =
-            "SELECT * FROM reader;";
+    private static final String SQL_SELECT_ALL = "SELECT * FROM reader;";
+    private static final String SQL_SELECT_INFO =
+            "SELECT" +
+                    "  periodicals.name name," +
+                    "  periodicals.publisher publisher," +
+                    "  periodicals.month_price month_price," +
+                    "  subscription.date date," +
+                    "  subscription.month_quantity month_quantity," +
+                    "  payment.paid paid " +
+                    "FROM periodicals, subscription, payment " +
+                    "WHERE" +
+                    "  subscription.reader_id = ? AND" +
+                    "  subscription.periodicals_id = periodicals.id AND" +
+                    "  subscription.id = payment.id;";
     private final DataSource dataSource;
 
     public JdbcReaderDao(DataSource dataSource) {
@@ -104,6 +122,52 @@ public class JdbcReaderDao implements ReaderDao {
     }
 
     @Override
+    public Reader getByEmailAndPassword(String email, String password) {
+        Assert.notEmpty(email, "Email must not be empty");
+        Assert.notEmpty(password, "Password must not be empty");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement selectStatement = connection.prepareStatement(
+                     SQL_SELECT_READER_BY_EMAIL_AND_PASS
+             )) {
+            selectStatement.setString(1, email);
+            selectStatement.setString(2, password);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                Reader reader = null;
+                if (resultSet.next()) {
+                    reader = buildReader(resultSet);
+                }
+                LOGGER.info("Get by email and password: " + reader);
+                return reader;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
+    public Reader getByEmail(String email) {
+        Assert.notEmpty(email, "Email must not be empty");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement selectStatement = connection.prepareStatement(
+                     SQL_SELECT_READER_BY_EMAIL
+             )) {
+            selectStatement.setString(1, email);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                Reader reader = null;
+                if (resultSet.next()) {
+                    reader = buildReader(resultSet);
+                }
+                LOGGER.info("Get by email: " + reader);
+                return reader;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+            throw new DaoException(e);
+        }
+    }
+
+    @Override
     public void update(Reader reader) {
         validate(reader);
         try (Connection connection = dataSource.getConnection();
@@ -133,15 +197,7 @@ public class JdbcReaderDao implements ReaderDao {
             try (ResultSet resultSet = allStatement.executeQuery()) {
                 List<Reader> list = new ArrayList<>();
                 while (resultSet.next()) {
-                    list.add(Reader.builder()
-                            .id(resultSet.getLong("id"))
-                            .lastName(resultSet.getString("last_name"))
-                            .firstName(resultSet.getString("first_name"))
-                            .middleName(resultSet.getString("middle_name"))
-                            .email(resultSet.getString("email"))
-                            .password(resultSet.getString("password"))
-                            .build()
-                    );
+                    list.add(buildReader(resultSet));
                 }
                 LOGGER.info("Get all readers: " + list);
                 return list;
@@ -150,5 +206,45 @@ public class JdbcReaderDao implements ReaderDao {
             LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
             throw new DaoException(e);
         }
+    }
+
+    @Override
+    public List<Information> getInformationByReader(long id) {
+        Assert.isPositive(id, "ID must be positive");
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement selectStatement = connection.prepareStatement(
+                     SQL_SELECT_INFO
+             )) {
+            selectStatement.setLong(1, id);
+            try (ResultSet resultSet = selectStatement.executeQuery()) {
+                List<Information> information = new ArrayList<>();
+                while (resultSet.next()) {
+                    information.add(Information.builder()
+                            .periodicalsName(resultSet.getString("name"))
+                            .periodicalsPublisher(resultSet.getString("publisher"))
+                            .periodicalsMonthPrice(resultSet.getBigDecimal("month_price"))
+                            .subscriptionDate(resultSet.getObject("date", LocalDateTime.class))
+                            .monthQuantity(resultSet.getInt("month_quantity"))
+                            .paymentPaid(resultSet.getInt("paid") == 1)
+                            .build());
+                }
+                LOGGER.info("Get by ID reader: " + information);
+                return information;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);
+            throw new DaoException(e);
+        }
+    }
+
+    private Reader buildReader(ResultSet resultSet) throws SQLException {
+        return Reader.builder()
+                .id(resultSet.getLong("id"))
+                .lastName(resultSet.getString("last_name"))
+                .firstName(resultSet.getString("first_name"))
+                .middleName(resultSet.getString("middle_name"))
+                .email(resultSet.getString("email"))
+                .password(resultSet.getString("password"))
+                .build();
     }
 }

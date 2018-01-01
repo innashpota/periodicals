@@ -1,6 +1,7 @@
 package com.inna.shpota.periodicals.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Subscription Model Object
@@ -90,24 +91,17 @@ public class Subscription {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Subscription that = (Subscription) o;
-
-        if (id != that.id) return false;
-        if (readerId != that.readerId) return false;
-        if (periodicalsId != that.periodicalsId) return false;
-        if (monthQuantity != that.monthQuantity) return false;
-        return date != null ? date.equals(that.date) : that.date == null;
+        return id == that.id &&
+                readerId == that.readerId &&
+                periodicalsId == that.periodicalsId &&
+                monthQuantity == that.monthQuantity &&
+                Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (readerId ^ (readerId >>> 32));
-        result = 31 * result + (int) (periodicalsId ^ (periodicalsId >>> 32));
-        result = 31 * result + monthQuantity;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
+        return Objects.hash(id, readerId, periodicalsId, monthQuantity, date);
     }
 
     @Override
@@ -121,6 +115,9 @@ public class Subscription {
                 '}';
     }
 
+    /**
+     * Builder for a {@link Subscription}
+     */
     public static class Builder {
         private long id;
         private long readerId;
@@ -142,7 +139,7 @@ public class Subscription {
         }
 
         /**
-         * Setter for an reader id.
+         * Setter for a reader id.
          *
          * @param readerId (required) ID of the reader.
          * @return Builder object
@@ -153,7 +150,7 @@ public class Subscription {
         }
 
         /**
-         * Setter for an periodicals id.
+         * Setter for a periodicals id.
          *
          * @param periodicalsId (required) ID of the periodicals.
          * @return Builder object

@@ -1,75 +1,86 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page isELIgnored="false" %>
+
 <html>
 <head>
     <title>Profile</title>
 </head>
 <body>
 <h2>Profile</h2>
-<h4>General information</h4>
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <th>Last name</th>
-        <th>First name</th>
-        <th>Middle name</th>
-        <th>Email</th>
-    </tr>
+
+<h3>General information</h3>
+<table>
     <tbody>
     <tr>
-        <td>
-            <c:out value="${reader.getLastName()}"/>
-        </td>
-        <td>
-            <c:out value="${reader.getFirstName()}"/>
-        </td>
-        <td>
-            <c:out value="${reader.getMiddleName()}"/>
-        </td>
-        <td>
-            <c:out value="${reader.getEmail()}"/>
-        </td>
+        <td><b>Last name:</b></td>
+        <td><c:out value="${reader.lastName}"/></td>
+    </tr>
+    <tr>
+        <td><b>First name:</b></td>
+        <td><c:out value="${reader.firstName}"/></td>
+    </tr>
+    <tr>
+        <td><b>Middle name:</b></td>
+        <td><c:out value="${reader.middleName}"/></td>
+    </tr>
+    <tr>
+        <td><b>Email:</b></td>
+        <td><c:out value="${reader.email}"/></td>
     </tr>
     </tbody>
 </table>
-<h4>Subscription</h4>
+
+<h3>Subscription</h3>
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <th>#</th>
         <th>Name</th>
         <th>Publisher</th>
         <th>Month price</th>
         <th>Subscription date</th>
+        <th>Month quantity</th>
         <th>Paid</th>
     </tr>
     <tbody>
-    <c:forEach items="${subscription}" var="subscription">
+    <c:forEach items="${information}" var="information">
         <tr>
             <td>
-                <c:out value="${subscription.periodicals.getId()}"/><%--EDITED--%>
+                <c:out value="${information.periodicalsName}"/>
             </td>
             <td>
-                <c:out value="${subscription.periodicals.getName()}"/>
+                <c:out value="${information.periodicalsPublisher}"/>
             </td>
             <td>
-                <c:out value="${subscription.periodicals.getPublisher()}"/>
+                <c:out value="${information.periodicalsMonthPrice}"/>
             </td>
             <td>
-                <c:out value="${subscription.periodicals.getMonthPrice()}"/>
+                <c:out value="${information.subscriptionDate}"/>
             </td>
             <td>
-                <c:out value="${subscription.periodicals.getDate()}"/>
+                <c:out value="${information.monthQuantity}"/>
             </td>
             <td>
-                    <%--<c:out value="${}"/>--%>
+                <c:if test="${information.paymentPaid == true}">
+                    YES
+                </c:if>
+                <c:if test="${information.paymentPaid == false}">
+                    NO
+                </c:if>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<a href="" onclick="history.back()"> Back to Previous Page </a>
+
 <div>
     <p>
-    <form action="/logout" method="get">
+    <form action="/periodicals" method="get">
+        <input type="submit" name="periodicals" value="Go to periodicals"/>
+    </form>
+    </p>
+    <p>
+    <form action="/reader/logout" method="get">
         <input type="submit" name="logout" value="Log out"/>
     </form>
     </p>
