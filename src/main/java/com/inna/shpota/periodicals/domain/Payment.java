@@ -1,6 +1,7 @@
 package com.inna.shpota.periodicals.domain;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Payment Model Object
@@ -86,22 +87,16 @@ public class Payment {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Payment payment = (Payment) o;
-
-        if (id != payment.id) return false;
-        if (subscriptionId != payment.subscriptionId) return false;
-        if (paid != payment.paid) return false;
-        return price != null ? price.equals(payment.price) : payment.price == null;
+        return id == payment.id &&
+                subscriptionId == payment.subscriptionId &&
+                paid == payment.paid &&
+                Objects.equals(price, payment.price);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (int) (subscriptionId ^ (subscriptionId >>> 32));
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (paid ? 1 : 0);
-        return result;
+        return Objects.hash(id, subscriptionId, price, paid);
     }
 
     @Override

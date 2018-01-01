@@ -97,7 +97,7 @@ public class JdbcAdminDao implements AdminDao {
     }
 
     @Override
-    public long getByLoginAndPassword(String login, String password) {
+    public Admin getByLoginAndPassword(String login, String password) {
         Assert.notEmpty(login, "Login must not be empty");
         Assert.notEmpty(password, "Password must not be empty");
         try (Connection connection = dataSource.getConnection();
@@ -107,12 +107,12 @@ public class JdbcAdminDao implements AdminDao {
             selectStatement.setString(1, login);
             selectStatement.setString(2, password);
             try (ResultSet resultSet = selectStatement.executeQuery()) {
-                long id = -1;
+                Admin admin = null;
                 if (resultSet.next()) {
-                    id = resultSet.getLong(1);
+                    admin = new Admin(resultSet.getLong("id"), login, password);
                 }
-                LOGGER.info("Get by login and password: " + id);
-                return id;
+                LOGGER.info("Get by login and password: " + admin);
+                return admin;
             }
         } catch (SQLException e) {
             LOGGER.error("SQLException occurred in JdbcPeriodicalsDao", e);

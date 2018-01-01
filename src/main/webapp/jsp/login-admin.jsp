@@ -1,35 +1,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page isELIgnored="false" %>
+
 <html>
 <head>
     <title>Log in</title>
 </head>
 <body>
 <h2>Log in</h2>
-<form action="/edit-periodicals" name="loginForm" method="post">
+<form action="/admin/login" name="loginForm" method="post">
     <br>
     Login:
     </br>
     <label>
-        <input type="text" name="login" maxlength="255" value="${login}" required/>
+        <input type="text" name="login"
+               maxlength="255"
+               value="${sessionScope.login}"
+               required
+        />
     </label>
     <br>
     Password:
     </br>
     <label>
-        <input type="password" name="password" maxlength="255" value="${password}" required/>
+        <input type="password" name="password"
+               maxlength="255"
+               value="${sessionScope.password}"
+               required
+        />
     </label>
     <br/>
     <br>
-    <input type="submit" name="login" value="Log in"/>
+    <input type="submit" name="login"
+           value="Log in"
+    />
     </br>
     <br>
-    <c:if test="${not empty message}">
-        <c:out value="${message}"/>
+    <c:if test="${not empty sessionScope.message}">
+        <span style="color: red; ">
+            <c:out value="${sessionScope.message}"/>
+        </span>
     </c:if>
-    <%--<c:if test="${not empty message}">
-        <span style="color: red; "> Either admin name or password is wrong. </span>
-    </c:if>--%>
 </form>
 </body>
 </html>
