@@ -15,10 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-@WebServlet(name = "PeriodicalsController",
-        urlPatterns = {"", "/periodicals", "/periodicals/*", "/admin", "/admin/*", "/edit-periodicals",
-                "/create", "/edit-periodicals/*", "/login", "/signup", "/reader/*", "/profile"}
-) //don't write here
+/*@WebServlet(name = "PeriodicalsController",
+        urlPatterns = {"",
+                "/periodicals",
+                "/periodicals/*",
+                "/admin",
+                "/admin/*",
+                "/edit-periodicals",
+                "/create",
+                "/login",
+                "/signup",
+                "/logout",
+                "/profile"})*/
 public class PeriodicalsController extends HttpServlet {
     private final static Logger LOGGER = Logger.getLogger(PeriodicalsController.class);
     private RequestHandler requestHandler;
