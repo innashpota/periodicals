@@ -3,14 +3,11 @@
 <%@ page isELIgnored="false" %>
 
 <html>
-
 <head>
     <title>Error</title>
 </head>
-
 <body>
 <h1>Error</h1>
-
 <h3>
     <c:if test="${not empty message}">
         <c:out value="${message}"/>

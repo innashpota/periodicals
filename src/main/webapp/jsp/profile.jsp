@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
 
@@ -9,8 +8,9 @@
 </head>
 <body>
 <h2>Profile</h2>
-
-<h3>General information</h3>
+<h3>
+    General information
+</h3>
 <table>
     <tbody>
     <tr>
@@ -31,8 +31,9 @@
     </tr>
     </tbody>
 </table>
-
-<h3>Subscription</h3>
+<h3>
+    Subscription
+</h3>
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <th>Name</th>
@@ -76,12 +77,16 @@
 <div>
     <p>
     <form action="/periodicals" method="get">
-        <input type="submit" name="periodicals" value="Go to periodicals"/>
+        <input type="submit"
+               name="periodicals"
+               value="Go to periodicals"/>
     </form>
     </p>
     <p>
-    <form action="/reader/logout" method="get">
-        <input type="submit" name="logout" value="Log out"/>
+    <form action="/logout" method="get">
+        <input type="submit"
+               name="logout"
+               value="Log out"/>
     </form>
     </p>
 </div>
