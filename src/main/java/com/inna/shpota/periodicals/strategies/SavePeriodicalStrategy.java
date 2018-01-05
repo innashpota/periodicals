@@ -26,8 +26,7 @@ public class SavePeriodicalStrategy extends Strategy {
 
     private long extractId(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        String postIdString = uri.replace("/edit-periodicals/", "")
-                .replace("/edit", "");
+        String postIdString = uri.replace("/periodicals/edit/", "");
         return Long.parseLong(postIdString);
     }
 

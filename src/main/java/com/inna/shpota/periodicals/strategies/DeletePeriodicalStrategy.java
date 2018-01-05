@@ -27,8 +27,7 @@ public class DeletePeriodicalStrategy extends Strategy {
 
     private long extractId(HttpServletRequest request) {
         String uri = request.getRequestURI();
-        String postIdString = uri.replace("/edit-periodicals/", "")
-                .replace("/delete", "");
+        String postIdString = uri.replace("/periodicals/delete/", "");
         return Long.parseLong(postIdString);
     }
 }

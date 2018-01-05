@@ -31,7 +31,6 @@ public class PermissionsFilter implements Filter {
         readerUri.add("/profile");
         readerUri.add("\\/periodicals\\/subscribe\\/.*[0-9]");
         readerUri.add("\\/periodicals\\/payment\\/.*[0-9]");
-        unauthorizedUri.add("/edit-periodicals");
         unauthorizedUri.add("/admin/logout");
         unauthorizedUri.add("/create");
         unauthorizedUri.add("\\/periodicals\\/edit\\/.*[0-9]");
@@ -50,14 +49,18 @@ public class PermissionsFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) resp;
             HttpSession session = request.getSession();
             String uri = request.getRequestURI();
+            String login = (String) session.getAttribute("login");
+            String password = (String) session.getAttribute("password");
             Admin admin = (Admin) session.getAttribute("admin");
             Reader reader = (Reader) session.getAttribute("reader");
             if (admin != null && readerUri.stream().anyMatch(uri::matches) ||
                     reader != null && adminUri.stream().anyMatch(uri::matches)) {
-                redirectErrorPage(request, response);
-            } else if ((admin == null || reader == null) &&
-                    (unauthorizedUri.stream().anyMatch(uri::matches))) {
-                request.getRequestDispatcher("/periodicals").forward(request, response);
+                redirectErrorPage(request, response, "Access denied!");
+            } else if (admin == null && reader == null &&
+                    unauthorizedUri.stream().anyMatch(uri::matches) ||
+                    (login == null && password == null &&
+                            uri.matches("/edit-periodicals"))) {
+                redirectErrorPage(request, response, "Please authorization!");
             }
         }
         filterChain.doFilter(req, resp);
@@ -66,9 +69,9 @@ public class PermissionsFilter implements Filter {
     @Override
     public void destroy() { }
 
-    private void redirectErrorPage(HttpServletRequest request, HttpServletResponse response)
+    private void redirectErrorPage(HttpServletRequest request, HttpServletResponse response, String message)
             throws ServletException, IOException {
-        request.setAttribute("message", "Access denied!");
+        request.setAttribute("message", message);
         request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
     }
 }
