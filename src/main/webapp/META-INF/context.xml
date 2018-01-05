@@ -7,7 +7,7 @@
               maxIdle="30"
               maxWait="10000"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/periodicals"
+              url="jdbc:mysql://periodicals_db:3306/periodicals"
               username="periodicals"
               password="periodicals"
     />
