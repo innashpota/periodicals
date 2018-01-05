@@ -96,10 +96,10 @@ public class RequestHandler {
                 return strategies.get(AddPeriodicalStrategy.class);
             }
         }
-        if (uri.matches("\\/edit-periodicals\\/.*[0-9]\\/delete")) {
+        if (uri.matches("\\/periodicals\\/delete\\/.*[0-9]")) {
             return strategies.get(DeletePeriodicalStrategy.class);
         }
-        if (uri.matches("\\/edit-periodicals\\/.*[0-9]\\/edit")) {
+        if (uri.matches("\\/periodicals\\/edit\\/.*[0-9]")) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(EditPeriodicalStrategy.class);
             } else if ("POST".equals(request.getMethod())) {
@@ -120,7 +120,7 @@ public class RequestHandler {
                 return strategies.get(ContinueSignUpStrategy.class);
             }
         }
-        if ("/reader/logout".equals(uri)) {
+        if ("/logout".equals(uri)) {
             return strategies.get(LogOutStrategy.class);
         }
         if (uri.matches("\\/periodicals\\/subscribe\\/.*[0-9]")) {

@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
 
 <html>
 <head>
+    <link rel="stylesheet" href="/css/styles.css"/>
     <title>Log in</title>
 </head>
 <body>
@@ -12,36 +12,36 @@
 <form action="/admin/login" name="loginForm" method="post">
     <br>
     Login:
-    </br>
+    <br>
     <label>
-        <input type="text" name="login"
+        <input type="text"
+               name="login"
                maxlength="255"
                value="${sessionScope.login}"
-               required
-        />
+               required/>
     </label>
     <br>
     Password:
-    </br>
+    <br>
     <label>
-        <input type="password" name="password"
+        <input type="password"
+               name="password"
                maxlength="255"
                value="${sessionScope.password}"
-               required
-        />
+               required/>
     </label>
     <br/>
     <br>
-    <input type="submit" name="login"
-           value="Log in"
-    />
-    </br>
+    <input type="submit"
+           name="login"
+           value="Log in"/>
     <br>
-    <c:if test="${not empty sessionScope.message}">
-        <span style="color: red; ">
+    <br>
+    <span>
+        <c:if test="${not empty sessionScope.message}">
             <c:out value="${sessionScope.message}"/>
-        </span>
-    </c:if>
+        </c:if>
+    </span>
 </form>
 </body>
 </html>

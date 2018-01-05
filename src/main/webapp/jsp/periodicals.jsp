@@ -1,27 +1,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
 
 <html>
-
 <head>
     <title>Periodicals</title>
 </head>
-
 <body>
 <c:if test="${empty reader and empty admin}">
     <div>
         <p>
         <form action="/periodicals" method="get">
-            <input type="submit" name="login"
-                   value="Log in"
-            />
+            <input type="submit"
+                   name="login"
+                   value="Log in"/>
         </form>
         <form action="/periodicals" method="get">
-            <input type="submit" name="signup"
-                   value="Sign up"
-            />
+            <input type="submit"
+                   name="signup"
+                   value="Sign up"/>
         </form>
         </p>
     </div>
@@ -31,14 +28,14 @@
     <div>
         <p>
         <form action="/profile" method="get">
-            <input type="submit" name="profile"
-                   value="View profile"
-            />
+            <input type="submit"
+                   name="profile"
+                   value="View profile"/>
         </form>
-        <form action="/reader/logout" method="get">
-            <input type="submit" name="logout"
-                   value="Log out"
-            />
+        <form action="/logout" method="get">
+            <input type="submit"
+                   name="logout"
+                   value="Log out"/>
         </form>
         </p>
     </div>
@@ -48,12 +45,14 @@
     <div>
         <p>
             &nbsp;
-            <a href="/edit-periodicals">Edit periodicals</a>
+            <a href="/edit-periodicals">
+                Edit periodicals
+            </a>
             &nbsp;
         <form action="/admin/logout" method="post">
-            <input type="submit" name="logout"
-                   value="Log out"
-            />
+            <input type="submit"
+                   name="logout"
+                   value="Log out"/>
         </form>
         </p>
     </div>
@@ -83,7 +82,9 @@
             <c:if test="${empty admin}">
                 <td>
                     &nbsp;
-                    <a href="/periodicals/subscribe/${periodical.id}"> Subscribe</a>
+                    <a href="/periodicals/subscribe/${periodical.id}">
+                        Subscribe
+                    </a>
                     &nbsp;
                 </td>
             </c:if>
@@ -92,5 +93,4 @@
     </tbody>
 </table>
 </body>
-
 </html>
