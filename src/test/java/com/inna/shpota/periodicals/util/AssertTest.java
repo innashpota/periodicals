@@ -13,8 +13,17 @@ public class AssertTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void notEmpty() {
+    public void notEmptyGivenNullString() {
         String str = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(message);
+
+        Assert.notEmpty(str, message);
+    }
+
+    @Test
+    public void notEmptyGivenEmpryString() {
+        String str = "" ;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(message);
 
