@@ -3,7 +3,7 @@ Periodicals
 
 ## Web application that allows to subscribe on periodicals
 
-The application is based on Servlets, JSP + JSTL, API JDBC, HTML + CSS and LOG4J 
+The application is based on Servlets, JSP + JSTL, JDBC, HTML + CSS and LOG4J 
 as a logging system. The code is covered with unit tests using JUnit and Mockito.
 
 ## Environment Setup
