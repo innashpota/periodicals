@@ -18,13 +18,13 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         prepareConnection();
         jdbcAdminDao = new JdbcAdminDao(jdbcDataSource);
     }
 
     @Test
-    public void shouldCreate() throws Exception {
+    public void shouldCreate() {
         Admin admin = new Admin("test", "test");
 
         long id = jdbcAdminDao.create(admin);
@@ -35,7 +35,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldDelete() throws Exception {
+    public void shouldDelete() {
         long id = 4;
 
         jdbcAdminDao.delete(id);
@@ -45,7 +45,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetById() throws Exception {
+    public void shouldGetById() {
         long id = 1;
         Admin expectedAdmin = new Admin(id, "admin1", "admin1");
 
@@ -55,7 +55,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetByLoginAndPassword() throws Exception {
+    public void shouldGetByLoginAndPassword() {
         String admin2 = "admin2";
         Admin expectedAdmin = new Admin(2, admin2, admin2);
 
@@ -65,7 +65,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldUpdate() throws Exception {
+    public void shouldUpdate() {
         long id = 1;
         Admin expectedAdmin = new Admin(id, "test", "test");
 
@@ -76,7 +76,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetAll() throws Exception {
+    public void shouldGetAll() {
         List<Admin> expected = asList(
                 new Admin(1, "admin1", "admin1"),
                 new Admin(2, "admin2", "admin2"),
@@ -89,7 +89,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullAdmin() throws Exception {
+    public void shouldFailToCreateGivenNullAdmin() {
         Admin admin = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Admin must not be null");
@@ -98,7 +98,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullLogin() throws Exception {
+    public void shouldFailToCreateGivenNullLogin() {
         Admin admin = new Admin(null, "password");
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Login must not be empty");
@@ -107,7 +107,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullPassword() throws Exception {
+    public void shouldFailToCreateGivenNullPassword() {
         Admin admin = new Admin("login", null);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Password must not be empty");
@@ -116,7 +116,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToDeleteGivenNegativeId() throws Exception {
+    public void shouldFailToDeleteGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
@@ -125,7 +125,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByLoginAndPasswordGivenEmptyLogin() throws Exception {
+    public void shouldFailToGetByLoginAndPasswordGivenEmptyLogin() {
         String login = "";
         String password = "password";
         expectedException.expect(IllegalArgumentException.class);
@@ -135,7 +135,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByLoginAndPasswordGivenNullPassword() throws Exception {
+    public void shouldFailToGetByLoginAndPasswordGivenNullPassword() {
         String login = "login";
         String password = null;
         expectedException.expect(IllegalArgumentException.class);
@@ -145,7 +145,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByIdGivenNegativeId() throws Exception {
+    public void shouldFailToGetByIdGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
@@ -154,7 +154,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullAdmin() throws Exception {
+    public void shouldFailToUpdateGivenNullAdmin() {
         Admin admin = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Admin must not be null");
@@ -163,7 +163,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullLogin() throws Exception {
+    public void shouldFailToUpdateGivenNullLogin() {
         Admin admin = new Admin(null, "password");
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Login must not be empty");
@@ -172,7 +172,7 @@ public class JdbcAdminDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullPassword() throws Exception {
+    public void shouldFailToUpdateGivenNullPassword() {
         Admin admin = new Admin("login", null);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Password must not be empty");

@@ -14,13 +14,13 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
     private JdbcPaymentDao jdbcPaymentDao;
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         prepareConnection();
         jdbcPaymentDao = new JdbcPaymentDao(jdbcDataSource);
     }
 
     @Test
-    public void shouldCreate() throws Exception {
+    public void shouldCreate() {
         Payment payment = new Payment(1, new BigDecimal("2.00"), true);
 
         long id = jdbcPaymentDao.create(payment);
@@ -32,7 +32,7 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldDelete() throws Exception {
+    public void shouldDelete() {
         long id = 6;
 
         jdbcPaymentDao.delete(id);
@@ -42,7 +42,7 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetById() throws Exception {
+    public void shouldGetById() {
         long id = 2;
         Payment expectedPayment = new Payment(id, 2, new BigDecimal("900.00"), true);
 
@@ -52,7 +52,7 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldUpdate() throws Exception {
+    public void shouldUpdate() {
         long id = 2;
         Payment expectedPayment = new Payment(id, 2, new BigDecimal("1999.00"), false);
 
@@ -63,7 +63,7 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetAll() throws Exception {
+    public void shouldGetAll() {
         List<Payment> expected = asList(
                 new Payment(1, 1, new BigDecimal("594.00"), true),
                 new Payment(2, 2, new BigDecimal("900.00"), true),

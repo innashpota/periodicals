@@ -14,13 +14,13 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     private JdbcPeriodicalsDao jdbcPeriodicalsDao;
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         prepareConnection();
         jdbcPeriodicalsDao = new JdbcPeriodicalsDao(jdbcDataSource);
     }
 
     @Test
-    public void shouldCreate() throws Exception {
+    public void shouldCreate() {
         Periodicals periodicals = new Periodicals("test", "test", new BigDecimal("66.66"));
 
         long id = jdbcPeriodicalsDao.create(periodicals);
@@ -32,7 +32,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldDelete() throws Exception {
+    public void shouldDelete() {
         long id = 4;
 
         jdbcPeriodicalsDao.delete(id);
@@ -42,7 +42,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetById() throws Exception {
+    public void shouldGetById() {
         long id = 3;
         Periodicals expectedPeriodicals = new Periodicals(
                 id, "HI - TECH PRO", "ID SoftPress", new BigDecimal("28.00")
@@ -54,7 +54,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldUpdate() throws Exception {
+    public void shouldUpdate() {
         long id = 3;
         Periodicals expectedPeriodicals = new Periodicals(3, "test", "test", new BigDecimal("66.66"));
 
@@ -65,7 +65,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetAll() throws Exception {
+    public void shouldGetAll() {
         List<Periodicals> expected = asList(
                 new Periodicals(1, "VOGUE UA", "TRK MEDIA FINANCE LIMITED", new BigDecimal("99.00")),
                 new Periodicals(2, "All Retail", "All Retail", new BigDecimal("75.00")),

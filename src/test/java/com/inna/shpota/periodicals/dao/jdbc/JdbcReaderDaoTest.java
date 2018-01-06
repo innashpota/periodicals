@@ -23,13 +23,13 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         prepareConnection();
         jdbcReaderDao = new JdbcReaderDao(jdbcDataSource);
     }
 
     @Test
-    public void shouldCreate() throws Exception {
+    public void shouldCreate() {
         Reader reader = Reader.builder()
                 .lastName("lastName")
                 .firstName("firstName")
@@ -49,7 +49,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldDelete() throws Exception {
+    public void shouldDelete() {
         long id = 5;
 
         jdbcReaderDao.delete(id);
@@ -59,7 +59,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetById() throws Exception {
+    public void shouldGetById() {
         long id = 3;
         Reader expectedReader = Reader.builder()
                 .id(id)
@@ -76,7 +76,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetByEmailAndPassword() throws Exception {
+    public void shouldGetByEmailAndPassword() {
         String email = "viazovska@ok.com";
         String password = "2";
         Reader expectedReader = Reader.builder()
@@ -94,7 +94,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetByEmail() throws Exception {
+    public void shouldGetByEmail() {
         String email = "viazovska@ok.com";
         Reader expectedReader = Reader.builder()
                 .id(2)
@@ -111,7 +111,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldUpdate() throws Exception {
+    public void shouldUpdate() {
         long id = 3;
         Reader expectedReader = Reader.builder()
                 .id(id)
@@ -129,7 +129,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetAll() throws Exception {
+    public void shouldGetAll() {
         List<Reader> expected = asList(
                 Reader.builder()
                         .id(1)
@@ -171,7 +171,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetInformationByReader() throws Exception {
+    public void shouldGetInformationByReader() {
         long id = 2;
         List<Information> expected = singletonList(
                 Information.builder()
@@ -190,7 +190,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullReader() throws Exception {
+    public void shouldFailToCreateGivenNullReader() {
         Reader reader = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Reader must not be null");
@@ -199,7 +199,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullLastName() throws Exception {
+    public void shouldFailToCreateGivenNullLastName() {
         Reader reader = getReaderNullLastName();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Last name must not be empty");
@@ -208,7 +208,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullFirstName() throws Exception {
+    public void shouldFailToCreateGivenNullFirstName() {
         Reader reader = getReaderNullFirstName();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("First name must not be empty");
@@ -217,7 +217,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullMiddleName() throws Exception {
+    public void shouldFailToCreateGivenNullMiddleName() {
         Reader reader = getReaderNullMiddleName();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Middle name must not be empty");
@@ -226,7 +226,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullEmail() throws Exception {
+    public void shouldFailToCreateGivenNullEmail() {
         Reader reader = getReaderNullEmail();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Email must not be empty");
@@ -235,7 +235,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullPassword() throws Exception {
+    public void shouldFailToCreateGivenNullPassword() {
         Reader reader = getReaderNullPassword();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Password must not be empty");
@@ -244,7 +244,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToDeleteGivenNegativeId() throws Exception {
+    public void shouldFailToDeleteGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
@@ -253,7 +253,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByIdGivenNegativeId() throws Exception {
+    public void shouldFailToGetByIdGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
@@ -262,7 +262,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByEmailAndPasswordGivenEmptyLogin() throws Exception {
+    public void shouldFailToGetByEmailAndPasswordGivenEmptyLogin() {
         String email = "";
         String password = "password";
         expectedException.expect(IllegalArgumentException.class);
@@ -272,7 +272,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByLoginAndPasswordGivenNullPassword() throws Exception {
+    public void shouldFailToGetByLoginAndPasswordGivenNullPassword() {
         String email = "email";
         String password = null;
         expectedException.expect(IllegalArgumentException.class);
@@ -282,7 +282,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByLoginGivenNullEmail() throws Exception {
+    public void shouldFailToGetByLoginGivenNullEmail() {
         String email = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Email must not be empty");
@@ -291,7 +291,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullReader() throws Exception {
+    public void shouldFailToUpdateGivenNullReader() {
         Reader reader = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Reader must not be null");
@@ -300,7 +300,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullLastName() throws Exception {
+    public void shouldFailToUpdateGivenNullLastName() {
         Reader reader = getReaderNullLastName();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Last name must not be empty");
@@ -309,7 +309,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullFirstName() throws Exception {
+    public void shouldFailToUpdateGivenNullFirstName() {
         Reader reader = getReaderNullFirstName();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("First name must not be empty");
@@ -318,7 +318,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullMiddleName() throws Exception {
+    public void shouldFailToUpdateGivenNullMiddleName() {
         Reader reader = getReaderNullMiddleName();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Middle name must not be empty");
@@ -327,7 +327,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullEmail() throws Exception {
+    public void shouldFailToUpdateGivenNullEmail() {
         Reader reader = getReaderNullEmail();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Email must not be empty");
@@ -336,7 +336,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullPassword() throws Exception {
+    public void shouldFailToUpdateGivenNullPassword() {
         Reader reader = getReaderNullPassword();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Password must not be empty");
@@ -345,7 +345,7 @@ public class JdbcReaderDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetInformationByReaderGivenNegativeId() throws Exception {
+    public void shouldFailToGetInformationByReaderGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
