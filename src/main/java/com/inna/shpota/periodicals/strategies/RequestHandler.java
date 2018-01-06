@@ -27,10 +27,9 @@ public class RequestHandler {
         strategies.put(PeriodicalsStrategy.class, new PeriodicalsStrategy(periodicalsDao));
         strategies.put(RedirectAdminLogInStrategy.class, new RedirectAdminLogInStrategy());
         strategies.put(AdminLogInStrategy.class, new AdminLogInStrategy());
-        strategies.put(RedirectEditPeriodicalsStrategy.class, new RedirectEditPeriodicalsStrategy());
-        strategies.put(EditPeriodicalsStrategy.class, new EditPeriodicalsStrategy(adminDao));
+        strategies.put(AdminPeriodicalsStrategy.class, new AdminPeriodicalsStrategy(adminDao));
+        strategies.put(EditPeriodicalsStrategy.class, new EditPeriodicalsStrategy());
         strategies.put(LogOutStrategy.class, new LogOutStrategy());
-        strategies.put(RedirectCreatePeriodicalsStrategy.class, new RedirectCreatePeriodicalsStrategy());
         strategies.put(CreatePeriodicalStrategy.class, new CreatePeriodicalStrategy());
         strategies.put(AddPeriodicalStrategy.class, new AddPeriodicalStrategy(periodicalsDao));
         strategies.put(DeletePeriodicalStrategy.class, new DeletePeriodicalStrategy(periodicalsDao));
@@ -73,14 +72,11 @@ public class RequestHandler {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(AdminLogInStrategy.class);
             } else if ("POST".equals(request.getMethod())) {
-                return strategies.get(RedirectEditPeriodicalsStrategy.class);
+                return strategies.get(AdminPeriodicalsStrategy.class);
             }
         }
         if ("/edit-periodicals".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
-                if (request.getParameter("create") != null) {
-                    return strategies.get(RedirectCreatePeriodicalsStrategy.class);
-                }
                 return strategies.get(EditPeriodicalsStrategy.class);
             }
         }

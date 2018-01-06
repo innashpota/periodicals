@@ -44,7 +44,7 @@
 </table>
 <div>
     <p>
-    <form action="/edit-periodicals" method="get">
+    <form action="/create" method="get">
         <input type="submit"
                name="create"
                value="Add periodical"/>

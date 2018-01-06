@@ -23,8 +23,7 @@ public class ReaderPeriodicalsStrategy extends Strategy {
         request.getSession().setAttribute("password", password);
         Reader reader = readerDao.getByEmailAndPassword(email, password);
         if (reader != null) {
-            request.getSession().setAttribute("reader", reader
-            );
+            request.getSession().setAttribute("reader", reader);
             response.sendRedirect("/periodicals");
         } else {
             request.getSession().setAttribute("message", "Either reader login or password is wrong.");

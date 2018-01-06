@@ -32,6 +32,7 @@ public class PermissionsFilter implements Filter {
         readerUri.add("\\/periodicals\\/subscribe\\/.*[0-9]");
         readerUri.add("\\/periodicals\\/payment\\/.*[0-9]");
         unauthorizedUri.add("/admin/logout");
+        unauthorizedUri.add("/edit-periodicals");
         unauthorizedUri.add("/create");
         unauthorizedUri.add("\\/periodicals\\/edit\\/.*[0-9]");
         unauthorizedUri.add("\\/periodicals\\/delete\\/.*[0-9]");
@@ -49,17 +50,13 @@ public class PermissionsFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) resp;
             HttpSession session = request.getSession();
             String uri = request.getRequestURI();
-            String login = (String) session.getAttribute("login");
-            String password = (String) session.getAttribute("password");
             Admin admin = (Admin) session.getAttribute("admin");
             Reader reader = (Reader) session.getAttribute("reader");
             if (admin != null && readerUri.stream().anyMatch(uri::matches) ||
                     reader != null && adminUri.stream().anyMatch(uri::matches)) {
                 redirectErrorPage(request, response, "Access denied!");
             } else if (admin == null && reader == null &&
-                    unauthorizedUri.stream().anyMatch(uri::matches) ||
-                    (login == null && password == null &&
-                            uri.matches("/edit-periodicals"))) {
+                    unauthorizedUri.stream().anyMatch(uri::matches)) {
                 redirectErrorPage(request, response, "Please authorization!");
             }
         }
