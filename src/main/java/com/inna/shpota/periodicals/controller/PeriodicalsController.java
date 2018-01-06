@@ -47,21 +47,20 @@ public class PeriodicalsController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response, "doGet");
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response, "doPost");
     }
 
 
-    private void processRequest(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            String method
-    ) throws IOException, ServletException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response, String method)
+            throws IOException, ServletException {
         LOGGER.info(method + "method has been called");
         Strategy strategy = requestHandler.getStrategy(request);
         strategy.handle(request, response);
