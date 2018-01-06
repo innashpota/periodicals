@@ -2,7 +2,9 @@ package com.inna.shpota.periodicals.dao.jdbc;
 
 import com.inna.shpota.periodicals.domain.Payment;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,6 +14,9 @@ import static org.junit.Assert.assertEquals;
 
 public class JdbcPaymentDaoTest extends AbstractDaoTest {
     private JdbcPaymentDao jdbcPaymentDao;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void before() {
@@ -75,5 +80,77 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
         List<Payment> actual = jdbcPaymentDao.getAll();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNullPayment() {
+        Payment payment = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Payment must not be null");
+
+        jdbcPaymentDao.create(payment);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNegativeSubscriptionId() {
+        Payment payment = new Payment(-4, new BigDecimal("2.00"), true);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Subscription ID must be positive");
+
+        jdbcPaymentDao.create(payment);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNegativePrice() {
+        Payment payment = new Payment(10, new BigDecimal("-2.00"), true);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Price must be positive");
+
+        jdbcPaymentDao.create(payment);
+    }
+
+    @Test
+    public void shouldFailToDeleteGivenNegativeId() {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcPaymentDao.delete(id);
+    }
+
+    @Test
+    public void shouldFailToGetByIdGivenNegativeId() {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcPaymentDao.getById(id);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNullPayment() {
+        Payment payment = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Payment must not be null");
+
+        jdbcPaymentDao.update(payment);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNegativeSubscriptionId() {
+        Payment payment = new Payment(-4, new BigDecimal("2.00"), true);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Subscription ID must be positive");
+
+        jdbcPaymentDao.update(payment);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNegativePrice() {
+        Payment payment = new Payment(10, new BigDecimal("-2.00"), true);
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Price must be positive");
+
+        jdbcPaymentDao.update(payment);
     }
 }

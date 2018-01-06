@@ -2,7 +2,9 @@ package com.inna.shpota.periodicals.dao.jdbc;
 
 import com.inna.shpota.periodicals.domain.Periodicals;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,6 +14,9 @@ import static org.junit.Assert.assertEquals;
 
 public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     private JdbcPeriodicalsDao jdbcPeriodicalsDao;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void before() {
@@ -75,5 +80,95 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
         List<Periodicals> actual = jdbcPeriodicalsDao.getAll();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNullPeriodicals() {
+        Periodicals periodicals = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Periodicals must not be null");
+
+        jdbcPeriodicalsDao.create(periodicals);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenEmptyName() {
+        Periodicals periodicals = new Periodicals(null, "publisher", new BigDecimal("2.00"));
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Name must not be empty");
+
+        jdbcPeriodicalsDao.create(periodicals);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenEmptyPublisher() {
+        Periodicals periodicals = new Periodicals("name", null, new BigDecimal("2.00"));
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Publisher must not be empty");
+
+        jdbcPeriodicalsDao.create(periodicals);
+    }
+
+    @Test
+    public void shouldFailToCreateGivenNegativeMonthPrice() {
+        Periodicals periodicals = new Periodicals("name", "publisher", new BigDecimal("-2.00"));
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Month price must be positive");
+
+        jdbcPeriodicalsDao.create(periodicals);
+    }
+
+    @Test
+    public void shouldFailToDeleteGivenNegativeId() {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcPeriodicalsDao.delete(id);
+    }
+
+    @Test
+    public void shouldFailToGetByIdGivenNegativeId() {
+        long id = -2;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("ID must be positive");
+
+        jdbcPeriodicalsDao.getById(id);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNullPeriodicals() {
+        Periodicals periodicals = null;
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Periodicals must not be null");
+
+        jdbcPeriodicalsDao.update(periodicals);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenEmptyName() {
+        Periodicals periodicals = new Periodicals(null, "publisher", new BigDecimal("2.00"));
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Name must not be empty");
+
+        jdbcPeriodicalsDao.update(periodicals);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenEmptyPublisher() {
+        Periodicals periodicals = new Periodicals("name", null, new BigDecimal("2.00"));
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Publisher must not be empty");
+
+        jdbcPeriodicalsDao.update(periodicals);
+    }
+
+    @Test
+    public void shouldFailToUpdateGivenNegativeMonthPrice() {
+        Periodicals periodicals = new Periodicals("name", "publisher", new BigDecimal("-2.00"));
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Month price must be positive");
+
+        jdbcPeriodicalsDao.update(periodicals);
     }
 }
