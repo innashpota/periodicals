@@ -23,7 +23,7 @@ public class AssertTest {
 
     @Test
     public void notEmptyGivenEmpryString() {
-        String str = "" ;
+        String str = "";
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(message);
 
