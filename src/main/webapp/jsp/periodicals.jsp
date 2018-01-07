@@ -49,7 +49,7 @@
                 Edit periodicals
             </a>
             &nbsp;
-        <form action="/admin/logout" method="post">
+        <form action="/logout" method="get">
             <input type="submit"
                    name="logout"
                    value="Log out"/>

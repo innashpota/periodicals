@@ -21,17 +21,14 @@ public class PermissionsFilter implements Filter {
         adminUri.add("/admin");
         adminUri.add("/admin/login");
         adminUri.add("/edit-periodicals");
-        adminUri.add("/admin/logout");
         adminUri.add("/create");
         adminUri.add("\\/periodicals\\/edit\\/.*[0-9]");
         adminUri.add("\\/periodicals\\/delete\\/.*[0-9]");
         readerUri.add("/login");
         readerUri.add("/signup");
-        readerUri.add("/logout");
         readerUri.add("/profile");
         readerUri.add("\\/periodicals\\/subscribe\\/.*[0-9]");
         readerUri.add("\\/periodicals\\/payment\\/.*[0-9]");
-        unauthorizedUri.add("/admin/logout");
         unauthorizedUri.add("/edit-periodicals");
         unauthorizedUri.add("/create");
         unauthorizedUri.add("\\/periodicals\\/edit\\/.*[0-9]");
@@ -64,7 +61,8 @@ public class PermissionsFilter implements Filter {
     }
 
     @Override
-    public void destroy() { }
+    public void destroy() {
+    }
 
     private void redirectErrorPage(HttpServletRequest request, HttpServletResponse response, String message)
             throws ServletException, IOException {

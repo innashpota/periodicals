@@ -80,11 +80,6 @@ public class RequestHandler {
                 return strategies.get(EditPeriodicalsStrategy.class);
             }
         }
-        if ("/admin/logout".equals(uri)) {
-            if ("POST".equals(request.getMethod())) {
-                return strategies.get(LogOutStrategy.class);
-            }
-        }
         if ("/create".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(CreatePeriodicalStrategy.class);
