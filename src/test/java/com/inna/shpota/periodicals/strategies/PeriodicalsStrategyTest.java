@@ -35,7 +35,7 @@ public class PeriodicalsStrategyTest extends AbstractDaoTest {
 
         strategy.handle(request, response);
 
-        verify(request.getSession()).setAttribute("periodicals", periodicals);
+        verify(session).setAttribute("periodicals", periodicals);
         verify(dispatcher).forward(request, response);
     }
 }
