@@ -1,38 +1,35 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.dao.PeriodicalsDao;
 import com.inna.shpota.periodicals.dao.jdbc.AbstractDaoTest;
-import com.inna.shpota.periodicals.dao.jdbc.JdbcPeriodicalsDao;
 import com.inna.shpota.periodicals.domain.Periodicals;
-import org.junit.Before;
 import org.junit.Test;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class PeriodicalsStrategyTest extends AbstractDaoTest {
-    private JdbcPeriodicalsDao jdbcPeriodicalsDao;
-
-    @Before
-    public void before() {
-        prepareConnection();
-        jdbcPeriodicalsDao = new JdbcPeriodicalsDao(jdbcDataSource);
-    }
-
     @Test
     public void shouldHandle() throws Exception {
-        Strategy strategy = new PeriodicalsStrategy(jdbcPeriodicalsDao);
+        PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
+        Strategy strategy = new PeriodicalsStrategy(periodicalsDao);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-        List<Periodicals> periodicals = jdbcPeriodicalsDao.getAll();
-        RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         HttpSession session = mock(HttpSession.class);
+        RequestDispatcher dispatcher = mock(RequestDispatcher.class);
+        List<Periodicals> periodicals = asList(
+                new Periodicals(1, "name1", "publisher", new BigDecimal("1.11")),
+                new Periodicals(2, "name2", "publisher", new BigDecimal("2.22")));
+        given(periodicalsDao.getAll()).willReturn(periodicals);
         given(request.getSession()).willReturn(session);
         given(request.getRequestDispatcher("/jsp/periodicals.jsp")).willReturn(dispatcher);
 
