@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class AbstractDaoTest {
-    JdbcDataSource jdbcDataSource = new JdbcDataSource();
+    public JdbcDataSource jdbcDataSource = new JdbcDataSource();
 
     private final String SQL_DROP_TABLES = "DROP TABLE IF EXISTS subscription_admin;" +
             "DROP TABLE IF EXISTS payment;" +
