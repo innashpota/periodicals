@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public abstract class AbstractDaoTest {
-    public JdbcDataSource jdbcDataSource = new JdbcDataSource();
+    JdbcDataSource jdbcDataSource = new JdbcDataSource();
 
     private final String SQL_DROP_TABLES = "DROP TABLE IF EXISTS subscription_admin;" +
             "DROP TABLE IF EXISTS payment;" +
@@ -87,7 +87,7 @@ public abstract class AbstractDaoTest {
             "  (4, 297, 1)," +
             "  (5, 1188, 1);";
 
-    public void prepareConnection() {
+    void prepareConnection() {
         jdbcDataSource.setURL("jdbc:h2:~/periodicals;MODE=MYSQL");
         jdbcDataSource.setUser("sa");
         jdbcDataSource.setPassword("");
