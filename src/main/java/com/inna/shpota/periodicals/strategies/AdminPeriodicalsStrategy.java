@@ -26,7 +26,7 @@ public class AdminPeriodicalsStrategy extends Strategy {
         Admin admin = adminDao.getByLoginAndPassword(login, password);
         if (admin != null) {
             session.setAttribute("admin", admin);
-            request.getRequestDispatcher("/jsp/edit-periodicals.jsp").forward(request, response);
+            response.sendRedirect("/edit-periodicals");
         } else {
             session.setAttribute("message", "Either admin login or password is wrong.");
             response.sendRedirect("/admin/login");

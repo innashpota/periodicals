@@ -4,7 +4,6 @@ import com.inna.shpota.periodicals.dao.AdminDao;
 import com.inna.shpota.periodicals.domain.Admin;
 import org.junit.Test;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +22,6 @@ public class AdminPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         String login = "login";
         String password = "pass";
         Admin admin = new Admin(2, login, password);
@@ -31,14 +29,13 @@ public class AdminPeriodicalsStrategyTest {
         given(request.getParameter("password")).willReturn(password);
         given(request.getSession()).willReturn(session);
         given(adminDao.getByLoginAndPassword(login, password)).willReturn(admin);
-        given(request.getRequestDispatcher("/jsp/edit-periodicals.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 
         verify(session).setAttribute("login", login);
         verify(session).setAttribute("password", password);
         verify(session).setAttribute("admin", admin);
-        verify(dispatcher).forward(request, response);
+        verify(response).sendRedirect("/edit-periodicals");
     }
 
     @Test
