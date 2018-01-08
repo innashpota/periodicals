@@ -35,7 +35,6 @@ public class RequestHandler {
         strategies.put(DeletePeriodicalStrategy.class, new DeletePeriodicalStrategy(periodicalsDao));
         strategies.put(EditPeriodicalStrategy.class, new EditPeriodicalStrategy(periodicalsDao));
         strategies.put(SavePeriodicalStrategy.class, new SavePeriodicalStrategy(periodicalsDao));
-        strategies.put(RedirectReaderLogInStrategy.class, new RedirectReaderLogInStrategy());
         strategies.put(ReaderLogInStrategy.class, new ReaderLogInStrategy());
         strategies.put(ReaderPeriodicalsStrategy.class, new ReaderPeriodicalsStrategy(readerDao));
         strategies.put(RedirectReaderSignUpStrategy.class, new RedirectReaderSignUpStrategy());
@@ -56,9 +55,6 @@ public class RequestHandler {
         }
         if ("/periodicals".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
-                if (request.getParameter("login") != null) {
-                    return strategies.get(RedirectReaderLogInStrategy.class);
-                }
                 if (request.getParameter("signup") != null) {
                     return strategies.get(RedirectReaderSignUpStrategy.class);
                 }

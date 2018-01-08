@@ -10,7 +10,7 @@
 <c:if test="${empty reader and empty admin}">
     <div>
         <p>
-        <form action="/periodicals" method="get">
+        <form action="/login" method="get">
             <input type="submit"
                    name="login"
                    value="Log in"/>
