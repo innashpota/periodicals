@@ -18,7 +18,7 @@ public class ReaderLogInStrategyTest {
     @Test
     public void shouldHandle() throws ServletException, IOException {
         Strategy strategy = new ReaderLogInStrategy();
-        Reader reader = build();
+        Reader reader = reader();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -47,7 +47,7 @@ public class ReaderLogInStrategyTest {
         verify(dispatcher).forward(request, response);
     }
 
-    private Reader build() {
+    private Reader reader() {
         return Reader.builder()
                 .id(2)
                 .lastName("last")
