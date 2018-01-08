@@ -15,7 +15,7 @@
                    name="login"
                    value="Log in"/>
         </form>
-        <form action="/periodicals" method="get">
+        <form action="/signup" method="get">
             <input type="submit"
                    name="signup"
                    value="Sign up"/>
