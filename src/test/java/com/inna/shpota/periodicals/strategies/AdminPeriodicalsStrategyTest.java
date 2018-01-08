@@ -39,7 +39,7 @@ public class AdminPeriodicalsStrategyTest {
     }
 
     @Test
-    public void shouldRedirectToHandle() throws ServletException, IOException {
+    public void shouldHandleRedirect() throws ServletException, IOException {
         AdminDao adminDao = mock(AdminDao.class);
         Strategy strategy = new AdminPeriodicalsStrategy(adminDao);
         HttpServletRequest request = mock(HttpServletRequest.class);

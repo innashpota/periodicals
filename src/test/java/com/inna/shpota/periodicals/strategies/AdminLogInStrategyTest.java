@@ -31,7 +31,7 @@ public class AdminLogInStrategyTest {
     }
 
     @Test
-    public void shouldForwardToHandle() throws ServletException, IOException {
+    public void shouldHandleForward() throws ServletException, IOException {
         Strategy strategy = new AdminLogInStrategy();
         Admin admin = null;
         HttpServletRequest request = mock(HttpServletRequest.class);
