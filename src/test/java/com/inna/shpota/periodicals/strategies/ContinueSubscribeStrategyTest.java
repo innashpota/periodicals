@@ -26,22 +26,24 @@ public class ContinueSubscribeStrategyTest {
         Strategy strategy = new ContinueSubscribeStrategy(subscriptionDao);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-        prepareMock(subscriptionDao, request, session);
+        prepareMock(subscriptionDao, request);
 
         strategy.handle(request, response);
 
         verify(response).sendRedirect("/periodicals/payment/" + 4);
     }
 
-    private void prepareMock(SubscriptionDao subscriptionDao, HttpServletRequest request, HttpSession session) {
+    private void prepareMock(SubscriptionDao subscriptionDao, HttpServletRequest request) {
+        HttpSession session = mock(HttpSession.class);
         Reader reader = reader();
         given(request.getSession()).willReturn(session);
         given(session.getAttribute("reader")).willReturn(reader);
         given(request.getParameter("monthQuantity")).willReturn("1");
         given(session.getAttribute("periodical")).willReturn(periodical());
-        given(subscriptionDao.createPaymentBySubscription(any(Subscription.class), eq(new BigDecimal("24.00"))))
-                .willReturn(4L);
+        given(subscriptionDao.createPaymentBySubscription(
+                any(Subscription.class),
+                eq(new BigDecimal("24.00"))
+        )).willReturn(4L);
     }
 
     private Periodicals periodical() {
