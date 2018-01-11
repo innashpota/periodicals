@@ -54,7 +54,7 @@
     Password:
     </br>
     <label>
-        <input type="text"
+        <input type="password"
                name="password"
                maxlength="255"
                value="${password}"
