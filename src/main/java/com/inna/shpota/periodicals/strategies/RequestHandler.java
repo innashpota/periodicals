@@ -1,6 +1,7 @@
 package com.inna.shpota.periodicals.strategies;
 
 import com.inna.shpota.periodicals.dao.*;
+import com.inna.shpota.periodicals.service.EmailService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -20,6 +21,7 @@ public class RequestHandler {
         PeriodicalsDao periodicalsDao = FactoryDao.createPeriodicalsDao(dataSource);
         ReaderDao readerDao = FactoryDao.createReaderDao(dataSource);
         SubscriptionDao subscriptionDao = FactoryDao.createSubscriptionDao(dataSource);
+        EmailService service = EmailService.getInstance();
 
         Map<Class<? extends Strategy>, Strategy> strategies = new HashMap<>();
         strategies.put(ErrorStrategy.class, new ErrorStrategy());
@@ -42,7 +44,7 @@ public class RequestHandler {
         strategies.put(SubscribeStrategy.class, new SubscribeStrategy(periodicalsDao));
         strategies.put(ContinueSubscribeStrategy.class, new ContinueSubscribeStrategy(subscriptionDao));
         strategies.put(PaymentStrategy.class, new PaymentStrategy(paymentDao));
-        strategies.put(PayStrategy.class, new PayStrategy(paymentDao));
+        strategies.put(PayStrategy.class, new PayStrategy(paymentDao, service));
         strategies.put(ProfileStrategy.class, new ProfileStrategy(readerDao));
         return new RequestHandler(strategies);
     }
