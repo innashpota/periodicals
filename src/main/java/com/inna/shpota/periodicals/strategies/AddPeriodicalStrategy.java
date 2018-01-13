@@ -6,6 +6,7 @@ import com.inna.shpota.periodicals.domain.Periodicals;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
@@ -24,8 +25,14 @@ public class AddPeriodicalStrategy extends Strategy {
         String monthPrice = request.getParameter("monthPrice");
         Periodicals periodical = new Periodicals(name, publisher, new BigDecimal(monthPrice));
         long id = periodicalsDao.create(periodical);
-        List<Periodicals> periodicals = periodicalsDao.getAll();
-        request.getSession().setAttribute("periodicals", periodicals);
-        response.sendRedirect("/edit-periodicals");
+        HttpSession session = request.getSession();
+        if (id > 0) {
+            List<Periodicals> periodicals = periodicalsDao.getAll();
+            session.setAttribute("periodicals", periodicals);
+            response.sendRedirect("/edit-periodicals");
+        } else {
+            session.setAttribute("message", null);
+            response.sendRedirect("/error");
+        }
     }
 }

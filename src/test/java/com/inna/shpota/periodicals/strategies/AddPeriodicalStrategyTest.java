@@ -22,24 +22,47 @@ public class AddPeriodicalStrategyTest {
     public void shouldHandle() throws ServletException, IOException {
         PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
         Strategy strategy = new AddPeriodicalStrategy(periodicalsDao);
-        String name = "name";
-        String publisher = "publisher";
-        BigDecimal monthPrice = new BigDecimal("2.00");
-        Periodicals periodicals = new Periodicals(name, publisher, monthPrice);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getParameter("name")).willReturn(name);
-        given(request.getParameter("publisher")).willReturn(publisher);
+        given(request.getParameter("name")).willReturn("name");
+        given(request.getParameter("publisher")).willReturn("publisher");
         given(request.getParameter("monthPrice")).willReturn("2.00");
-        given(periodicalsDao.create(periodicals)).willReturn(1L);
-        List<Periodicals> list = singletonList(new Periodicals(1, name, publisher, monthPrice));
-        given(periodicalsDao.getAll()).willReturn(list);
+        given(periodicalsDao.create(periodical())).willReturn(1L);
         given(request.getSession()).willReturn(session);
+        List<Periodicals> list = singletonList(periodicalWithId());
+        given(periodicalsDao.getAll()).willReturn(list);
 
         strategy.handle(request, response);
 
         verify(session).setAttribute("periodicals", list);
         verify(response).sendRedirect("/edit-periodicals");
+    }
+
+    @Test
+    public void shouldHandleRedirect() throws ServletException, IOException {
+        PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
+        Strategy strategy = new AddPeriodicalStrategy(periodicalsDao);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        HttpSession session = mock(HttpSession.class);
+        given(request.getParameter("name")).willReturn("name");
+        given(request.getParameter("publisher")).willReturn("publisher");
+        given(request.getParameter("monthPrice")).willReturn("2.00");
+        given(periodicalsDao.create(periodical())).willReturn(-2L);
+        given(request.getSession()).willReturn(session);
+
+        strategy.handle(request, response);
+
+        verify(session).setAttribute("message", null);
+        verify(response).sendRedirect("/error");
+    }
+
+    private Periodicals periodical() {
+        return new Periodicals("name", "publisher", new BigDecimal("2.00"));
+    }
+
+    private Periodicals periodicalWithId() {
+        return new Periodicals(1, "name", "publisher", new BigDecimal("2.00"));
     }
 }
