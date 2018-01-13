@@ -8,9 +8,11 @@ import com.inna.shpota.periodicals.domain.Subscription;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
+import static java.time.LocalDateTime.now;
 
 public class ContinueSubscribeStrategy extends Strategy {
     private final SubscriptionDao subscriptionDao;
@@ -21,23 +23,25 @@ public class ContinueSubscribeStrategy extends Strategy {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Reader reader = (Reader) request.getSession().getAttribute("reader");
-        String monthQuantity = request.getParameter("monthQuantity");
-        Subscription subscription = Subscription.builder()
-                .readerId(reader.getId())
-                .periodicalsId(extractId(request))
-                .monthQuantity(Integer.parseInt(monthQuantity))
-                .date(LocalDateTime.now())
-                .build();
-        Periodicals periodicals = (Periodicals) request.getSession().getAttribute("periodical");
+        HttpSession session = request.getSession();
+        Periodicals periodicals = (Periodicals) session.getAttribute("periodical");
+        Subscription subscription = extractSubscription(request, session, periodicals);
         BigDecimal monthPrice = periodicals.getMonthPrice();
         long paymentId = subscriptionDao.createPaymentBySubscription(subscription, monthPrice);
         response.sendRedirect("/periodicals/payment/" + paymentId);
     }
 
-    private int extractId(HttpServletRequest request) {
-        String uri = request.getRequestURI();
-        String postIdString = uri.replace("/periodicals/subscribe/", "");
-        return Integer.parseInt(postIdString);
+    private Subscription extractSubscription(HttpServletRequest request, HttpSession session, Periodicals periodicals) {
+        long periodicalsId = periodicals.getId();
+        Reader reader = (Reader) session.getAttribute("reader");
+        long readerId = reader.getId();
+        String monthQuantity = request.getParameter("monthQuantity");
+        int quantity = Integer.parseInt(monthQuantity);
+        return Subscription.builder()
+                .readerId(readerId)
+                .periodicalsId(periodicalsId)
+                .monthQuantity(quantity)
+                .date(now())
+                .build();
     }
 }

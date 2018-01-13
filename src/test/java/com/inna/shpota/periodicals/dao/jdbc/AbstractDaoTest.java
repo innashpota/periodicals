@@ -87,7 +87,7 @@ public abstract class AbstractDaoTest {
             "  (4, 297, 1)," +
             "  (5, 1188, 1);";
 
-    public void prepareConnection() {
+    void prepareConnection() {
         jdbcDataSource.setURL("jdbc:h2:~/periodicals;MODE=MYSQL");
         jdbcDataSource.setUser("sa");
         jdbcDataSource.setPassword("");

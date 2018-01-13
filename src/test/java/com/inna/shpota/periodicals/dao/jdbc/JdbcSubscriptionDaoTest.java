@@ -23,14 +23,14 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Before
-    public void before() throws Exception {
+    public void before() {
         prepareConnection();
         jdbcSubscriptionDao = new JdbcSubscriptionDao(jdbcDataSource);
         jdbcPaymentDao = new JdbcPaymentDao(jdbcDataSource);
     }
 
     @Test
-    public void shouldCreate() throws Exception {
+    public void shouldCreate() {
         Subscription subscription = Subscription.builder()
                 .readerId(1)
                 .periodicalsId(1)
@@ -48,7 +48,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldCreatePaymentBySubscription() throws Exception {
+    public void shouldCreatePaymentBySubscription() {
         int monthQuantity = 5;
         Subscription subscription = Subscription.builder()
                 .readerId(1)
@@ -68,7 +68,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldDelete() throws Exception {
+    public void shouldDelete() {
         long id = 6;
 
         jdbcSubscriptionDao.delete(id);
@@ -78,7 +78,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetById() throws Exception {
+    public void shouldGetById() {
         long id = 2;
         Subscription expectedSubscription = Subscription.builder()
                 .id(id)
@@ -94,7 +94,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldUpdate() throws Exception {
+    public void shouldUpdate() {
         int id = 2;
         Subscription expectedSubscription = Subscription.builder()
                 .id(id)
@@ -111,7 +111,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldGetAll() throws Exception {
+    public void shouldGetAll() {
         List<Subscription> expected = asList(
                 Subscription.builder()
                         .id(1)
@@ -156,7 +156,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullSubscription() throws Exception {
+    public void shouldFailToCreateGivenNullSubscription() {
         Subscription subscription = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Subscription must not be null");
@@ -165,7 +165,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNegativeReaderId() throws Exception {
+    public void shouldFailToCreateGivenNegativeReaderId() {
         Subscription subscription = getSubscriptionWithNegativeReaderId();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Reader ID must be positive");
@@ -174,7 +174,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNegativePeriodicalsId() throws Exception {
+    public void shouldFailToCreateGivenNegativePeriodicalsId() {
         Subscription subscription = getSubscriptionWithNegativePeriodicalsId();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Periodicals ID must be positive");
@@ -183,7 +183,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNegativeMonthQuantity() throws Exception {
+    public void shouldFailToCreateGivenNegativeMonthQuantity() {
         Subscription subscription = getSubscriptionWithNegativeMonthQuantity();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Month quantity must be positive");
@@ -192,7 +192,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreateGivenNullDate() throws Exception {
+    public void shouldFailToCreateGivenNullDate() {
         Subscription subscription = getSubscriptionWithNullDate();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Date must not be null");
@@ -202,7 +202,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
 
 
     @Test
-    public void shouldFailToCreatePaymentGivenNullSubscription() throws Exception {
+    public void shouldFailToCreatePaymentGivenNullSubscription() {
         Subscription subscription = null;
         BigDecimal monthPrice = new BigDecimal("10.00");
         expectedException.expect(IllegalArgumentException.class);
@@ -212,7 +212,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreatePaymentGivenNegativeReaderId() throws Exception {
+    public void shouldFailToCreatePaymentGivenNegativeReaderId() {
         Subscription subscription = getSubscriptionWithNegativeReaderId();
         BigDecimal monthPrice = new BigDecimal("10.00");
         expectedException.expect(IllegalArgumentException.class);
@@ -222,7 +222,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreatePaymentGivenNegativePeriodicalsId() throws Exception {
+    public void shouldFailToCreatePaymentGivenNegativePeriodicalsId() {
         Subscription subscription = getSubscriptionWithNegativePeriodicalsId();
         BigDecimal monthPrice = new BigDecimal("10.00");
         expectedException.expect(IllegalArgumentException.class);
@@ -232,7 +232,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreatePaymentGivenNegativeMonthQuantity() throws Exception {
+    public void shouldFailToCreatePaymentGivenNegativeMonthQuantity() {
         Subscription subscription = getSubscriptionWithNegativeMonthQuantity();
         BigDecimal monthPrice = new BigDecimal("10.00");
         expectedException.expect(IllegalArgumentException.class);
@@ -242,7 +242,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreatePaymentGivenNullDate() throws Exception {
+    public void shouldFailToCreatePaymentGivenNullDate() {
         Subscription subscription = getSubscriptionWithNullDate();
         BigDecimal monthPrice = new BigDecimal("10.00");
         expectedException.expect(IllegalArgumentException.class);
@@ -252,7 +252,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToCreatePaymentGivenNegativeMonthPrice() throws Exception {
+    public void shouldFailToCreatePaymentGivenNegativeMonthPrice() {
         Subscription subscription = Subscription.builder()
                 .readerId(1)
                 .periodicalsId(1)
@@ -267,7 +267,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToDeleteGivenNegativeId() throws Exception {
+    public void shouldFailToDeleteGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
@@ -276,7 +276,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToGetByIdGivenNegativeId() throws Exception {
+    public void shouldFailToGetByIdGivenNegativeId() {
         long id = -2;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("ID must be positive");
@@ -285,7 +285,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullSubscription() throws Exception {
+    public void shouldFailToUpdateGivenNullSubscription() {
         Subscription subscription = null;
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Subscription must not be null");
@@ -294,7 +294,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNegativeReaderId() throws Exception {
+    public void shouldFailToUpdateGivenNegativeReaderId() {
         Subscription subscription = getSubscriptionWithNegativeReaderId();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Reader ID must be positive");
@@ -303,7 +303,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNegativePeriodicalsId() throws Exception {
+    public void shouldFailToUpdateGivenNegativePeriodicalsId() {
         Subscription subscription = getSubscriptionWithNegativePeriodicalsId();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Periodicals ID must be positive");
@@ -312,7 +312,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNegativeMonthQuantity() throws Exception {
+    public void shouldFailToUpdateGivenNegativeMonthQuantity() {
         Subscription subscription = getSubscriptionWithNegativeMonthQuantity();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Month quantity must be positive");
@@ -321,7 +321,7 @@ public class JdbcSubscriptionDaoTest extends AbstractDaoTest {
     }
 
     @Test
-    public void shouldFailToUpdateGivenNullDate() throws Exception {
+    public void shouldFailToUpdateGivenNullDate() {
         Subscription subscription = getSubscriptionWithNullDate();
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Date must not be null");

@@ -1,6 +1,7 @@
 package com.inna.shpota.periodicals.strategies;
 
 import com.inna.shpota.periodicals.dao.*;
+import com.inna.shpota.periodicals.service.EmailService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
@@ -20,6 +21,7 @@ public class RequestHandler {
         PeriodicalsDao periodicalsDao = FactoryDao.createPeriodicalsDao(dataSource);
         ReaderDao readerDao = FactoryDao.createReaderDao(dataSource);
         SubscriptionDao subscriptionDao = FactoryDao.createSubscriptionDao(dataSource);
+        EmailService service = EmailService.getInstance();
 
         Map<Class<? extends Strategy>, Strategy> strategies = new HashMap<>();
         strategies.put(ErrorStrategy.class, new ErrorStrategy());
@@ -27,25 +29,22 @@ public class RequestHandler {
         strategies.put(PeriodicalsStrategy.class, new PeriodicalsStrategy(periodicalsDao));
         strategies.put(RedirectAdminLogInStrategy.class, new RedirectAdminLogInStrategy());
         strategies.put(AdminLogInStrategy.class, new AdminLogInStrategy());
-        strategies.put(RedirectEditPeriodicalsStrategy.class, new RedirectEditPeriodicalsStrategy());
-        strategies.put(EditPeriodicalsStrategy.class, new EditPeriodicalsStrategy(adminDao));
+        strategies.put(AdminPeriodicalsStrategy.class, new AdminPeriodicalsStrategy(adminDao));
+        strategies.put(EditPeriodicalsStrategy.class, new EditPeriodicalsStrategy());
         strategies.put(LogOutStrategy.class, new LogOutStrategy());
-        strategies.put(RedirectCreatePeriodicalsStrategy.class, new RedirectCreatePeriodicalsStrategy());
         strategies.put(CreatePeriodicalStrategy.class, new CreatePeriodicalStrategy());
         strategies.put(AddPeriodicalStrategy.class, new AddPeriodicalStrategy(periodicalsDao));
         strategies.put(DeletePeriodicalStrategy.class, new DeletePeriodicalStrategy(periodicalsDao));
         strategies.put(EditPeriodicalStrategy.class, new EditPeriodicalStrategy(periodicalsDao));
         strategies.put(SavePeriodicalStrategy.class, new SavePeriodicalStrategy(periodicalsDao));
-        strategies.put(RedirectReaderLogInStrategy.class, new RedirectReaderLogInStrategy());
         strategies.put(ReaderLogInStrategy.class, new ReaderLogInStrategy());
         strategies.put(ReaderPeriodicalsStrategy.class, new ReaderPeriodicalsStrategy(readerDao));
-        strategies.put(RedirectReaderSignUpStrategy.class, new RedirectReaderSignUpStrategy());
         strategies.put(ReaderSignUpStrategy.class, new ReaderSignUpStrategy(readerDao));
         strategies.put(ContinueSignUpStrategy.class, new ContinueSignUpStrategy(readerDao));
         strategies.put(SubscribeStrategy.class, new SubscribeStrategy(periodicalsDao));
         strategies.put(ContinueSubscribeStrategy.class, new ContinueSubscribeStrategy(subscriptionDao));
         strategies.put(PaymentStrategy.class, new PaymentStrategy(paymentDao));
-        strategies.put(PayStrategy.class, new PayStrategy(paymentDao));
+        strategies.put(PayStrategy.class, new PayStrategy(paymentDao, service));
         strategies.put(ProfileStrategy.class, new ProfileStrategy(readerDao));
         return new RequestHandler(strategies);
     }
@@ -56,15 +55,7 @@ public class RequestHandler {
             return strategies.get(RedirectPeriodicalsStrategy.class);
         }
         if ("/periodicals".equals(uri)) {
-            if ("GET".equals(request.getMethod())) {
-                if (request.getParameter("login") != null) {
-                    return strategies.get(RedirectReaderLogInStrategy.class);
-                }
-                if (request.getParameter("signup") != null) {
-                    return strategies.get(RedirectReaderSignUpStrategy.class);
-                }
-                return strategies.get(PeriodicalsStrategy.class);
-            }
+            return strategies.get(PeriodicalsStrategy.class);
         }
         if ("/admin".equals(uri)) {
             return strategies.get(RedirectAdminLogInStrategy.class);
@@ -73,20 +64,12 @@ public class RequestHandler {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(AdminLogInStrategy.class);
             } else if ("POST".equals(request.getMethod())) {
-                return strategies.get(RedirectEditPeriodicalsStrategy.class);
+                return strategies.get(AdminPeriodicalsStrategy.class);
             }
         }
         if ("/edit-periodicals".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
-                if (request.getParameter("create") != null) {
-                    return strategies.get(RedirectCreatePeriodicalsStrategy.class);
-                }
                 return strategies.get(EditPeriodicalsStrategy.class);
-            }
-        }
-        if ("/admin/logout".equals(uri)) {
-            if ("POST".equals(request.getMethod())) {
-                return strategies.get(LogOutStrategy.class);
             }
         }
         if ("/create".equals(uri)) {

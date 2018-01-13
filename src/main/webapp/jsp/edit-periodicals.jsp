@@ -44,12 +44,12 @@
 </table>
 <div>
     <p>
-    <form action="/edit-periodicals" method="get">
+    <form action="/create" method="get">
         <input type="submit"
                name="create"
                value="Add periodical"/>
     </form>
-    <form action="/admin/logout" method="post">
+    <form action="/logout" method="get">
         <input type="submit"
                name="logout"
                value="Log out"/>
