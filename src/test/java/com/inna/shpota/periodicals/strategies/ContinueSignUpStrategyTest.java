@@ -26,10 +26,10 @@ public class ContinueSignUpStrategyTest {
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("lastName", getLastName());
-        verify(session).setAttribute("firstName", getFirstName());
-        verify(session).setAttribute("middleName", getMiddleName());
-        verify(session).setAttribute("email", getEmail());
+        verify(session).setAttribute("lastName", "lastName");
+        verify(session).setAttribute("firstName", "firstName");
+        verify(session).setAttribute("middleName", "middleName");
+        verify(session).setAttribute("email", "email");
         verify(session).setAttribute("message", "This email is used!");
         verify(response).sendRedirect("/signup");
     }
@@ -51,12 +51,12 @@ public class ContinueSignUpStrategyTest {
 
     private void prepareMockForHandle(ReaderDao readerDao, HttpServletRequest request, HttpSession session) {
         Reader reader = reader();
-        given(request.getParameter("lastName")).willReturn(getLastName());
-        given(request.getParameter("firstName")).willReturn(getFirstName());
-        given(request.getParameter("middleName")).willReturn(getMiddleName());
-        given(request.getParameter("email")).willReturn(getEmail());
-        given(request.getParameter("password")).willReturn(getPassword());
-        given(readerDao.getByEmail(getEmail())).willReturn(reader);
+        given(request.getParameter("lastName")).willReturn("lastName");
+        given(request.getParameter("firstName")).willReturn("firstName");
+        given(request.getParameter("middleName")).willReturn("middleName");
+        given(request.getParameter("email")).willReturn("email");
+        given(request.getParameter("password")).willReturn("password");
+        given(readerDao.getByEmail("email")).willReturn(reader);
         given(request.getSession()).willReturn(session);
     }
 
@@ -64,59 +64,35 @@ public class ContinueSignUpStrategyTest {
             ReaderDao readerDao, HttpServletRequest request, HttpSession session
     ) {
         Reader reader = reader();
-        given(request.getParameter("lastName")).willReturn(getLastName());
-        given(request.getParameter("firstName")).willReturn(getFirstName());
-        given(request.getParameter("middleName")).willReturn(getMiddleName());
-        given(request.getParameter("email")).willReturn(getEmail());
-        given(request.getParameter("password")).willReturn(getPassword());
-        given(readerDao.getByEmail(getEmail())).willReturn(null);
-        given(readerDao.create(reader)).willReturn(getId());
-        given(readerDao.getById(getId())).willReturn(readerWithId());
+        given(request.getParameter("lastName")).willReturn("lastName");
+        given(request.getParameter("firstName")).willReturn("firstName");
+        given(request.getParameter("middleName")).willReturn("middleName");
+        given(request.getParameter("email")).willReturn("email");
+        given(request.getParameter("password")).willReturn("password");
+        given(readerDao.getByEmail("email")).willReturn(null);
+        given(readerDao.create(reader)).willReturn(2L);
+        given(readerDao.getById(2)).willReturn(readerWithId());
         given(request.getSession()).willReturn(session);
     }
 
     private Reader reader() {
         return Reader.builder()
-                .lastName(getLastName())
-                .firstName(getFirstName())
-                .middleName(getMiddleName())
-                .email(getEmail())
-                .password(getPassword())
+                .lastName("lastName")
+                .firstName("firstName")
+                .middleName("middleName")
+                .email("email")
+                .password("password")
                 .build();
     }
 
     private Reader readerWithId() {
         return Reader.builder()
-                .id(getId())
-                .lastName(getLastName())
-                .firstName(getFirstName())
-                .middleName(getMiddleName())
-                .email(getEmail())
-                .password(getPassword())
+                .id(2)
+                .lastName("lastName")
+                .firstName("firstName")
+                .middleName("middleName")
+                .email("email")
+                .password("password")
                 .build();
-    }
-
-    private long getId() {
-        return 2;
-    }
-
-    private String getLastName() {
-        return "lastName";
-    }
-
-    private String getFirstName() {
-        return "firstName";
-    }
-
-    private String getMiddleName() {
-        return "middleName";
-    }
-
-    private String getEmail() {
-        return "email";
-    }
-
-    private String getPassword() {
-        return "password";
     }
 }
