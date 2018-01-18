@@ -39,7 +39,7 @@ public class RequestHandler {
         strategies.put(SavePeriodicalStrategy.class, new SavePeriodicalStrategy(periodicalsDao));
         strategies.put(ReaderLogInStrategy.class, new ReaderLogInStrategy());
         strategies.put(ReaderPeriodicalsStrategy.class, new ReaderPeriodicalsStrategy(readerDao));
-        strategies.put(ReaderSignUpStrategy.class, new ReaderSignUpStrategy(readerDao));
+        strategies.put(ReaderSignUpStrategy.class, new ReaderSignUpStrategy());
         strategies.put(ContinueSignUpStrategy.class, new ContinueSignUpStrategy(readerDao));
         strategies.put(SubscribeStrategy.class, new SubscribeStrategy(periodicalsDao));
         strategies.put(ContinueSubscribeStrategy.class, new ContinueSubscribeStrategy(subscriptionDao));
