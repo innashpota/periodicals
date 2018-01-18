@@ -19,7 +19,7 @@ public class CreatePeriodicalStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getRequestDispatcher("/jsp/create.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/create.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

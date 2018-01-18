@@ -14,7 +14,7 @@ public class ReaderLogInStrategy extends Strategy {
         if (reader != null) {
             response.sendRedirect("/periodicals");
         } else {
-            request.getRequestDispatcher("/jsp/login-reader.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/login-reader.jsp").forward(request, response);
         }
     }
 }

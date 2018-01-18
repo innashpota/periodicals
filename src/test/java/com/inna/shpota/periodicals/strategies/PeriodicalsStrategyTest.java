@@ -2,6 +2,7 @@ package com.inna.shpota.periodicals.strategies;
 
 import com.inna.shpota.periodicals.dao.PeriodicalsDao;
 import com.inna.shpota.periodicals.domain.Periodicals;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.servlet.RequestDispatcher;
@@ -32,7 +33,7 @@ public class PeriodicalsStrategyTest {
                 new Periodicals(2, "name2", "publisher", new BigDecimal("2.22")));
         given(periodicalsDao.getAll()).willReturn(periodicals);
         given(request.getSession()).willReturn(session);
-        given(request.getRequestDispatcher("/jsp/periodicals.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/periodicals.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

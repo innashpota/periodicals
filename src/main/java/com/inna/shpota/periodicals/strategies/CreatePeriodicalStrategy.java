@@ -8,6 +8,6 @@ import java.io.IOException;
 public class CreatePeriodicalStrategy extends Strategy {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/create.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/create.jsp").forward(request, response);
     }
 }

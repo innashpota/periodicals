@@ -40,7 +40,7 @@ public class ReaderLogInStrategyTest {
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         given(request.getSession()).willReturn(session);
         given(session.getAttribute("reader")).willReturn(reader);
-        given(request.getRequestDispatcher("/jsp/login-reader.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/login-reader.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

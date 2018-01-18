@@ -33,7 +33,7 @@ public class ProfileStrategyTest {
         given(request.getSession()).willReturn(session);
         given(session.getAttribute("reader")).willReturn(reader());
         given(readerDao.getInformationByReader(2)).willReturn(information());
-        given(request.getRequestDispatcher("/jsp/profile.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

@@ -21,7 +21,7 @@ public class PaymentStrategy extends Strategy {
         long id = extractId(request);
         Payment payment = paymentDao.getById(id);
         request.getSession().setAttribute("payment", payment);
-        request.getRequestDispatcher("/jsp/payment.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/payment.jsp").forward(request, response);
     }
 
     private long extractId(HttpServletRequest request) {
