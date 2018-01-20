@@ -20,7 +20,7 @@ public class EditPeriodicalStrategy extends Strategy {
         long id = extractId(request);
         Periodicals periodical = periodicalsDao.getById(id);
         request.getSession().setAttribute("periodical", periodical);
-        request.getRequestDispatcher("/jsp/edit.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp").forward(request, response);
     }
 
     private long extractId(HttpServletRequest request) {

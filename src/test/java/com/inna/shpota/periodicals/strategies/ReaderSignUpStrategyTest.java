@@ -12,14 +12,14 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-public class CreatePeriodicalStrategyTest {
+public class ReaderSignUpStrategyTest {
     @Test
     public void shouldHandle() throws ServletException, IOException {
-        Strategy strategy = new CreatePeriodicalStrategy();
+        ReaderSignUpStrategy strategy = new ReaderSignUpStrategy();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getRequestDispatcher("/WEB-INF/jsp/create.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

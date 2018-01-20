@@ -31,7 +31,7 @@ public class SubscribeStrategyTest {
         given(session.getAttribute("reader")).willReturn(reader);
         given(request.getRequestURI()).willReturn("/periodicals/subscribe/2");
         given(periodicalsDao.getById(2)).willReturn(periodical());
-        given(request.getRequestDispatcher("/jsp/subscribe.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/subscribe.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

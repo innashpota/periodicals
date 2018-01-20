@@ -40,7 +40,7 @@ public class AdminLogInStrategyTest {
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         given(request.getSession()).willReturn(session);
         given(session.getAttribute("admin")).willReturn(admin);
-        given(request.getRequestDispatcher("/jsp/login-admin.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/login-admin.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

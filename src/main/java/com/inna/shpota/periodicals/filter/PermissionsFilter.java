@@ -61,12 +61,13 @@ public class PermissionsFilter implements Filter {
     }
 
     @Override
-    public void destroy() {
-    }
+    public void destroy() { }
 
     private void redirectErrorPage(HttpServletRequest request, HttpServletResponse response, String message)
             throws ServletException, IOException {
         request.setAttribute("message", message);
-        request.getRequestDispatcher("/jsp/error.jsp").forward(request, response);
+        request.getServletContext()
+                .getRequestDispatcher("/WEB-INF/jsp/error.jsp")
+                .forward(request, response);
     }
 }

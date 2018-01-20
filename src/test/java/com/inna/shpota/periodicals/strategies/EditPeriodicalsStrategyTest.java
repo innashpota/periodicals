@@ -19,7 +19,7 @@ public class EditPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getRequestDispatcher("/jsp/edit-periodicals.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/edit-periodicals.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

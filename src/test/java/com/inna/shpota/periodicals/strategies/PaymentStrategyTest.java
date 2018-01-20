@@ -28,7 +28,7 @@ public class PaymentStrategyTest {
         given(request.getRequestURI()).willReturn("/periodicals/payment/3");
         given(paymentDao.getById(3)).willReturn(payment());
         given(request.getSession()).willReturn(session);
-        given(request.getRequestDispatcher("/jsp/payment.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/payment.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

@@ -14,7 +14,7 @@ public class AdminLogInStrategy extends Strategy {
         if (admin != null) {
             response.sendRedirect("/edit-periodicals");
         } else {
-            request.getRequestDispatcher("/jsp/login-admin.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/login-admin.jsp").forward(request, response);
         }
     }
 }

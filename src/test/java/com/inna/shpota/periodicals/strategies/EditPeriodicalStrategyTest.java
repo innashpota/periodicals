@@ -31,7 +31,7 @@ public class EditPeriodicalStrategyTest {
         BigDecimal price = new BigDecimal("2.22");
         Periodicals periodical = new Periodicals(id, "name", "publisher", price);
         given(periodicalsDao.getById(id)).willReturn(periodical);
-        given(request.getRequestDispatcher("/jsp/edit.jsp")).willReturn(dispatcher);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);
 

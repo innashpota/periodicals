@@ -8,6 +8,6 @@ import java.io.IOException;
 public class EditPeriodicalsStrategy extends Strategy {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/jsp/edit-periodicals.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/edit-periodicals.jsp").forward(request, response);
     }
 }

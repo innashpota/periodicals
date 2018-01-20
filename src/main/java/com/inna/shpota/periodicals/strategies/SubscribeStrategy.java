@@ -28,7 +28,7 @@ public class SubscribeStrategy extends Strategy {
             long id = extractId(request);
             Periodicals periodical = periodicalsDao.getById(id);
             session.setAttribute("periodical", periodical);
-            request.getRequestDispatcher("/jsp/subscribe.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/jsp/subscribe.jsp").forward(request, response);
         }
     }
 

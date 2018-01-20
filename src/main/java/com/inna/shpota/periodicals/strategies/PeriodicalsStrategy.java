@@ -20,6 +20,6 @@ public class PeriodicalsStrategy extends Strategy {
     public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Periodicals> periodicals = periodicalsDao.getAll();
         request.getSession().setAttribute("periodicals", periodicals);
-        request.getRequestDispatcher("/jsp/periodicals.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/periodicals.jsp").forward(request, response);
     }
 }
