@@ -2,16 +2,22 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
 
+<jsp:include page="extensions/language.jsp"/>
+
 <html>
 <head>
-    <link rel="stylesheet" href="/css/styles.css"/>
-    <title>Log in</title>
+    <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
+    <title>
+        <c:out value="${sessionScope.properties['login-admin.head']}"/>
+    </title>
 </head>
 <body>
-<h2>Log in</h2>
-<form action="/admin/login" name="loginForm" method="post">
+<h2>
+    <c:out value="${sessionScope.properties['login-admin.title']}"/>
+</h2>
+<form action="<c:url value="/admin/login"/>" name="loginForm" method="post">
     <br>
-    Login:
+    <c:out value="${sessionScope.properties['login-admin.login']}"/>
     <br>
     <label>
         <input type="text"
@@ -21,7 +27,7 @@
                required/>
     </label>
     <br>
-    Password:
+    <c:out value="${sessionScope.properties['login-admin.password']}"/>
     <br>
     <label>
         <input type="password"
@@ -34,14 +40,10 @@
     <br>
     <input type="submit"
            name="login"
-           value="Log in"/>
+           value="${sessionScope.properties['login-admin.logIn']}"/>
     <br>
     <br>
-    <span>
-        <c:if test="${not empty sessionScope.message}">
-            <c:out value="${sessionScope.message}"/>
-        </c:if>
-    </span>
+    <jsp:include page="extensions/message.jsp"/>
 </form>
 </body>
 </html>
