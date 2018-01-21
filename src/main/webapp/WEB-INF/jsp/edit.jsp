@@ -52,5 +52,8 @@
            name="save"
            value="${sessionScope.properties['edit.save']}"/>
 </form>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

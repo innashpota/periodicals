@@ -49,5 +49,8 @@
     <br>
     <jsp:include page="extensions/message.jsp"/>
 </form>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

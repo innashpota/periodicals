@@ -69,5 +69,8 @@
                value="${sessionScope.properties['edit-periodicals.logout']}"/>
     </form>
 </div>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

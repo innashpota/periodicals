@@ -49,5 +49,8 @@
            name="add"
            value="${sessionScope.properties['create.add']}"/>
 </form>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

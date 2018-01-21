@@ -114,5 +114,8 @@
                value="${sessionScope.properties['profile.logout']}"/>
     </form>
 </div>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

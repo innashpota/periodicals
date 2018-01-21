@@ -56,5 +56,8 @@
     </c:forEach>
     </tbody>
 </table>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

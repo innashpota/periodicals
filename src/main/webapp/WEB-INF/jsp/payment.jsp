@@ -39,5 +39,8 @@
            name="pay"
            value="${sessionScope.properties['payment.pay']}"/>
 </form>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

@@ -1,0 +1,1 @@
+<div id="footer">&copy; 2018 Inna Shpota</div>

@@ -39,5 +39,8 @@
            name="continue"
            value="${sessionScope.properties['subscribe.continue']}"/>
 </form>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>

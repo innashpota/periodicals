@@ -20,5 +20,8 @@
         <c:out value="${sessionScope.properties['error.defaultMessage']}"/>
     </c:if>
 </h3>
+
+<jsp:include page="extensions/copyright.jsp"/>
+
 </body>
 </html>
