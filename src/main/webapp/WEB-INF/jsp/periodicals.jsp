@@ -2,62 +2,69 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page isELIgnored="false" %>
 
-<jsp:include page="extensions/language.jsp"/>
-
 <html>
 <head>
+    <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['periodicals.head']}"/>
     </title>
 </head>
 <body>
-
-<jsp:include page="extensions/user.jsp"/>
-
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <th>
-            <c:out value="${sessionScope.properties['periodicals.name']}"/>
-        </th>
-        <th>
-            <c:out value="${sessionScope.properties['periodicals.publisher']}"/>
-        </th>
-        <th>
-            <c:out value="${sessionScope.properties['periodicals.monthPrice']}"/>
-        </th>
-        <c:if test="${empty sessionScope.admin}">
-            <th>
-                <c:out value="${sessionScope.properties['periodicals.actions']}"/>
-            </th>
-        </c:if>
-    </tr>
-    <tbody>
-    <c:forEach items="${sessionScope.periodicals}" var="periodical">
-        <tr>
-            <td>
-                <c:out value="${periodical.name}"/>
-            </td>
-            <td>
-                <c:out value="${periodical.publisher}"/>
-            </td>
-            <td>
-                <c:out value="${periodical.monthPrice}"/>
-            </td>
-            <c:if test="${empty sessionScope.admin}">
-                <td>
-                    &nbsp;
-                    <a href="/periodicals/subscribe/${periodical.id}">
-                        <c:out value="${sessionScope.properties['periodicals.subscribe']}"/>
-                    </a>
-                    &nbsp;
-                </td>
-            </c:if>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-
+<div id="wrapper">
+    <jsp:include page="extensions/welcome.jsp"/>
+    <div id="fixed">
+        <p>
+        <form>
+            <jsp:include page="extensions/user.jsp"/>
+            &nbsp;
+            <jsp:include page="extensions/language.jsp"/>
+        </form>
+    </div>
+    <div id="container">
+        <table class="border">
+            <tr>
+                <th class="border">
+                    <c:out value="${sessionScope.properties['periodicals.name']}"/>
+                </th>
+                <th class="border">
+                    <c:out value="${sessionScope.properties['periodicals.publisher']}"/>
+                </th>
+                <th class="border">
+                    <c:out value="${sessionScope.properties['periodicals.monthPrice']}"/>
+                </th>
+                <c:if test="${empty sessionScope.admin}">
+                    <th class="border">
+                        <c:out value="${sessionScope.properties['periodicals.actions']}"/>
+                    </th>
+                </c:if>
+            </tr>
+            <tbody>
+            <c:forEach items="${sessionScope.periodicals}" var="periodical">
+                <tr>
+                    <td class="border">
+                        <c:out value="${periodical.name}"/>
+                    </td>
+                    <td class="border">
+                        <c:out value="${periodical.publisher}"/>
+                    </td>
+                    <td class="center border">
+                        <c:out value="${periodical.monthPrice}"/>
+                    </td>
+                    <c:if test="${empty sessionScope.admin}">
+                        <td class="border">
+                            &nbsp;
+                            <a href="/periodicals/subscribe/${periodical.id}">
+                                <c:out value="${sessionScope.properties['periodicals.subscribe']}"/>
+                            </a>
+                            &nbsp;
+                        </td>
+                    </c:if>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+</div>
 <jsp:include page="extensions/copyright.jsp"/>
-
 </body>
 </html>

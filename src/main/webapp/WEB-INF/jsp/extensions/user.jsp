@@ -3,55 +3,43 @@
 <%@ page isELIgnored="false" %>
 
 <c:if test="${empty sessionScope.reader and empty sessionScope.admin}">
-    <div>
-        <p>
-        <form action="<c:url value="/login"/>" method="get">
-            <input type="submit"
-                   name="login"
-                   value="${sessionScope.properties['periodicals.login']}"/>
-        </form>
-        <form action="<c:url value="/signup"/>" method="get">
-            <input type="submit"
-                   name="signup"
-                   value="${sessionScope.properties['periodicals.signUp']}"/>
-        </form>
-    </div>
+    <input formaction="<c:url value="/login"/>"
+           formmethod="get"
+           type="submit"
+           name="login"
+           value="${sessionScope.properties['periodicals.login']}">
+    &nbsp;
+    <input formaction="<c:url value="/signup"/>"
+           formmethod="get"
+           type="submit"
+           name="signup"
+           value="${sessionScope.properties['periodicals.signUp']}">
 </c:if>
 
 <c:if test="${not empty sessionScope.reader and empty sessionScope.admin}">
-    <h4>
-        <c:out value="${sessionScope.properties['periodicals.welcome']} ${sessionScope.reader.firstName}!"/>
-    </h4>
-    <div>
-        <p>
-        <form action="<c:url value="/profile"/>" method="get">
-            <input type="submit"
-                   name="profile"
-                   value="${sessionScope.properties['periodicals.profile']}"/>
-        </form>
-        <form action="<c:url value="/logout"/>" method="get">
-            <input type="submit"
-                   name="logout"
-                   value="${sessionScope.properties['periodicals.logout']}"/>
-        </form>
-    </div>
+    <input formaction="<c:url value="/profile"/>"
+           formmethod="get"
+           type="submit"
+           name="profile"
+           value="${sessionScope.properties['periodicals.profile']}"/>
+    &nbsp;
+    <input formaction="<c:url value="/logout"/>"
+           formmethod="get"
+           type="submit"
+           name="logout"
+           value="${sessionScope.properties['periodicals.logout']}"/>
 </c:if>
 
 <c:if test="${empty sessionScope.reader and not empty sessionScope.admin}">
-    <h4>
-        <c:out value="${sessionScope.properties['periodicals.welcome']} ${sessionScope.admin.login}!"/>
-    </h4>
-    <div>
-        <p>
-            &nbsp;
-            <a href="<c:url value="/edit-periodicals"/>">
-                <c:out value="${sessionScope.properties['periodicals.editPeriodicals']}"/>
-            </a>
-            &nbsp;
-        <form action="<c:url value="/logout"/>" method="get">
-            <input type="submit"
-                   name="logout"
-                   value="${sessionScope.properties['periodicals.logout']}"/>
-        </form>
-    </div>
+    <input formaction="<c:url value="/edit-periodicals"/>"
+           formmethod="get"
+           type="submit"
+           name="edit-periodicals"
+           value="${sessionScope.properties['periodicals.editPeriodicals']}"/>
+    &nbsp;
+    <input formaction="<c:url value="/logout"/>"
+           formmethod="get"
+           type="submit"
+           name="logout"
+           value="${sessionScope.properties['periodicals.logout']}"/>
 </c:if>
