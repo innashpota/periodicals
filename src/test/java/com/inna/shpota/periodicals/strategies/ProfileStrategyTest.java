@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.inna.shpota.periodicals.strategies.Strategy.DATE_FORMATTER;
 import static java.time.Month.DECEMBER;
 import static java.util.Collections.singletonList;
 import static org.mockito.BDDMockito.given;
@@ -38,6 +39,7 @@ public class ProfileStrategyTest {
         strategy.handle(request, response);
 
         verify(session).setAttribute("information", information());
+        verify(session).setAttribute("formatter", DATE_FORMATTER);
         verify(dispatcher).forward(request, response);
     }
 

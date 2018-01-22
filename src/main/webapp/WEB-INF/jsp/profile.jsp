@@ -101,7 +101,7 @@
                         <c:out value="${information.periodicalsMonthPrice}"/>
                     </td>
                     <td class="center border">
-                        <c:out value="${information.subscriptionDate}"/>
+                        <c:out value="${sessionScope.formatter.format(information.subscriptionDate)}"/>
                     </td>
                     <td class="center border">
                         <c:out value="${information.monthQuantity}"/>

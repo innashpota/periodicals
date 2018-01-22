@@ -24,6 +24,7 @@ public class ProfileStrategy extends Strategy {
         long id = reader.getId();
         List<Information> information = readerDao.getInformationByReader(id);
         request.getSession().setAttribute("information", information);
+        request.getSession().setAttribute("formatter", DATE_FORMATTER);
         request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp").forward(request, response);
     }
 }
