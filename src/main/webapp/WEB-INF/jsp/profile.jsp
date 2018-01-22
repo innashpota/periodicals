@@ -14,8 +14,6 @@
     <div id="fixed">
         <p>
         <form>
-            <jsp:include page="extensions/language.jsp"/>
-            &nbsp;
             <input formaction="<c:url value="/periodicals"/>"
                    formmethod="get"
                    type="submit"
@@ -27,6 +25,8 @@
                    type="submit"
                    name="logout"
                    value="${sessionScope.properties['profile.logout']}"/>
+            &nbsp;
+            <jsp:include page="extensions/language.jsp"/>
         </form>
     </div>
     <div id="container">
