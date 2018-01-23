@@ -4,6 +4,7 @@
 
 <html>
 <head>
+    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>" />
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['edit.head']}"/>
