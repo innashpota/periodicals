@@ -1,4 +1,4 @@
-package com.inna.shpota.periodicals.utf8;
+package com.inna.shpota.periodicals.filter;
 
 import java.io.IOException;
 import java.io.InputStream;

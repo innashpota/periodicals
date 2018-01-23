@@ -1,7 +1,5 @@
 package com.inna.shpota.periodicals.filter;
 
-import com.inna.shpota.periodicals.utf8.UTF8Control;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
