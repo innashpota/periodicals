@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>" />
+    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['subscribe.head']}"/>
@@ -23,25 +23,44 @@
             <c:out value="${sessionScope.properties['subscribe.title']}"/>
         </h2>
         <form action="/periodicals/subscribe/${sessionScope.periodical.id}" method="post">
-            <h4>
-                <c:out value="${sessionScope.properties['subscribe.name']}"/>
-            </h4>
-            <c:out value="${sessionScope.periodical.name}"/>
-            <h4>
-                <c:out value="${sessionScope.properties['subscribe.price']}"/>
-            </h4>
-            <c:out value="${sessionScope.periodical.monthPrice}"/>
-            <h4>
-                <c:out value="${sessionScope.properties['subscribe.quantity']}"/>
-            </h4>
-            <input type="number"
-                   name="monthQuantity"
-                   placeholder="00"
-                   min="1"
-                   step="1"
-                   value="${sessionScope.monthQuantity}"
-                   required/>
-            <br/> <br/>
+            <br/>
+            <table>
+                <tbody>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['subscribe.name']}"/>
+                    </b></td>
+                    <td>
+                        <c:out value="${sessionScope.periodical.name}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['subscribe.price']}"/>
+                    </b></td>
+                    <td>
+                        <c:out value="${sessionScope.periodical.monthPrice}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['subscribe.quantity']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="number"
+                                   name="monthQuantity"
+                                   placeholder="00"
+                                   min="1"
+                                   step="1"
+                                   value="${sessionScope.monthQuantity}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
             <input type="submit"
                    name="continue"
                    value="${sessionScope.properties['subscribe.continue']}"/>

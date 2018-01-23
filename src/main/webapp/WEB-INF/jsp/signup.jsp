@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>" />
+    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['signup.head']}"/>
@@ -24,56 +24,81 @@
         </h2>
         <form action="<c:url value="/signup"/>" name="signupForm" method="post">
             <br/>
-            <c:out value="${sessionScope.properties['signup.lastName']}"/>
+            <table>
+                <tbody>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['signup.lastName']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="lastName"
+                                   maxlength="255"
+                                   value="${sessionScope.lastName}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['signup.firstName']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="firstName"
+                                   maxlength="255"
+                                   value="${sessionScope.firstName}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['signup.middleName']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="middleName"
+                                   maxlength="255"
+                                   value="${sessionScope.middleName}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['signup.email']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="email"
+                                   maxlength="255"
+                                   value="${sessionScope.email}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['signup.password']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="password"
+                                   name="password"
+                                   maxlength="255"
+                                   value="${sessionScope.password}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             <br/>
-            <label>
-                <input type="text"
-                       name="lastName"
-                       maxlength="255"
-                       value="${sessionScope.lastName}"
-                       required/>
-            </label>
-            <br/>
-            <c:out value="${sessionScope.properties['signup.firstName']}"/>
-            <br/>
-            <label>
-                <input type="text"
-                       name="firstName"
-                       maxlength="255"
-                       value="${sessionScope.firstName}"
-                       required/>
-            </label>
-            <br/>
-            <c:out value="${sessionScope.properties['signup.middleName']}"/>
-            <br/>
-            <label>
-                <input type="text"
-                       name="middleName"
-                       maxlength="255"
-                       value="${sessionScope.middleName}"
-                       required/>
-            </label>
-            <br/>
-            <c:out value="${sessionScope.properties['signup.email']}"/>
-            <br/>
-            <label>
-                <input type="text"
-                       name="email"
-                       maxlength="255"
-                       value="${sessionScope.email}"
-                       required/>
-            </label>
-            <br/>
-            <c:out value="${sessionScope.properties['signup.password']}"/>
-            <br/>
-            <label>
-                <input type="password"
-                       name="password"
-                       maxlength="255"
-                       value="${sessionScope.password}"
-                       required/>
-            </label>
-            <br/> <br/>
             <input type="submit"
                    name="continue"
                    value="${sessionScope.properties['signup.continue']}"/>

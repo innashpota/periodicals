@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>" />
+    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['edit.head']}"/>
@@ -23,38 +23,57 @@
             <c:out value="${sessionScope.properties['edit.title']} \"${sessionScope.periodical.name}\""/>
         </h2>
         <form action="/periodicals/edit/${sessionScope.periodical.id}" method="post">
-            <h4>
-                <c:out value="${sessionScope.properties['edit.name']}"/>
-            </h4>
-            <label>
-                <input type="text"
-                       name="name"
-                       maxlength="255"
-                       value="${sessionScope.periodical.name}"
-                       required/>
-            </label>
-            <h4>
-                <c:out value="${sessionScope.properties['edit.publisher']}"/>
-            </h4>
-            <label>
-                <input type="text"
-                       name="publisher"
-                       maxlength="255"
-                       value="${sessionScope.periodical.publisher}"
-                       required/>
-            </label>
-            <h4>
-                <c:out value="${sessionScope.properties['edit.monthPrice']}"/>
-            </h4>
-            <input type="number"
-                   name="monthPrice"
-                   placeholder="000.00"
-                   max="999.99"
-                   min="0.01"
-                   step="0.01"
-                   value="${sessionScope.periodical.monthPrice}"
-                   required/>
-            <br/> <br/>
+            <br/>
+            <table>
+                <tbody>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['edit.name']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="name"
+                                   maxlength="255"
+                                   value="${sessionScope.periodical.name}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['edit.publisher']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="publisher"
+                                   maxlength="255"
+                                   value="${sessionScope.periodical.publisher}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['edit.monthPrice']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="number"
+                                   name="monthPrice"
+                                   placeholder="000.00"
+                                   max="999.99"
+                                   min="0.01"
+                                   step="0.01"
+                                   value="${sessionScope.periodical.monthPrice}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
             <input type="submit"
                    name="save"
                    value="${sessionScope.properties['edit.save']}"/>

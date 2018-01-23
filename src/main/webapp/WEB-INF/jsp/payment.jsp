@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>" />
+    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['payment.head']}"/>
@@ -23,25 +23,46 @@
             <c:out value="${sessionScope.properties['payment.title']}"/>
         </h2>
         <form action="/periodicals/payment/${sessionScope.payment.id}" method="post">
-            <h4>
-                <c:out value="${sessionScope.properties['payment.payer']}"/>
-            </h4>
-            <c:out value="${sessionScope.reader.lastName}
-                  ${sessionScope.reader.firstName}
-                  ${sessionScope.reader.middleName}"/>
-            <h4>
-                <c:out value="${sessionScope.properties['payment.email']}"/>
-            </h4>
-            <c:out value="${sessionScope.reader.email}"/>
-            <h4>
-                <c:out value="${sessionScope.properties['payment.periodicalName']}"/>
-            </h4>
-            <c:out value="${sessionScope.periodical.name}"/>
-            <h4>
-                <c:out value="${sessionScope.properties['payment.price']}"/>
-            </h4>
-            <c:out value="${sessionScope.payment.price} ₴"/>
-            <br/> <br/>
+            <br/>
+            <table>
+                <tbody>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['payment.payer']}"/>
+                    </b></td>
+                    <td>
+                        <c:out value="${sessionScope.reader.lastName}
+                                      ${sessionScope.reader.firstName}
+                                      ${sessionScope.reader.middleName}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['payment.email']}"/>
+                    </b></td>
+                    <td>
+                        <c:out value="${sessionScope.reader.email}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['payment.periodicalName']}"/>
+                    </b></td>
+                    <td>
+                        <c:out value="${sessionScope.periodical.name}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['payment.price']}"/>
+                    </b></td>
+                    <td>
+                        <c:out value="${sessionScope.payment.price} ₴"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
             <input type="submit"
                    name="pay"
                    value="${sessionScope.properties['payment.pay']}"/>

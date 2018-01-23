@@ -24,26 +24,39 @@
         </h2>
         <form action="<c:url value="/admin/login"/>" name="loginForm" method="post">
             <br/>
-            <c:out value="${sessionScope.properties['login-admin.login']}"/>
+            <table>
+                <tbody>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['login-admin.login']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="login"
+                                   maxlength="255"
+                                   value="${sessionScope.login}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['login-admin.password']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="password"
+                                   name="password"
+                                   maxlength="255"
+                                   value="${sessionScope.password}"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
             <br/>
-            <label>
-                <input type="text"
-                       name="login"
-                       maxlength="255"
-                       value="${sessionScope.login}"
-                       required/>
-            </label>
-            <br/>
-            <c:out value="${sessionScope.properties['login-admin.password']}"/>
-            <br/>
-            <label>
-                <input type="password"
-                       name="password"
-                       maxlength="255"
-                       value="${sessionScope.password}"
-                       required/>
-            </label>
-            <br/> <br/>
             <input type="submit"
                    name="login"
                    value="${sessionScope.properties['login-admin.logIn']}"/>

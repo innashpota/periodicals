@@ -18,10 +18,12 @@ table {
 
 }
 
+table, th, td {
+    padding: 3px;
+}
+
 .border {
     border: 1px solid black;
-    padding: 3px;
-
 }
 
 span {

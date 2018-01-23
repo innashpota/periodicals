@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>" />
+    <link rel="shortcut icon" href="<c:url value="/image/favicon.png"/>"/>
     <link rel="stylesheet" href="<c:url value="/css/styles.css"/>"/>
     <title>
         <c:out value="${sessionScope.properties['create.head']}"/>
@@ -23,35 +23,54 @@
             <c:out value="${sessionScope.properties['create.title']}"/>
         </h2>
         <form action="<c:url value="/create"/>" method="post">
-            <h4>
-                <c:out value="${sessionScope.properties['create.name']}"/>
-            </h4>
-            <label>
-                <input type="text"
-                       name="name"
-                       maxlength="255"
-                       required/>
-            </label>
-            <h4>
-                <c:out value="${sessionScope.properties['create.publisher']}"/>
-            </h4>
-            <label>
-                <input type="text"
-                       name="publisher"
-                       maxlength="255"
-                       required/>
-            </label>
-            <h4>
-                <c:out value="${sessionScope.properties['create.monthPrice']}"/>
-            </h4>
-            <input type="number"
-                   name="monthPrice"
-                   placeholder="000.00"
-                   max="999.99"
-                   min="0.01"
-                   step="0.01"
-                   required/>
-            <br/> <br/>
+            <br/>
+            <table>
+                <tbody>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['create.name']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="name"
+                                   maxlength="255"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['create.publisher']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="text"
+                                   name="publisher"
+                                   maxlength="255"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>
+                        <c:out value="${sessionScope.properties['create.monthPrice']}"/>
+                    </b></td>
+                    <td>
+                        <label>
+                            <input type="number"
+                                   name="monthPrice"
+                                   placeholder="000.00"
+                                   max="999.99"
+                                   min="0.01"
+                                   step="0.01"
+                                   required/>
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
             <input type="submit"
                    name="add"
                    value="${sessionScope.properties['create.add']}"/>
