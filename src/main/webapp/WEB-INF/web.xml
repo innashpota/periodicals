@@ -62,4 +62,8 @@
         <filter-name>PermissionsFilter</filter-name>
         <servlet-name>PeriodicalsController</servlet-name>
     </filter-mapping>
+
+    <session-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
 </web-app>
