@@ -124,6 +124,7 @@ public class RequestHandler {
         if ("/profile".equals(uri)) {
             return strategies.get(ProfileStrategy.class);
         }
+        request.getSession().setAttribute("message", null);
         return strategies.get(ErrorStrategy.class);
     }
 }

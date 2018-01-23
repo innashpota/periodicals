@@ -21,13 +21,16 @@ public class AdminPeriodicalsStrategy extends Strategy {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
-        session.setAttribute("login", login);
-        session.setAttribute("password", password);
         Admin admin = adminDao.getByLoginAndPassword(login, password);
         if (admin != null) {
+            session.setAttribute("login", null);
+            session.setAttribute("password", null);
+            session.setAttribute("message", null);
             session.setAttribute("admin", admin);
             response.sendRedirect("/edit-periodicals");
         } else {
+            session.setAttribute("login", login);
+            session.setAttribute("password", password);
             session.setAttribute("message", "Either admin login or password is wrong.");
             response.sendRedirect("/admin/login");
         }

@@ -22,19 +22,17 @@ public class AdminPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        String login = "login";
-        String password = "pass";
-        Admin admin = new Admin(2, login, password);
-        given(request.getParameter("login")).willReturn(login);
-        given(request.getParameter("password")).willReturn(password);
+        given(request.getParameter("login")).willReturn("login");
+        given(request.getParameter("password")).willReturn("pass");
         given(request.getSession()).willReturn(session);
-        given(adminDao.getByLoginAndPassword(login, password)).willReturn(admin);
+        given(adminDao.getByLoginAndPassword("login", "pass")).willReturn(admin());
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("login", login);
-        verify(session).setAttribute("password", password);
-        verify(session).setAttribute("admin", admin);
+        verify(session).setAttribute("login", null);
+        verify(session).setAttribute("password", null);
+        verify(session).setAttribute("message", null);
+        verify(session).setAttribute("admin", admin());
         verify(response).sendRedirect("/edit-periodicals");
     }
 
@@ -45,19 +43,20 @@ public class AdminPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        String login = "login";
-        String password = "pass";
-        Admin admin = null;
-        given(request.getParameter("login")).willReturn(login);
-        given(request.getParameter("password")).willReturn(password);
+        given(request.getParameter("login")).willReturn("login");
+        given(request.getParameter("password")).willReturn("pass");
         given(request.getSession()).willReturn(session);
-        given(adminDao.getByLoginAndPassword(login, password)).willReturn(admin);
+        given(adminDao.getByLoginAndPassword("login", "pass")).willReturn(null);
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("login", login);
-        verify(session).setAttribute("password", password);
+        verify(session).setAttribute("login", "login");
+        verify(session).setAttribute("password", "pass");
         verify(session).setAttribute("message", "Either admin login or password is wrong.");
         verify(response).sendRedirect("/admin/login");
+    }
+
+    private Admin admin() {
+        return new Admin(2, "login", "pass");
     }
 }

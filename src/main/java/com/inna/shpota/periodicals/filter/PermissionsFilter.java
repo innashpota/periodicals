@@ -35,7 +35,6 @@ public class PermissionsFilter implements Filter {
         unauthorizedUri.add("\\/periodicals\\/delete\\/.*[0-9]");
         unauthorizedUri.add("/logout");
         unauthorizedUri.add("/profile");
-        unauthorizedUri.add("\\/periodicals\\/subscribe\\/.*[0-9]");
         unauthorizedUri.add("\\/periodicals\\/payment\\/.*[0-9]");
     }
 
@@ -54,10 +53,11 @@ public class PermissionsFilter implements Filter {
                 redirectErrorPage(request, response, "Access denied!");
             } else if (admin == null && reader == null &&
                     unauthorizedUri.stream().anyMatch(uri::matches)) {
-                redirectErrorPage(request, response, "Please authorization!");
+                redirectErrorPage(request, response, "Please authorize!");
+            } else {
+                filterChain.doFilter(req, resp);
             }
         }
-        filterChain.doFilter(req, resp);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PermissionsFilter implements Filter {
 
     private void redirectErrorPage(HttpServletRequest request, HttpServletResponse response, String message)
             throws ServletException, IOException {
-        request.setAttribute("message", message);
+        request.getSession().setAttribute("message", message);
         request.getServletContext()
                 .getRequestDispatcher("/WEB-INF/jsp/error.jsp")
                 .forward(request, response);

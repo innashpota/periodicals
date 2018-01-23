@@ -22,19 +22,17 @@ public class ReaderPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        String email = "email";
-        String password = "pass";
-        Reader reader = build(email, password);
-        given(request.getParameter("email")).willReturn(email);
-        given(request.getParameter("password")).willReturn(password);
+        given(request.getParameter("email")).willReturn("email");
+        given(request.getParameter("password")).willReturn("pass");
         given(request.getSession()).willReturn(session);
-        given(readerDao.getByEmailAndPassword(email, password)).willReturn(reader);
+        given(readerDao.getByEmailAndPassword("email", "pass")).willReturn(reader());
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("email", email);
-        verify(session).setAttribute("password", password);
-        verify(session).setAttribute("reader", reader);
+        verify(session).setAttribute("email", null);
+        verify(session).setAttribute("password", null);
+        verify(session).setAttribute("message", null);
+        verify(session).setAttribute("reader", reader());
         verify(response).sendRedirect("/periodicals");
     }
 
@@ -45,30 +43,27 @@ public class ReaderPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        String email = "email";
-        String password = "pass";
-        Reader reader = null;
-        given(request.getParameter("email")).willReturn(email);
-        given(request.getParameter("password")).willReturn(password);
+        given(request.getParameter("email")).willReturn("email");
+        given(request.getParameter("password")).willReturn("pass");
         given(request.getSession()).willReturn(session);
-        given(readerDao.getByEmailAndPassword(email, password)).willReturn(reader);
+        given(readerDao.getByEmailAndPassword("email", "pass")).willReturn(null);
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("email", email);
-        verify(session).setAttribute("password", password);
+        verify(session).setAttribute("email", "email");
+        verify(session).setAttribute("password", "pass");
         verify(session).setAttribute("message", "Either reader login or password is wrong.");
         verify(response).sendRedirect("/login");
     }
 
-    private Reader build(String email, String password) {
+    private Reader reader() {
         return Reader.builder()
                 .id(2)
                 .lastName("last")
                 .firstName("first")
                 .middleName("middle")
-                .email(email)
-                .password(password)
+                .email("email")
+                .password("password")
                 .build();
     }
 }
