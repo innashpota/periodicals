@@ -1,6 +1,5 @@
 package com.inna.shpota.periodicals.controller;
 
-import com.inna.shpota.periodicals.strategies.RequestHandler;
 import com.inna.shpota.periodicals.strategies.Strategy;
 import org.apache.log4j.Logger;
 

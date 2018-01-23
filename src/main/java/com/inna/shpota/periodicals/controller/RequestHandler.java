@@ -1,7 +1,8 @@
-package com.inna.shpota.periodicals.strategies;
+package com.inna.shpota.periodicals.controller;
 
 import com.inna.shpota.periodicals.dao.*;
 import com.inna.shpota.periodicals.service.EmailService;
+import com.inna.shpota.periodicals.strategies.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
