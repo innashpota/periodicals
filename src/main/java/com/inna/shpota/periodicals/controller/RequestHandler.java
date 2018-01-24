@@ -9,6 +9,8 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.inna.shpota.periodicals.dao.DaoFactory.*;
+
 public class RequestHandler {
     private final Map<Class<? extends Strategy>, Strategy> strategies;
 
@@ -17,11 +19,11 @@ public class RequestHandler {
     }
 
     public static RequestHandler construct(DataSource dataSource) {
-        AdminDao adminDao = FactoryDao.createAdminDao(dataSource);
-        PaymentDao paymentDao = FactoryDao.createPaymentDao(dataSource);
-        PeriodicalsDao periodicalsDao = FactoryDao.createPeriodicalsDao(dataSource);
-        ReaderDao readerDao = FactoryDao.createReaderDao(dataSource);
-        SubscriptionDao subscriptionDao = FactoryDao.createSubscriptionDao(dataSource);
+        AdminDao adminDao = createAdminDao(dataSource);
+        PaymentDao paymentDao = createPaymentDao(dataSource);
+        PeriodicalsDao periodicalsDao = createPeriodicalsDao(dataSource);
+        ReaderDao readerDao = createReaderDao(dataSource);
+        SubscriptionDao subscriptionDao = createSubscriptionDao(dataSource);
         EmailService service = EmailService.getInstance();
 
         Map<Class<? extends Strategy>, Strategy> strategies = new HashMap<>();
