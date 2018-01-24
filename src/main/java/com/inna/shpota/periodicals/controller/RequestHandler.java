@@ -64,19 +64,17 @@ public class RequestHandler {
         if ("/admin/login".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(AdminLogInStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(AdminPeriodicalsStrategy.class);
             }
         }
         if ("/edit-periodicals".equals(uri)) {
-            if ("GET".equals(request.getMethod())) {
-                return strategies.get(EditPeriodicalsStrategy.class);
-            }
+            return strategies.get(EditPeriodicalsStrategy.class);
         }
         if ("/create".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(CreatePeriodicalStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(AddPeriodicalStrategy.class);
             }
         }
@@ -86,21 +84,21 @@ public class RequestHandler {
         if (uri.matches("\\/periodicals\\/edit\\/.*[0-9]")) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(EditPeriodicalStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(SavePeriodicalStrategy.class);
             }
         }
         if ("/login".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(ReaderLogInStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(ReaderPeriodicalsStrategy.class);
             }
         }
         if ("/signup".equals(uri)) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(ReaderSignUpStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(ContinueSignUpStrategy.class);
             }
         }
@@ -110,14 +108,14 @@ public class RequestHandler {
         if (uri.matches("\\/periodicals\\/subscribe\\/.*[0-9]")) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(SubscribeStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(ContinueSubscribeStrategy.class);
             }
         }
         if (uri.matches("\\/periodicals\\/payment\\/.*[0-9]")) {
             if ("GET".equals(request.getMethod())) {
                 return strategies.get(PaymentStrategy.class);
-            } else if ("POST".equals(request.getMethod())) {
+            } else {
                 return strategies.get(PayStrategy.class);
             }
         }
