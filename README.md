@@ -46,3 +46,57 @@ The application requires:
     ```
     docker run -it --rm -p 8080:8080 --name periodicals_web --link periodicals_db  periodicals:periodicals-web
     ```
+
+The application is accessable via http://localhost:8080/.
+
+Use **admin1/admin1** as _username/password_ to admin login.
+
+## Interface
+
+Main page of the application
+
+![main-page](./samples/main-page.png)
+
+Sign up page
+
+![sign-up-page](./samples/sign-up-page.png)
+
+Reader log in page
+
+![reader-login-page](./samples/reader-login-page.png)
+
+Reader main page
+
+![reader-main-page](./samples/reader-main-page.png)
+
+Subscribe page
+
+![subscribe-page](./samples/subscribe-page.png)
+
+Payment page
+
+![payment-page](./samples/payment-page.png)
+
+Profile page
+
+![reader-main-page](./samples/profile-page.png)
+
+Admin log in page
+
+![admin-login-page](./samples/admin-login-page.png)
+
+Admin main page
+
+![admin-main-page](./samples/admin-main-page.png)
+
+Admin periodicals page
+
+![admin-periodicals-page](./samples/admin-periodicals-page.png)
+
+Create a new periodical
+
+![create-periodical-page](./samples/create-periodical-page.png)
+
+Edit page
+
+![edit-periodical-page](./samples/edit-periodical-page.png)
