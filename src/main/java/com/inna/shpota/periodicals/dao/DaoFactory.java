@@ -4,7 +4,7 @@ import com.inna.shpota.periodicals.dao.jdbc.*;
 
 import javax.sql.DataSource;
 
-public class FactoryDao {
+public class DaoFactory {
     public static AdminDao createAdminDao(DataSource dataSource) {
         return new JdbcAdminDao(dataSource);
     }
