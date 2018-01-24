@@ -35,6 +35,7 @@ The application requires:
     ```
     mvn clean package
     ```
+    
 4. Build web-server image
 
     ```
