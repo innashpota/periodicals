@@ -19,7 +19,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 public class JdbcPeriodicalsDao implements PeriodicalsDao {
     private final static Logger LOGGER = Logger.getLogger(JdbcPeriodicalsDao.class);
     private final String SQL_INSERT_PERIODICALS =
-            "INSERT INTO periodicals (name, publisher, month_price, deleted) VALUES (?, ?, ?, ?);";
+            "INSERT INTO periodicals (name, publisher, month_price) VALUES (?, ?, ?);";
     private static final String SQL_DELETE_PERIODICALS =
             "UPDATE periodicals SET deleted = 1 WHERE id = ?;";
     private static final String SQL_SELECT_PERIODICALS =
@@ -45,7 +45,6 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
             createStatement.setString(1, periodicals.getName());
             createStatement.setString(2, periodicals.getPublisher());
             createStatement.setBigDecimal(3, periodicals.getMonthPrice());
-            createStatement.setInt(4, periodicals.isDeleted() ? 1 : 0);
             createStatement.executeUpdate();
             LOGGER.info("Create new periodical: " + periodicals);
             return getGeneratedId(createStatement);

@@ -33,7 +33,6 @@ public class JdbcPaymentDaoTest extends AbstractDaoTest {
         Payment actual = jdbcPaymentDao.getById(id);
         assertEquals(payment.getSubscriptionId(), actual.getSubscriptionId());
         assertEquals(payment.getPrice(), actual.getPrice());
-        assertEquals(payment.isPaid(), actual.isPaid());
     }
 
     @Test

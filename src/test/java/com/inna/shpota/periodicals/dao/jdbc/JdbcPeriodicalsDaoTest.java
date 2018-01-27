@@ -34,7 +34,6 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
         assertEquals(periodicals.getName(), actual.getName());
         assertEquals(periodicals.getPublisher(), actual.getPublisher());
         assertEquals(periodicals.getMonthPrice(), actual.getMonthPrice());
-        assertEquals(periodicals.isDeleted(), actual.isDeleted());
     }
 
     @Test
