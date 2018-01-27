@@ -21,7 +21,7 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
     private final String SQL_INSERT_PERIODICALS =
             "INSERT INTO periodicals (name, publisher, month_price, deleted) VALUES (?, ?, ?, ?);";
     private static final String SQL_DELETE_PERIODICALS =
-            "UPDATE periodicals SET deleted = ? WHERE id = ?;";
+            "UPDATE periodicals SET deleted = 1 WHERE id = ?;";
     private static final String SQL_SELECT_PERIODICALS =
             "SELECT name, publisher, month_price, deleted FROM periodicals WHERE id = ?;";
     private static final String SQL_UPDATE_PERIODICALS =
@@ -62,8 +62,7 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
              PreparedStatement deleteStatement = connection.prepareStatement(
                      SQL_DELETE_PERIODICALS
              )) {
-            deleteStatement.setInt(1, 1);
-            deleteStatement.setLong(2, id);
+            deleteStatement.setLong(1, id);
             deleteStatement.executeUpdate();
             LOGGER.info("Delete periodical by ID: " + id);
         } catch (SQLException e) {
