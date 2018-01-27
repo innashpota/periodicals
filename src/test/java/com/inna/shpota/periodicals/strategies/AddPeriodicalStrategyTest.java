@@ -25,17 +25,11 @@ public class AddPeriodicalStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getParameter("name")).willReturn("name");
-        given(request.getParameter("publisher")).willReturn("publisher");
-        given(request.getParameter("monthPrice")).willReturn("2.00");
-        given(periodicalsDao.create(periodical())).willReturn(1L);
-        given(request.getSession()).willReturn(session);
-        List<Periodicals> list = singletonList(periodicalWithId());
-        given(periodicalsDao.getAll()).willReturn(list);
+        prepareMockForHandle(periodicalsDao, request, session);
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("periodicals", list);
+        verify(session).setAttribute("periodicals", list());
         verify(response).sendRedirect("/edit-periodicals");
     }
 
@@ -46,11 +40,7 @@ public class AddPeriodicalStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getParameter("name")).willReturn("name");
-        given(request.getParameter("publisher")).willReturn("publisher");
-        given(request.getParameter("monthPrice")).willReturn("2.00");
-        given(periodicalsDao.create(periodical())).willReturn(-2L);
-        given(request.getSession()).willReturn(session);
+        prepareMockForHandleRedirect(periodicalsDao, request, session);
 
         strategy.handle(request, response);
 
@@ -58,11 +48,32 @@ public class AddPeriodicalStrategyTest {
         verify(response).sendRedirect("/error");
     }
 
-    private Periodicals periodical() {
-        return new Periodicals("name", "publisher", new BigDecimal("2.00"));
+    private void prepareMockForHandle(PeriodicalsDao periodicalsDao, HttpServletRequest request, HttpSession session) {
+        given(request.getParameter("name")).willReturn("name");
+        given(request.getParameter("publisher")).willReturn("publisher");
+        given(request.getParameter("monthPrice")).willReturn("2.00");
+        given(periodicalsDao.create(periodical())).willReturn(1L);
+        given(request.getSession()).willReturn(session);
+        given(periodicalsDao.getAll()).willReturn(list());
     }
 
-    private Periodicals periodicalWithId() {
-        return new Periodicals(1, "name", "publisher", new BigDecimal("2.00"));
+    private void prepareMockForHandleRedirect(
+            PeriodicalsDao periodicalsDao, HttpServletRequest request, HttpSession session
+    ) {
+        given(request.getParameter("name")).willReturn("name");
+        given(request.getParameter("publisher")).willReturn("publisher");
+        given(request.getParameter("monthPrice")).willReturn("2.00");
+        given(periodicalsDao.create(periodical())).willReturn(-2L);
+        given(request.getSession()).willReturn(session);
+    }
+
+    private Periodicals periodical() {
+        return new Periodicals("name", "publisher", new BigDecimal("2.00"), false);
+    }
+
+    private List<Periodicals> list() {
+        return singletonList(
+                new Periodicals(1, "name", "publisher", new BigDecimal("2.00"), false)
+        );
     }
 }

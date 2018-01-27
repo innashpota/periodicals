@@ -34,7 +34,7 @@ public class SavePeriodicalStrategy extends Strategy {
         String name = request.getParameter("name");
         String publisher = request.getParameter("publisher");
         String monthPrice = request.getParameter("monthPrice");
-        Periodicals newPeriodical = new Periodicals(id, name, publisher, new BigDecimal(monthPrice));
+        Periodicals newPeriodical = new Periodicals(id, name, publisher, new BigDecimal(monthPrice), false);
         periodicalsDao.update(newPeriodical);
         List<Periodicals> periodicals = periodicalsDao.getAll();
         request.getSession().setAttribute("periodicals", periodicals);

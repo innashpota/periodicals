@@ -35,9 +35,8 @@ public class ContinueSubscribeStrategyTest {
 
     private void prepareMock(SubscriptionDao subscriptionDao, HttpServletRequest request) {
         HttpSession session = mock(HttpSession.class);
-        Reader reader = reader();
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader);
+        given(session.getAttribute("reader")).willReturn(reader());
         given(request.getParameter("monthQuantity")).willReturn("1");
         given(session.getAttribute("periodical")).willReturn(periodical());
         given(subscriptionDao.createPaymentBySubscription(
@@ -47,7 +46,7 @@ public class ContinueSubscribeStrategyTest {
     }
 
     private Periodicals periodical() {
-        return new Periodicals(4, "name", "publisher", new BigDecimal("24.00"));
+        return new Periodicals(4, "name", "publisher", new BigDecimal("24.00"), false);
     }
 
     private Reader reader() {

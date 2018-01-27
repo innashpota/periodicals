@@ -23,7 +23,7 @@ public class AddPeriodicalStrategy extends Strategy {
         String name = request.getParameter("name");
         String publisher = request.getParameter("publisher");
         String monthPrice = request.getParameter("monthPrice");
-        Periodicals periodical = new Periodicals(name, publisher, new BigDecimal(monthPrice));
+        Periodicals periodical = new Periodicals(name, publisher, new BigDecimal(monthPrice), false);
         long id = periodicalsDao.create(periodical);
         HttpSession session = request.getSession();
         if (id > 0) {

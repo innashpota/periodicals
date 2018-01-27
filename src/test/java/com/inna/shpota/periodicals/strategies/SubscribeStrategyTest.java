@@ -22,16 +22,11 @@ public class SubscribeStrategyTest {
     public void shouldHandle() throws ServletException, IOException {
         PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
         Strategy strategy = new SubscribeStrategy(periodicalsDao);
-        Reader reader = reader();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader);
-        given(request.getRequestURI()).willReturn("/periodicals/subscribe/2");
-        given(periodicalsDao.getById(2)).willReturn(periodical());
-        given(request.getRequestDispatcher("/WEB-INF/jsp/subscribe.jsp")).willReturn(dispatcher);
+        prepareMockForHandle(periodicalsDao, request, session, dispatcher);
 
         strategy.handle(request, response);
 
@@ -43,12 +38,11 @@ public class SubscribeStrategyTest {
     public void shouldHandleForward() throws ServletException, IOException {
         PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
         Strategy strategy = new SubscribeStrategy(periodicalsDao);
-        Reader reader = null;
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader);
+        given(session.getAttribute("reader")).willReturn(null);
 
         strategy.handle(request, response);
 
@@ -66,7 +60,17 @@ public class SubscribeStrategyTest {
                 .build();
     }
 
+    private void prepareMockForHandle(
+            PeriodicalsDao periodicalsDao, HttpServletRequest request, HttpSession session, RequestDispatcher dispatcher
+    ) {
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("reader")).willReturn(reader());
+        given(request.getRequestURI()).willReturn("/periodicals/subscribe/2");
+        given(periodicalsDao.getById(2)).willReturn(periodical());
+        given(request.getRequestDispatcher("/WEB-INF/jsp/subscribe.jsp")).willReturn(dispatcher);
+    }
+
     private Periodicals periodical() {
-        return new Periodicals(2, "name", "publisher", new BigDecimal("2.22"));
+        return new Periodicals(2, "name", "publisher", new BigDecimal("2.22"), false);
     }
 }
