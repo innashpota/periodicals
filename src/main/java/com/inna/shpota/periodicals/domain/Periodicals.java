@@ -5,9 +5,9 @@ import java.util.Objects;
 
 /**
  * Periodicals Model Object
- *
+ * <p>
  * <P>Various attributes of periodicals, and related behaviour.
- *
+ * <p>
  * <P>Note that {@link BigDecimal} is used to model the month price - not double or float.
  * See {@link #Periodicals(String name, String publisher, BigDecimal monthPrice, boolean deleted)} or
  * {@link #Periodicals(long id, String name, String publisher, BigDecimal monthPrice, boolean deleted)}
@@ -17,7 +17,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Periodicals {
-    private long id;
+    private final long id;
     private final String name;
     private final String publisher;
     private final BigDecimal monthPrice;
@@ -34,8 +34,11 @@ public class Periodicals {
      *                   Default value false.
      */
     public Periodicals(long id, String name, String publisher, BigDecimal monthPrice, boolean deleted) {
-        this(name, publisher, monthPrice, deleted);
         this.id = id;
+        this.name = name;
+        this.publisher = publisher;
+        this.monthPrice = monthPrice;
+        this.deleted = deleted;
     }
 
     /**
@@ -44,12 +47,11 @@ public class Periodicals {
      * @param name       (required) Name of the periodicals.
      * @param publisher  (required) Publisher of the periodicals.
      * @param monthPrice (required) Month price of the all months.
+     * @param deleted    (required) Deleted or not deleted periodicals.
+     *                   Default value false.
      */
     public Periodicals(String name, String publisher, BigDecimal monthPrice, boolean deleted) {
-        this.name = name;
-        this.publisher = publisher;
-        this.monthPrice = monthPrice;
-        this.deleted = deleted;
+        this(-1, name, publisher, monthPrice, deleted);
     }
 
     /**

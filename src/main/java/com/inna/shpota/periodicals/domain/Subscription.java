@@ -14,7 +14,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Subscription {
-    private long id;
+    private final long id;
     private final long readerId;
     private final long periodicalsId;
     private final int monthQuantity;

@@ -14,7 +14,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Admin {
-    private long id;
+    private final long id;
     private final String login;
     private final String password;
 
@@ -26,8 +26,9 @@ public class Admin {
      * @param password (required) Password of the admin.
      */
     public Admin(long id, String login, String password) {
-        this(login, password);
         this.id = id;
+        this.login = login;
+        this.password = password;
     }
 
     /**
@@ -37,8 +38,7 @@ public class Admin {
      * @param password (required) Password of the admin.
      */
     public Admin(String login, String password) {
-        this.login = login;
-        this.password = password;
+        this(-1, login, password);
     }
 
     /**
