@@ -27,18 +27,22 @@ public class PayStrategyTest {
         Strategy strategy = new PayStrategy(paymentDao, service);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-        given(request.getRequestURI()).willReturn("/periodicals/payment/3");
-        given(paymentDao.getById(3)).willReturn(payment());
-        given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader());
-        given(session.getAttribute("periodical")).willReturn(periodical());
+        prepareMock(paymentDao, request);
 
         strategy.handle(request, response);
 
         verify(paymentDao).update(paymentWithTruePaid());
         verify(service).send(reader(), periodical(), payment().getPrice());
         verify(response).sendRedirect("/periodicals");
+    }
+
+    private void prepareMock(PaymentDao paymentDao, HttpServletRequest request) {
+        HttpSession session = mock(HttpSession.class);
+        given(request.getRequestURI()).willReturn("/periodicals/payment/3");
+        given(paymentDao.getById(3)).willReturn(payment());
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("reader")).willReturn(reader());
+        given(session.getAttribute("periodical")).willReturn(periodical());
     }
 
     private Payment payment() {
@@ -61,6 +65,6 @@ public class PayStrategyTest {
     }
 
     private Periodicals periodical() {
-        return new Periodicals(4, "name", "publisher", new BigDecimal("24.00"));
+        return new Periodicals(4, "name", "publisher", new BigDecimal("24.00"), false);
     }
 }

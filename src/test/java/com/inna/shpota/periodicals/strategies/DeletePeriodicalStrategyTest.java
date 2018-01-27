@@ -21,21 +21,27 @@ public class DeletePeriodicalStrategyTest {
     @Test
     public void shouldHandle() throws ServletException, IOException {
         PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
-        long id = 3;
         Strategy strategy = new DeletePeriodicalStrategy(periodicalsDao);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getRequestURI()).willReturn("/periodicals/delete/" + id);
-        given(request.getSession()).willReturn(session);
-        List<Periodicals> list = singletonList(
-                new Periodicals(1, "name", "publisher", new BigDecimal("2.22")));
-        given(periodicalsDao.getAll()).willReturn(list);
+        prepareMock(periodicalsDao, request, session);
 
         strategy.handle(request, response);
 
-        verify(periodicalsDao).delete(id);
-        verify(session).setAttribute("periodicals", list);
+        verify(periodicalsDao).delete(3);
+        verify(session).setAttribute("periodicals", list());
         verify(response).sendRedirect("/edit-periodicals");
+    }
+
+    private void prepareMock(PeriodicalsDao periodicalsDao, HttpServletRequest request, HttpSession session) {
+        given(request.getRequestURI()).willReturn("/periodicals/delete/" + 3);
+        given(request.getSession()).willReturn(session);
+        given(periodicalsDao.getAll()).willReturn(list());
+    }
+
+    private List<Periodicals> list() {
+        return singletonList(
+                new Periodicals(1, "name", "publisher", new BigDecimal("2.22"), false));
     }
 }

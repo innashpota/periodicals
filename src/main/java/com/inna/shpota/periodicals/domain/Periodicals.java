@@ -5,21 +5,23 @@ import java.util.Objects;
 
 /**
  * Periodicals Model Object
- *
+ * <p>
  * <P>Various attributes of periodicals, and related behaviour.
- *
+ * <p>
  * <P>Note that {@link BigDecimal} is used to model the month price - not double or float.
- * See {@link #Periodicals(String name, String publisher, BigDecimal monthPrice)} or
- * {@link #Periodicals(long id, String name, String publisher, BigDecimal monthPrice)} for more information
+ * See {@link #Periodicals(String name, String publisher, BigDecimal monthPrice, boolean deleted)} or
+ * {@link #Periodicals(long id, String name, String publisher, BigDecimal monthPrice, boolean deleted)}
+ * for more information
  *
  * @author Inna Shpota
  * @version 1.0
  */
 public class Periodicals {
-    private long id;
+    private final long id;
     private final String name;
     private final String publisher;
     private final BigDecimal monthPrice;
+    private final boolean deleted;
 
     /**
      * Constructor for all parameters.
@@ -28,10 +30,15 @@ public class Periodicals {
      * @param name       (required) Name of the periodicals.
      * @param publisher  (required) Publisher of the periodicals.
      * @param monthPrice (required) Month price of the all months.
+     * @param deleted    (required) Deleted or not deleted periodicals.
+     *                   Default value false.
      */
-    public Periodicals(long id, String name, String publisher, BigDecimal monthPrice) {
-        this(name, publisher, monthPrice);
+    public Periodicals(long id, String name, String publisher, BigDecimal monthPrice, boolean deleted) {
         this.id = id;
+        this.name = name;
+        this.publisher = publisher;
+        this.monthPrice = monthPrice;
+        this.deleted = deleted;
     }
 
     /**
@@ -40,11 +47,11 @@ public class Periodicals {
      * @param name       (required) Name of the periodicals.
      * @param publisher  (required) Publisher of the periodicals.
      * @param monthPrice (required) Month price of the all months.
+     * @param deleted    (required) Deleted or not deleted periodicals.
+     *                   Default value false.
      */
-    public Periodicals(String name, String publisher, BigDecimal monthPrice) {
-        this.name = name;
-        this.publisher = publisher;
-        this.monthPrice = monthPrice;
+    public Periodicals(String name, String publisher, BigDecimal monthPrice, boolean deleted) {
+        this(-1, name, publisher, monthPrice, deleted);
     }
 
     /**
@@ -83,12 +90,22 @@ public class Periodicals {
         return monthPrice;
     }
 
+    /**
+     * Getter for a deleted.
+     *
+     * @return deleted
+     */
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Periodicals that = (Periodicals) o;
         return id == that.id &&
+                deleted == that.deleted &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(publisher, that.publisher) &&
                 Objects.equals(monthPrice, that.monthPrice);
@@ -96,7 +113,7 @@ public class Periodicals {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, publisher, monthPrice);
+        return Objects.hash(id, name, publisher, monthPrice, deleted);
     }
 
     @Override
@@ -106,6 +123,7 @@ public class Periodicals {
                 ", name='" + name + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", monthPrice=" + monthPrice +
+                ", deleted=" + deleted +
                 '}';
     }
 }

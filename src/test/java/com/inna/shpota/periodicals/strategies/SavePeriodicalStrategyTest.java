@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.mockito.BDDMockito.given;
@@ -21,27 +20,29 @@ public class SavePeriodicalStrategyTest {
     @Test
     public void shouldHandle() throws ServletException, IOException {
         PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
-        long id = 3;
-        String name = "name";
-        String publisher = "publisher";
-        BigDecimal price = new BigDecimal("2.22");
         Strategy strategy = new SavePeriodicalStrategy(periodicalsDao);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getRequestURI()).willReturn("/periodicals/edit/" + id);
-        given(request.getParameter("name")).willReturn(name);
-        given(request.getParameter("publisher")).willReturn(publisher);
-        given(request.getParameter("monthPrice")).willReturn("2.22");
-        Periodicals periodical = new Periodicals(id, "name", "publisher", price);
-        List<Periodicals> list = singletonList(periodical);
-        given(periodicalsDao.getAll()).willReturn(list);
-        given(request.getSession()).willReturn(session);
+        prepareMock(periodicalsDao, request, session);
 
         strategy.handle(request, response);
 
-        verify(periodicalsDao).update(periodical);
-        verify(session).setAttribute("periodicals", list);
+        verify(periodicalsDao).update(periodical());
+        verify(session).setAttribute("periodicals", singletonList(periodical()));
         verify(response).sendRedirect("/edit-periodicals");
+    }
+
+    private void prepareMock(PeriodicalsDao periodicalsDao, HttpServletRequest request, HttpSession session) {
+        given(request.getRequestURI()).willReturn("/periodicals/edit/" + 3);
+        given(request.getParameter("name")).willReturn("name");
+        given(request.getParameter("publisher")).willReturn("publisher");
+        given(request.getParameter("monthPrice")).willReturn("2.22");
+        given(periodicalsDao.getAll()).willReturn(singletonList(periodical()));
+        given(request.getSession()).willReturn(session);
+    }
+
+    private Periodicals periodical() {
+        return new Periodicals(3, "name", "publisher", new BigDecimal("2.22"), false);
     }
 }

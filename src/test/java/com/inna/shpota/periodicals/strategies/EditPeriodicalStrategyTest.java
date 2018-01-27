@@ -20,22 +20,29 @@ public class EditPeriodicalStrategyTest {
     @Test
     public void shouldHandle() throws ServletException, IOException {
         PeriodicalsDao periodicalsDao = mock(PeriodicalsDao.class);
-        long id = 3;
         Strategy strategy = new EditPeriodicalStrategy(periodicalsDao);
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getRequestURI()).willReturn("/periodicals/edit/" + id);
-        given(request.getSession()).willReturn(session);
-        BigDecimal price = new BigDecimal("2.22");
-        Periodicals periodical = new Periodicals(id, "name", "publisher", price);
-        given(periodicalsDao.getById(id)).willReturn(periodical);
-        given(request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp")).willReturn(dispatcher);
+        prepareMock(periodicalsDao, request, session, dispatcher);
 
         strategy.handle(request, response);
 
-        verify(session).setAttribute("periodical", periodical);
+        verify(session).setAttribute("periodical", periodical());
         verify(dispatcher).forward(request, response);
+    }
+
+    private void prepareMock(
+            PeriodicalsDao periodicalsDao, HttpServletRequest request, HttpSession session, RequestDispatcher dispatcher
+    ) {
+        given(request.getRequestURI()).willReturn("/periodicals/edit/" + 3);
+        given(request.getSession()).willReturn(session);
+        given(periodicalsDao.getById(3)).willReturn(periodical());
+        given(request.getRequestDispatcher("/WEB-INF/jsp/edit.jsp")).willReturn(dispatcher);
+    }
+
+    private Periodicals periodical() {
+        return new Periodicals(3, "name", "publisher", new BigDecimal("2.22"), false);
     }
 }

@@ -26,7 +26,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldCreate() {
-        Periodicals periodicals = new Periodicals("test", "test", new BigDecimal("66.66"));
+        Periodicals periodicals = new Periodicals("test", "test", new BigDecimal("66.66"), false);
 
         long id = jdbcPeriodicalsDao.create(periodicals);
 
@@ -38,19 +38,19 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldDelete() {
-        long id = 4;
+        long id = 3;
 
         jdbcPeriodicalsDao.delete(id);
 
-        int size = jdbcPeriodicalsDao.getAll().size();
-        assertEquals(3, size);
+        Periodicals actual = jdbcPeriodicalsDao.getById(id);
+        assertEquals(true, actual.isDeleted());
     }
 
     @Test
     public void shouldGetById() {
         long id = 3;
         Periodicals expectedPeriodicals = new Periodicals(
-                id, "HI - TECH PRO", "ID SoftPress", new BigDecimal("28.00")
+                id, "HI - TECH PRO", "ID SoftPress", new BigDecimal("28.00"), false
         );
 
         Periodicals actualPeriodicals = jdbcPeriodicalsDao.getById(id);
@@ -61,7 +61,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     @Test
     public void shouldUpdate() {
         long id = 3;
-        Periodicals expectedPeriodicals = new Periodicals(3, "test", "test", new BigDecimal("66.66"));
+        Periodicals expectedPeriodicals = new Periodicals(3, "test", "test", new BigDecimal("66.66"), false);
 
         jdbcPeriodicalsDao.update(expectedPeriodicals);
 
@@ -72,9 +72,9 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
     @Test
     public void shouldGetAll() {
         List<Periodicals> expected = asList(
-                new Periodicals(1, "VOGUE UA", "TRK MEDIA FINANCE LIMITED", new BigDecimal("99.00")),
-                new Periodicals(2, "All Retail", "All Retail", new BigDecimal("75.00")),
-                new Periodicals(3, "HI - TECH PRO", "ID SoftPress", new BigDecimal("28.00"))
+                new Periodicals(1, "VOGUE UA", "TRK MEDIA FINANCE LIMITED", new BigDecimal("99.00"), false),
+                new Periodicals(2, "All Retail", "All Retail", new BigDecimal("75.00"), false),
+                new Periodicals(3, "HI - TECH PRO", "ID SoftPress", new BigDecimal("28.00"), false)
         );
 
         List<Periodicals> actual = jdbcPeriodicalsDao.getAll();
@@ -93,7 +93,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldFailToCreateGivenEmptyName() {
-        Periodicals periodicals = new Periodicals(null, "publisher", new BigDecimal("2.00"));
+        Periodicals periodicals = new Periodicals(null, "publisher", new BigDecimal("2.00"), false);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Name must not be empty");
 
@@ -102,7 +102,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldFailToCreateGivenEmptyPublisher() {
-        Periodicals periodicals = new Periodicals("name", null, new BigDecimal("2.00"));
+        Periodicals periodicals = new Periodicals("name", null, new BigDecimal("2.00"), false);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Publisher must not be empty");
 
@@ -111,7 +111,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldFailToCreateGivenNegativeMonthPrice() {
-        Periodicals periodicals = new Periodicals("name", "publisher", new BigDecimal("-2.00"));
+        Periodicals periodicals = new Periodicals("name", "publisher", new BigDecimal("-2.00"), false);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Month price must be positive");
 
@@ -147,7 +147,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldFailToUpdateGivenEmptyName() {
-        Periodicals periodicals = new Periodicals(null, "publisher", new BigDecimal("2.00"));
+        Periodicals periodicals = new Periodicals(null, "publisher", new BigDecimal("2.00"), false);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Name must not be empty");
 
@@ -156,7 +156,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldFailToUpdateGivenEmptyPublisher() {
-        Periodicals periodicals = new Periodicals("name", null, new BigDecimal("2.00"));
+        Periodicals periodicals = new Periodicals("name", null, new BigDecimal("2.00"), false);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Publisher must not be empty");
 
@@ -165,7 +165,7 @@ public class JdbcPeriodicalsDaoTest extends AbstractDaoTest {
 
     @Test
     public void shouldFailToUpdateGivenNegativeMonthPrice() {
-        Periodicals periodicals = new Periodicals("name", "publisher", new BigDecimal("-2.00"));
+        Periodicals periodicals = new Periodicals("name", "publisher", new BigDecimal("-2.00"), false);
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Month price must be positive");
 

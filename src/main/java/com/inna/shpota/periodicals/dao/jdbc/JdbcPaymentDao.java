@@ -19,7 +19,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 public class JdbcPaymentDao implements PaymentDao {
     private final static Logger LOGGER = Logger.getLogger(JdbcPaymentDao.class);
     private static final String SQL_INSERT_PAYMENT =
-            "INSERT INTO payment (subscription_id, price, paid) VALUES (?, ?, ?);";
+            "INSERT INTO payment (subscription_id, price) VALUES (?, ?);";
     private static final String SQL_DELETE_PAYMENT =
             "DELETE FROM payment WHERE id = ?;";
     private static final String SQL_SELECT_PAYMENT =
@@ -44,7 +44,6 @@ public class JdbcPaymentDao implements PaymentDao {
              )) {
             createStatement.setLong(1, payment.getSubscriptionId());
             createStatement.setBigDecimal(2, payment.getPrice());
-            createStatement.setInt(3, payment.isPaid() ? 1 : 0);
             createStatement.executeUpdate();
             LOGGER.info("Create new payment: " + payment);
             return getGeneratedId(createStatement);

@@ -25,15 +25,19 @@ public class PaymentStrategyTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getRequestURI()).willReturn("/periodicals/payment/3");
-        given(paymentDao.getById(3)).willReturn(payment());
-        given(request.getSession()).willReturn(session);
-        given(request.getRequestDispatcher("/WEB-INF/jsp/payment.jsp")).willReturn(dispatcher);
+        prepareMock(paymentDao, request, session, dispatcher);
 
         strategy.handle(request, response);
 
         verify(session).setAttribute("payment", payment());
         verify(dispatcher).forward(request, response);
+    }
+
+    private void prepareMock(PaymentDao paymentDao, HttpServletRequest request, HttpSession session, RequestDispatcher dispatcher) {
+        given(request.getRequestURI()).willReturn("/periodicals/payment/3");
+        given(paymentDao.getById(3)).willReturn(payment());
+        given(request.getSession()).willReturn(session);
+        given(request.getRequestDispatcher("/WEB-INF/jsp/payment.jsp")).willReturn(dispatcher);
     }
 
     private Payment payment() {

@@ -27,6 +27,7 @@ public abstract class AbstractDaoTest {
             "  name        VARCHAR(255)  NOT NULL," +
             "  publisher   VARCHAR(255)  NOT NULL," +
             "  month_price DECIMAL(5, 2) NOT NULL," +
+            "  deleted     BIT           NOT NULL DEFAULT 0," +
             "  CONSTRAINT periodicals_name_uk UNIQUE (name)," +
             "  PRIMARY KEY (id)" +
             ");";
@@ -65,10 +66,10 @@ public abstract class AbstractDaoTest {
             "  ('admin1', 'admin1')," +
             "  ('admin2', 'admin2')," +
             "  ('admin3', 'admin3');";
-    private final String SQL_INSERT_PERIODICALS = "INSERT INTO periodicals (name, publisher, month_price) VALUES" +
-            "  ('VOGUE UA', 'TRK MEDIA FINANCE LIMITED', 99)," +
-            "  ('All Retail', 'All Retail', 75)," +
-            "  ('HI - TECH PRO', 'ID SoftPress', 28);";
+    private final String SQL_INSERT_PERIODICALS = "INSERT INTO periodicals (name, publisher, month_price, deleted) VALUES" +
+            "  ('VOGUE UA', 'TRK MEDIA FINANCE LIMITED', 99, 0)," +
+            "  ('All Retail', 'All Retail', 75, 0)," +
+            "  ('HI - TECH PRO', 'ID SoftPress', 28, 0);";
     private final String SQL_INSERT_READER = "INSERT INTO reader (last_name, first_name, middle_name, email, password) VALUES" +
             "  ('Korolyuk', 'Volodymyr', 'Semenovych', 'korolyuk@ok.com', '1')," +
             "  ('Viazovska', 'Maryna', 'Sergiivna', 'viazovska@ok.com', '2')," +

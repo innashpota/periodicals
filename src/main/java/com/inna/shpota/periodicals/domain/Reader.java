@@ -13,7 +13,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Reader {
-    private long id;
+    private final long id;
     private final String lastName;
     private final String firstName;
     private final String middleName;

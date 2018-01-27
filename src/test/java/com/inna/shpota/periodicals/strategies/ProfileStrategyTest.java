@@ -31,16 +31,20 @@ public class ProfileStrategyTest {
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
-        given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader());
-        given(readerDao.getInformationByReader(2)).willReturn(information());
-        given(request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp")).willReturn(dispatcher);
+        prepareMock(readerDao, request, session, dispatcher);
 
         strategy.handle(request, response);
 
         verify(session).setAttribute("information", information());
         verify(session).setAttribute("formatter", DATE_FORMATTER);
         verify(dispatcher).forward(request, response);
+    }
+
+    private void prepareMock(ReaderDao readerDao, HttpServletRequest request, HttpSession session, RequestDispatcher dispatcher) {
+        given(request.getSession()).willReturn(session);
+        given(session.getAttribute("reader")).willReturn(reader());
+        given(readerDao.getInformationByReader(2)).willReturn(information());
+        given(request.getRequestDispatcher("/WEB-INF/jsp/profile.jsp")).willReturn(dispatcher);
     }
 
     private List<Information> information() {

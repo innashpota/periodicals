@@ -16,7 +16,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Payment {
-    private long id;
+    private final long id;
     private final long subscriptionId;
     private final BigDecimal price;
     private final boolean paid;
@@ -30,8 +30,10 @@ public class Payment {
      * @param paid           (optional) Paid or not paid subscription. Default value false.
      */
     public Payment(long id, long subscriptionId, BigDecimal price, boolean paid) {
-        this(subscriptionId, price, paid);
         this.id = id;
+        this.subscriptionId = subscriptionId;
+        this.price = price;
+        this.paid = paid;
     }
 
     /**
@@ -42,9 +44,7 @@ public class Payment {
      * @param paid           (optional) Paid or not paid subscription. Default value false.
      */
     public Payment(long subscriptionId, BigDecimal price, boolean paid) {
-        this.subscriptionId = subscriptionId;
-        this.price = price;
-        this.paid = paid;
+        this(-1, subscriptionId, price, paid);
     }
 
     /**

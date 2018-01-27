@@ -50,29 +50,27 @@ public class ContinueSignUpStrategyTest {
     }
 
     private void prepareMockForHandle(ReaderDao readerDao, HttpServletRequest request, HttpSession session) {
-        Reader reader = reader();
-        given(request.getParameter("lastName")).willReturn("lastName");
-        given(request.getParameter("firstName")).willReturn("firstName");
-        given(request.getParameter("middleName")).willReturn("middleName");
-        given(request.getParameter("email")).willReturn("email");
-        given(request.getParameter("password")).willReturn("password");
-        given(readerDao.getByEmail("email")).willReturn(reader);
+        prepareMock(request);
+        given(readerDao.getByEmail("email")).willReturn(reader());
         given(request.getSession()).willReturn(session);
     }
 
     private void prepareMockForHandleRedirect(
             ReaderDao readerDao, HttpServletRequest request, HttpSession session
     ) {
-        Reader reader = reader();
+        prepareMock(request);
+        given(readerDao.getByEmail("email")).willReturn(null);
+        given(readerDao.create(reader())).willReturn(2L);
+        given(readerDao.getById(2)).willReturn(readerWithId());
+        given(request.getSession()).willReturn(session);
+    }
+
+    private void prepareMock(HttpServletRequest request) {
         given(request.getParameter("lastName")).willReturn("lastName");
         given(request.getParameter("firstName")).willReturn("firstName");
         given(request.getParameter("middleName")).willReturn("middleName");
         given(request.getParameter("email")).willReturn("email");
         given(request.getParameter("password")).willReturn("password");
-        given(readerDao.getByEmail("email")).willReturn(null);
-        given(readerDao.create(reader)).willReturn(2L);
-        given(readerDao.getById(2)).willReturn(readerWithId());
-        given(request.getSession()).willReturn(session);
     }
 
     private Reader reader() {

@@ -21,13 +21,13 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
     private final String SQL_INSERT_PERIODICALS =
             "INSERT INTO periodicals (name, publisher, month_price) VALUES (?, ?, ?);";
     private static final String SQL_DELETE_PERIODICALS =
-            "DELETE FROM periodicals WHERE id = ?;";
+            "UPDATE periodicals SET deleted = 1 WHERE id = ?;";
     private static final String SQL_SELECT_PERIODICALS =
-            "SELECT name, publisher, month_price FROM periodicals WHERE id = ?;";
+            "SELECT name, publisher, month_price, deleted FROM periodicals WHERE id = ?;";
     private static final String SQL_UPDATE_PERIODICALS =
-            "UPDATE periodicals SET name = ?, publisher = ?, month_price = ? WHERE id = ?;";
+            "UPDATE periodicals SET name = ?, publisher = ?, month_price = ?, deleted = ? WHERE id = ?;";
     private static final String SQL_SELECT_ALL =
-            "SELECT * FROM periodicals;";
+            "SELECT * FROM periodicals WHERE deleted = 0;";
     private final DataSource dataSource;
 
     public JdbcPeriodicalsDao(DataSource dataSource) {
@@ -85,7 +85,8 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
                             id,
                             resultSet.getString("name"),
                             resultSet.getString("publisher"),
-                            resultSet.getBigDecimal("month_price")
+                            resultSet.getBigDecimal("month_price"),
+                            resultSet.getInt("deleted") == 1
                     );
                 }
                 LOGGER.info("Get by ID periodical: " + periodicals);
@@ -107,7 +108,8 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
             updateStatement.setString(1, periodicals.getName());
             updateStatement.setString(2, periodicals.getPublisher());
             updateStatement.setBigDecimal(3, periodicals.getMonthPrice());
-            updateStatement.setLong(4, periodicals.getId());
+            updateStatement.setInt(4, periodicals.isDeleted() ? 1 : 0);
+            updateStatement.setLong(5, periodicals.getId());
             updateStatement.executeUpdate();
             LOGGER.info("Update periodical: " + periodicals);
         } catch (SQLException e) {
@@ -129,7 +131,8 @@ public class JdbcPeriodicalsDao implements PeriodicalsDao {
                             resultSet.getLong("id"),
                             resultSet.getString("name"),
                             resultSet.getString("publisher"),
-                            resultSet.getBigDecimal("month_price")
+                            resultSet.getBigDecimal("month_price"),
+                            resultSet.getInt("deleted") == 1
                     ));
                 }
                 LOGGER.info("Get all periodicals: " + list);
