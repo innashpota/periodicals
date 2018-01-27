@@ -18,12 +18,11 @@ public class ReaderLogInStrategyTest {
     @Test
     public void shouldHandle() throws ServletException, IOException {
         Strategy strategy = new ReaderLogInStrategy();
-        Reader reader = reader();
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader);
+        given(session.getAttribute("reader")).willReturn(reader());
 
         strategy.handle(request, response);
 
@@ -33,13 +32,12 @@ public class ReaderLogInStrategyTest {
     @Test
     public void shouldHandleForward() throws ServletException, IOException {
         Strategy strategy = new ReaderLogInStrategy();
-        Reader reader = null;
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         RequestDispatcher dispatcher = mock(RequestDispatcher.class);
         given(request.getSession()).willReturn(session);
-        given(session.getAttribute("reader")).willReturn(reader);
+        given(session.getAttribute("reader")).willReturn(null);
         given(request.getRequestDispatcher("/WEB-INF/jsp/login-reader.jsp")).willReturn(dispatcher);
 
         strategy.handle(request, response);

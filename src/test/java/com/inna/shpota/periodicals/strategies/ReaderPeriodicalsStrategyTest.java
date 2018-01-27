@@ -22,10 +22,7 @@ public class ReaderPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getParameter("email")).willReturn("email");
-        given(request.getParameter("password")).willReturn("pass");
-        given(request.getSession()).willReturn(session);
-        given(readerDao.getByEmailAndPassword("email", "pass")).willReturn(reader());
+        prepareMock(readerDao, request, session, reader());
 
         strategy.handle(request, response);
 
@@ -43,10 +40,7 @@ public class ReaderPeriodicalsStrategyTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        given(request.getParameter("email")).willReturn("email");
-        given(request.getParameter("password")).willReturn("pass");
-        given(request.getSession()).willReturn(session);
-        given(readerDao.getByEmailAndPassword("email", "pass")).willReturn(null);
+        prepareMock(readerDao, request, session, null);
 
         strategy.handle(request, response);
 
@@ -54,6 +48,13 @@ public class ReaderPeriodicalsStrategyTest {
         verify(session).setAttribute("password", "pass");
         verify(session).setAttribute("message", "Either reader login or password is wrong.");
         verify(response).sendRedirect("/login");
+    }
+
+    private void prepareMock(ReaderDao readerDao, HttpServletRequest request, HttpSession session, Reader reader) {
+        given(request.getParameter("email")).willReturn("email");
+        given(request.getParameter("password")).willReturn("pass");
+        given(request.getSession()).willReturn(session);
+        given(readerDao.getByEmailAndPassword("email", "pass")).willReturn(reader);
     }
 
     private Reader reader() {
