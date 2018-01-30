@@ -9,8 +9,6 @@ import java.time.format.DateTimeFormatter;
 public abstract class Strategy {
     final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
 
-    public abstract void handle(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws ServletException, IOException;
+    public abstract void handle(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException;
 }
