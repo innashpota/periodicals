@@ -7,10 +7,10 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import java.io.IOException;
 
@@ -48,20 +48,22 @@ public class PeriodicalsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "doGet");
+        processRequest(request, response, "GET");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response, "doPost");
+        processRequest(request, response, "POST");
     }
 
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response, String method)
             throws IOException, ServletException {
         LOGGER.info(method + "method has been called");
-        Strategy strategy = requestHandler.getStrategy(request);
+        String uri = request.getRequestURI();
+        HttpSession session = request.getSession();
+        Strategy strategy = requestHandler.getStrategy(method, uri, session);
         strategy.handle(request, response);
     }
 }

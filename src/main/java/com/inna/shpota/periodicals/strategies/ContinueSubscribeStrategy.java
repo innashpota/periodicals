@@ -1,5 +1,6 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.annotation.RequestAttributes;
 import com.inna.shpota.periodicals.dao.SubscriptionDao;
 import com.inna.shpota.periodicals.domain.Periodicals;
 import com.inna.shpota.periodicals.domain.Reader;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 
 import static java.time.LocalDateTime.now;
 
+@RequestAttributes(method = "POST", uri = "\\/periodicals\\/subscribe\\/.*[0-9]")
 public class ContinueSubscribeStrategy extends Strategy {
     private final SubscriptionDao subscriptionDao;
 

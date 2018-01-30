@@ -1,5 +1,6 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.annotation.RequestAttributes;
 import com.inna.shpota.periodicals.dao.PeriodicalsDao;
 import com.inna.shpota.periodicals.domain.Periodicals;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@RequestAttributes(uri = "/periodicals")
 public class PeriodicalsStrategy extends Strategy {
     private final PeriodicalsDao periodicalsDao;
 
