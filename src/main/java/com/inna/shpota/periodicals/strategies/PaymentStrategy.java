@@ -1,5 +1,6 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.annotation.RequestAttributes;
 import com.inna.shpota.periodicals.dao.PaymentDao;
 import com.inna.shpota.periodicals.domain.Payment;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@RequestAttributes(uri = "\\/periodicals\\/payment\\/.*[0-9]")
 public class PaymentStrategy extends Strategy {
     private final PaymentDao paymentDao;
 

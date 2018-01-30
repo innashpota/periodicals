@@ -1,5 +1,6 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.annotation.RequestAttributes;
 import com.inna.shpota.periodicals.dao.PeriodicalsDao;
 import com.inna.shpota.periodicals.domain.Periodicals;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
+@RequestAttributes(method = "POST", uri = "\\/periodicals\\/edit\\/.*[0-9]")
 public class SavePeriodicalStrategy extends Strategy {
     private final PeriodicalsDao periodicalsDao;
 

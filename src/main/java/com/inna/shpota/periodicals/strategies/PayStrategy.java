@@ -1,5 +1,6 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.annotation.RequestAttributes;
 import com.inna.shpota.periodicals.dao.PaymentDao;
 import com.inna.shpota.periodicals.domain.Payment;
 import com.inna.shpota.periodicals.domain.Periodicals;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 
+@RequestAttributes(method = "POST", uri = "\\/periodicals\\/payment\\/.*[0-9]")
 public class PayStrategy extends Strategy {
     private final static Logger LOGGER = Logger.getLogger(PayStrategy.class);
     private final PaymentDao paymentDao;

@@ -1,5 +1,6 @@
 package com.inna.shpota.periodicals.strategies;
 
+import com.inna.shpota.periodicals.annotation.RequestAttributes;
 import com.inna.shpota.periodicals.dao.ReaderDao;
 import com.inna.shpota.periodicals.domain.Reader;
 
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+@RequestAttributes(method = "POST", uri = "/login")
 public class ReaderPeriodicalsStrategy extends Strategy {
     private final ReaderDao readerDao;
 
